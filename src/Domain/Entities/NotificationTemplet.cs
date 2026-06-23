@@ -10,7 +10,7 @@ public class NotificationTemplet : BaseAuditableEntity
     {
         
     }
-    private NotificationTemplet(int id, string code, string titleTemplate, string bodyTemplate, bool isActive, string reference)
+    private NotificationTemplet(Guid id, string code, string titleTemplate, string bodyTemplate, bool isActive, ReferenceType reference)
     {
         Id = id;
         Code = code;
@@ -24,6 +24,6 @@ public class NotificationTemplet : BaseAuditableEntity
     public string TitleTemplate { get; set; } = string.Empty;
     public string BodyTemplate { get; set; } = string.Empty;
     public bool IsActive { get; set; } = false;
-    public string Reference { get; set; } = string.Empty;
+    public ReferenceType Reference { get; set; } = ReferenceType.non;
 
 }

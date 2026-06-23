@@ -10,7 +10,7 @@ public class AuditChange : BaseAuditableEntity
     {
         
     }
-    private AuditChange(int id, Guid auditEntryId, string oldValue, string newValue, string content)
+    private AuditChange(Guid id, Guid auditEntryId, string oldValue, string newValue, string content)
     {
         Id = id;
         AuditEntryId = auditEntryId;

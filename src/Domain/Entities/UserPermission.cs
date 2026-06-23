@@ -10,7 +10,7 @@ public class UserPermission : BaseAuditableEntity
     {
 
     }
-    private UserPermission(int id, Guid userId, Guid permissionId, bool isGranted, User user, Permission permission)
+    private UserPermission(Guid id, Guid userId, Guid permissionId, bool isGranted, User user, Permission permission)
     {
         Id = id;
         UserId = userId;

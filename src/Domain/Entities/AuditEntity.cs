@@ -10,30 +10,31 @@ public class AuditEntity : BaseAuditableEntity
     {
         
     }
-    private AuditEntity(int  id, string userName, int userId, int action, string referenceEntityType, int referenceID, DateTime timestamp, string category, string fileName)
+    private AuditEntity(Guid id, string userName, Guid userId, AuditAction action, ReferenceType referenceEntityType, Guid referenceID, DateTime timestamp, AuditCategory category, string fileName)
     {
         Id = id;
         UserName = userName;
         UserId = userId;
         Action = action;
-        ReferenceEntityType = referenceEntityType;
+        ReferenceType = referenceEntityType;
         ReferenceID = referenceID;
         Timestamp = timestamp;
         Category = category;
         FileName = fileName;
+        AuditChanges = new List<AuditChange>();
     }
 
     public string UserName { get; set; } = string.Empty;
-    public int UserId { get; set; }
-    public int Action {  get; set; }
-    public string ReferenceEntityType { get; set; } = string.Empty;
-    public int ReferenceID { get; set; }
+    public Guid UserId { get; set; }
+    public AuditAction Action { get; set; } = AuditAction.unknown;
+    public ReferenceType ReferenceType { get; set; } = ReferenceType.non;
+    public Guid ReferenceID { get; set; }
     public DateTimeOffset Timestamp { get; set; } 
-    public string Category { get; set; } = string.Empty;
+    public AuditCategory Category { get; set; } = AuditCategory.unknown;
     public string FileName { get; set; } = string.Empty;
 
-    public ICollection<AuditEntity> AuditEntities
+    public ICollection<AuditChange>? AuditChanges
     {
         get;
-    } = new List<AuditEntity>();
+    } 
 }

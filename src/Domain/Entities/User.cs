@@ -11,7 +11,7 @@ public class User : BaseAuditableEntity
     {
         
     }
-    private User(int id, string fullName, string number, string email ,string password, string status, string role )
+    private User(Guid id, string fullName, string number, string email ,string password, UserStatus status, Role role )
     {
         Id = id;
         FullName = fullName;
@@ -26,8 +26,8 @@ public class User : BaseAuditableEntity
     public string Number { get; set; } = string.Empty;
     public string Email { get; set; } =string.Empty;
     public string Password { get; set; } = string.Empty;
-    public string Status { get; set; } = string.Empty;
-    public string Role { get; set; } = string.Empty;
+    public UserStatus Status { get; set; } = UserStatus.unActive;
+    public Role Role { get; set; } = Role.customer;
 
     public ICollection<UserPermission> UserPermissions { get; set; } = new List<UserPermission>();
 

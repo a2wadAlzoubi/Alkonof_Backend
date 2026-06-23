@@ -10,7 +10,7 @@ public class Permission : BaseAuditableEntity
     {
         
     }
-    private Permission(int id, string name, string code, string description)
+    private Permission(Guid id, string name, string code, string description)
     {
         Id = id;
         Name = name;
