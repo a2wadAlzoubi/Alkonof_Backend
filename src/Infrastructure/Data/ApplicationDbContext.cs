@@ -15,6 +15,26 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 
     public DbSet<TodoItem> TodoItems => Set<TodoItem>();
 
+    public DbSet<AuditChange> AuditChange => Set<AuditChange>();
+
+    public DbSet<AuditEntity> AuditEntity => Set<AuditEntity>();
+
+    public DbSet<Complain> Complain => Set<Complain>();
+
+    public DbSet<Notification> Notification => Set<Notification>();
+
+    public DbSet<NotificationTemplet> NotificationTemplet => Set<NotificationTemplet>();
+
+    public DbSet<Permission> Permission => Set<Permission>();
+
+    public DbSet<Resolution> Resolution => Set<Resolution>();
+
+    public DbSet<TimeTable> TimeTable => Set<TimeTable>();
+
+    public DbSet<User> User => Set<User>();
+
+    public DbSet<UserPermission> UserPermission => Set<UserPermission>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

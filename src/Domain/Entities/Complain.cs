@@ -31,7 +31,7 @@ public class Complain : BaseAuditableEntity
     public string Description { get; set; } = string.Empty;
 
     public ReferenceType ReferenceType { get; set; } = ReferenceType.non;
-    public int ReferenceId { get; set; }
+    public Guid ReferenceId { get; set; }
     public string Content { get; set; } = string.Empty;
 
     public ICollection<Resolution> Resolutions { get; set; } = new List<Resolution>();

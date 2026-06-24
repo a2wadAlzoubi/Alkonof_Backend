@@ -6,7 +6,11 @@ namespace Alkonof_Backend.Domain.Entities;
 
 public class TimeTable : BaseAuditableEntity
 {
-    public TimeTable(DayOfWeek dayOfWeek, int hour, bool isFalse, User responsibal, Guid responsibalId)
+    private TimeTable()
+    {
+        
+    }
+    private TimeTable(DayOfWeek dayOfWeek, int hour, bool isFalse, User responsibal, Guid responsibalId)
     {
         DayOfWeek = dayOfWeek;
         Hour = hour;
@@ -15,11 +19,11 @@ public class TimeTable : BaseAuditableEntity
         ResponsibalId = responsibalId;
     }
 
-    DayOfWeek DayOfWeek { get; set; }
-    public int Hour{ get; set; }
-    public bool IsFalse { get; set; }
+    DayOfWeek DayOfWeek { get; set; } = DayOfWeek.Sunday;
+    public int Hour { get; set; } = 0;
+    public bool IsFalse { get; set; } = false;
     
     //Relations :
-    public User Responsibal { get; set; }
+    public User? Responsibal { get; set; }
     public Guid ResponsibalId { get; set; } 
 }
