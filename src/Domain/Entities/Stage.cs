@@ -4,6 +4,6 @@ using System.Text;
 
 namespace Alkonof_Backend.Domain.Entities;
 
-internal class Stage
+public class Stage
 {
 }
