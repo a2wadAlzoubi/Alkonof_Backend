@@ -11,7 +11,7 @@ public class Complain : BaseAuditableEntity
     {
         
     }
-    private Complain(int  id, int customerId, string type, string status, string subject, string description, string referenceType, int referenceId, string content)
+    private Complain(Guid id, Guid customerId, string type, string status, string subject, string description, ReferenceType referenceType, Guid referenceId, string content)
     {
         Id = id;
         CustomerId = customerId;
@@ -24,14 +24,14 @@ public class Complain : BaseAuditableEntity
         Content = content;
     }
 
-    public int CustomerId { get; set; }
+    public Guid CustomerId { get; set; }
     public string Type { get; set; } = string.Empty;
     public string Status { get; set; } = string.Empty;
     public string Subject { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 
-    public string ReferenceType { get; set; } = string.Empty;
-    public int ReferenceId { get; set; }
+    public ReferenceType ReferenceType { get; set; } = ReferenceType.non;
+    public Guid ReferenceId { get; set; }
     public string Content { get; set; } = string.Empty;
 
     public ICollection<Resolution> Resolutions { get; set; } = new List<Resolution>();

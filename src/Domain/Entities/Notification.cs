@@ -10,7 +10,7 @@ public class Notification : BaseAuditableEntity
     {
         
     }
-    private Notification(int id, Guid userId, Guid templateId, string status, string referenceType, int referenceId, bool isRead, DateTime createdAt, User user, NotificationTemplet templet)
+    private Notification(Guid id, Guid userId, Guid templateId, NotificationStatus status, ReferenceType referenceType, Guid referenceId, bool isRead, DateTime createdAt, User user, NotificationTemplet templet)
     {
         Id = id;
         UserId = userId;
@@ -24,9 +24,9 @@ public class Notification : BaseAuditableEntity
         Templet = templet;
     }
 
-    public string Status { get; set; } = string.Empty;
-    public string ReferenceType { get; set; } = string.Empty;
-    public int ReferenceId { get; set; }
+    public NotificationStatus Status { get; set; } = NotificationStatus.unRead;
+    public ReferenceType ReferenceType { get; set; } = ReferenceType.non;
+    public Guid ReferenceId { get; set; }
     public bool IsRead { get; set; }
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 

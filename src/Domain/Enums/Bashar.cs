@@ -5,10 +5,11 @@ public enum AuditAction
     bookingAssinged =0,
     meetingCompleted = 1,
     projectCreated = 2,
-    permissionGranted = 3
+    permissionGranted = 3,
+    unknown = 4,
 }
 
-public enum AuditCatigory
+public enum AuditCategory
 {
     create = 0,
     update = 1,
@@ -16,7 +17,9 @@ public enum AuditCatigory
     statusCharge = 3,
     permissionChange = 4,
     assignment = 5,
-    workflow = 6
+    workflow = 6,
+    unknown = 7,
+
 }
 
 public enum NotificationStatus
@@ -38,3 +41,26 @@ public enum ReferenceType
     complain = 8,
     non = 9
 }
+public enum UserType
+{
+    admin = 0,
+    responsible = 1,
+    customer = 2,
+}
+public enum UserStatus
+{
+    active = 0,
+    suspended = 1,
+    locked = 2,
+    deleted = 3,
+    unActive = 4,
+}
+
+public enum ComplainStatus
+{
+    unReaded = 0,
+    reared = 1,
+    Resolved = 2,
+
+}
+

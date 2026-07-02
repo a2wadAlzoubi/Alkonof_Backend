@@ -10,7 +10,7 @@ public class Resolution : BaseAuditableEntity
     {
         
     }
-    private Resolution(int id, Guid complintId, string resolutionText)
+    private Resolution(Guid id, Guid complintId, string resolutionText)
     {
         Id = id;
         ComplainId = complintId;
@@ -20,6 +20,6 @@ public class Resolution : BaseAuditableEntity
     public string ResolutionText { get; set; } = string.Empty;
 
     // Relations
-    public Complain? Complain { get; set; } = null!;
+    public Complain? Complain { get; set; }
     public Guid ComplainId { get; set; }
 }

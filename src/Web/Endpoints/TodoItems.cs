@@ -20,7 +20,7 @@ public class TodoItems : IEndpointGroup
 
     [EndpointSummary("Create a new Todo Item")]
     [EndpointDescription("Creates a new todo item using the provided details and returns the ID of the created item.")]
-    public static async Task<Created<int>> CreateTodoItem(ISender sender, CreateTodoItemCommand command)
+    public static async Task<Created<Guid>> CreateTodoItem(ISender sender, CreateTodoItemCommand command)
     {
         var id = await sender.Send(command);
 
