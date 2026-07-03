@@ -22,8 +22,8 @@ public class Project
     public string Location {  get; set; }
 
     //Realational
-    public List<ProjectStaff> StaffList { get; set; }
-    public List<Stage>Stages { get; set; }
+    public List<ProjectStaff>? StaffList { get; set; }
+    public List<Stage>? Stages { get; set; }
     //forgin Key
 
 

@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Alkonof_Backend.AppHost</RootNamespace>
     <AssemblyName>Alkonof_Backend.AppHost</AssemblyName>
+    <UserSecretsId>dd3d2da3-82c3-4544-9536-6fb177c4b028</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

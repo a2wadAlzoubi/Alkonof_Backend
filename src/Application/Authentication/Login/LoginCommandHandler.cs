@@ -1,0 +1,49 @@
+﻿using Alkonof_Backend.Application.Common.Interfaces;
+using Application.Abstractions.JWT;
+using Application.Authentication.Dtos;
+using Application.Entities.Users.Services;
+using Domain.RefreshTokens;
+
+namespace Application.Authentication.SignIn
+{
+    public sealed record LoginCommandHandler(
+        IApplicationDbContext context,
+        IPasswordService passwordService,
+        IJwtGenerator jwtGenerator,
+        IGenerateRefreshToken generateRefreshToken
+        ) : IRequestHandler<LoginCommand, RefreshTokenResponce>
+    {
+        public async Task<RefreshTokenResponce> Handle(LoginCommand request, CancellationToken cancellationToken)
+        {
+            var user = await context.User.FindAsync([request.Email], cancellationToken);
+            Guard.Against.NotFound(request.Email, user);
+
+            if (user == null || !passwordService.Compare(request.Password, user.Password))
+            {
+                Guard.Against.NotFound(request.Email, user);
+            }
+            if (user.RefreshTokens == null)
+                Guard.Against.NotFound(request.Email, user.RefreshTokens);
+
+            foreach (var refreshtoken in user.RefreshTokens)
+            {
+                if (refreshtoken.IsUsed || refreshtoken.Expired < DateTimeOffset.UtcNow)
+                {
+                    refreshtoken.ExpireToken();
+                }
+            }
+            context.User.Update(user);
+            //if(!context.User.Update(user))
+            //{
+            //    Guard.Against.NotFound(request.Email, user);
+            //}
+            var refreshToken = RefreshToken.CreateRefreshToken();
+            var grefreshToken = generateRefreshToken.GRefreshToken(refreshToken, user);
+            var acessToken = jwtGenerator.Generate(user, grefreshToken.Id);
+            //await context..Add(grefreshToken, cancellationToken);
+            //await context.SaveChangesAsync();
+
+            return new RefreshTokenResponce(acessToken, refreshToken);
+        }
+    }
+}

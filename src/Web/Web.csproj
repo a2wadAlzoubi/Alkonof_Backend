@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RootNamespace>Alkonof_Backend.Web</RootNamespace>
     <AssemblyName>Alkonof_Backend.Web</AssemblyName>
+    <UserSecretsId>974071b0-4542-4c34-acbb-61b9bde75d27</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

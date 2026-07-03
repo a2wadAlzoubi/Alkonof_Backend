@@ -2,6 +2,7 @@
 using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Domain.Entities;
 using Alkonof_Backend.Infrastructure.Identity;
+using Domain.RefreshTokens;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +33,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<TimeTable> TimeTable => Set<TimeTable>();
 
     public DbSet<User> User => Set<User>();
+    public DbSet<RefreshToken> RefreshToken => Set<RefreshToken>();
 
     public DbSet<UserPermission> UserPermission => Set<UserPermission>();
 

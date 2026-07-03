@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
+using Domain.RefreshTokens;
 
 namespace Alkonof_Backend.Domain.Entities;
 
@@ -13,7 +14,7 @@ public class User : BaseAuditableEntity
     private User(Guid id, Guid identityId , string fullName, string number, string email ,string password )
     {
         Id = id;
-        FullName = fullName;
+        Name = fullName;
         Number = number;
         Password = password;
         Email = email;
@@ -21,7 +22,7 @@ public class User : BaseAuditableEntity
         UserPermissions = new List<UserPermission>();
     }
 
-    public string FullName { get; private set; } = string.Empty;
+    public string Name { get; private set; } = string.Empty;
     public string Number { get; private set; } = string.Empty;
     public string Email { get; private set; } =string.Empty;
     public string Password { get; private set; } = string.Empty;
@@ -29,6 +30,7 @@ public class User : BaseAuditableEntity
     public Guid IdentityId { get; private set; }
 
     public ICollection<UserPermission>? UserPermissions { get; private set; }
+    public ICollection<RefreshToken>? RefreshTokens { get; private set; }
 
     public static User Create(
       Guid identityId, string fullName, string number, string email, string password)
@@ -40,7 +42,7 @@ public class User : BaseAuditableEntity
         Guid id, Guid identityId, string fullName, string number, string email, string password)
     {
         this.Id = id;
-        this.FullName = fullName;
+        this.Name = fullName;
         this.Number = number;
         this.Password = password;
         this.Email = email;
@@ -58,10 +60,10 @@ public class User : BaseAuditableEntity
     }
 
 
-    //public string GenerateSecurityHash()
-    //{
-    //    return ComputeSha512Hash(Name + Password);
-    //}
+    public string GenerateSecurityHash()
+    {
+        return ComputeSha512Hash(Name + Password);
+    }
 
 
     private static string ComputeSha512Hash(string rawData)

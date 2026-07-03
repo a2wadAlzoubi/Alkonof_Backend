@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 builder.AddKeyVaultIfConfigured();
-builder.AddApplicationServices();
-builder.AddInfrastructureServices();
+builder.AddApplicationServices(builder.Configuration);
+builder.AddInfrastructureServices(builder.Configuration);
 builder.AddWebServices();
 
 var app = builder.Build();
