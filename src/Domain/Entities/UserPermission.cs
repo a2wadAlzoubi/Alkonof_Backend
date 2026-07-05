@@ -16,15 +16,13 @@ public class UserPermission : BaseAuditableEntity
         UserId = userId;
         PermissionId = permissionId;
         IsGranted = isGranted;
-        User = user;
-        Permission = permission;
     }
 
-    public bool IsGranted { get; set; }
+    public bool IsGranted { get; private set; }
 
     // Relations :
-    public User? User { get; set; }
-    public Guid UserId { get; set; }
-    public Permission? Permission { get; set; }
-    public Guid PermissionId { get; set; }
+    public User? User { get; private set; }
+    public Guid UserId { get; private set; }
+    public Permission? Permission { get; private set; }
+    public Guid PermissionId { get; private set; }
 }

@@ -1,7 +1,10 @@
 ﻿using System.Globalization;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml.Linq;
 using Domain.RefreshTokens;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Alkonof_Backend.Domain.Entities;
 
@@ -11,42 +14,52 @@ public class User : BaseAuditableEntity
     {
         
     }
-    private User(Guid id, Guid identityId , string fullName, string number, string email ,string password )
+
+    private User(Guid id , string name, string number, string email, string password, UserStatus status, UserRole role)
     {
         Id = id;
-        Name = fullName;
+        Name = name;
         Number = number;
-        Password = password;
         Email = email;
-        IdentityId = identityId;
-        UserPermissions = new List<UserPermission>();
+        Password = password;
+        Status = status;
+        Role = role;
     }
 
     public string Name { get; private set; } = string.Empty;
     public string Number { get; private set; } = string.Empty;
     public string Email { get; private set; } =string.Empty;
     public string Password { get; private set; } = string.Empty;
-    public UserType Type { get; private set; } = UserType.customer;
-    public Guid IdentityId { get; private set; }
+    public UserStatus Status{ get; private set; } = UserStatus.unActive;
+    public UserRole Role { get; private set; } = UserRole.customer;
 
+
+    // Relations
+
+    public ICollection<OrderBooking>? OrderBookings { get; private set; }
+    public ICollection<Booking>? ResponsibalBookings { get; private set; }
+    public ICollection<Booking>? CustomerBookings { get; private set; }
     public ICollection<UserPermission>? UserPermissions { get; private set; }
+    public ICollection<Complain>? Complains { get; private set; }
+    public ICollection<AuditEntity>? AuditEntities { get; private set; }
+    public ICollection<Notification>? Notifications { get; private set; }
+    public ICollection<ProjectStaff>? ProjectStaffs { get; private set; }
     public ICollection<RefreshToken>? RefreshTokens { get; private set; }
 
-    public static User Create(
-      Guid identityId, string fullName, string number, string email, string password)
+    public static User Create(string name, string number, string email, string password, UserStatus status, UserRole role)
     {
-        return new User(Guid.NewGuid(), identityId, fullName, number, email, password);
+        return new User(Guid.NewGuid(), name, number, email, password , status , role);
     }
     //public decimal CalculateBalance => User_Accounts.Sum(ua=>ua.Transaction!.Amount);
-    public void Update(
-        Guid id, Guid identityId, string fullName, string number, string email, string password)
+    public void Update
+        (string name, string number, string email, string password, UserStatus status, UserRole role)
     {
-        this.Id = id;
-        this.Name = fullName;
-        this.Number = number;
-        this.Password = password;
-        this.Email = email;
-        this.IdentityId = identityId;
+        Name = name;
+        Number = number;
+        Email = email;
+        Password = password;
+        Status = status;
+        Role = role;
     }
     public void UpdateEmail(string email)
     {

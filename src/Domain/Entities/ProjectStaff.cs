@@ -4,16 +4,17 @@ using System.Text;
 
 namespace Alkonof_Backend.Domain.Entities;
 
-public class ProjectStaff
+public class ProjectStaff : BaseAuditableEntity
 {
     private ProjectStaff() { }
-    private ProjectStaff(int id,int projectid,int respnsibalid)
+    private ProjectStaff(Guid id,Guid projectid,Guid respnsibalid)
     {
         Id = id;
         ProjectId = projectid;
         ResponsibalId = respnsibalid;
     }
-    public int Id { get; set; }
-    public int ProjectId {  get; set; }
-    public int ResponsibalId {  get; set; }
+    public Project? Project {  get; private set; }
+    public Guid ProjectId {  get; private set; }
+    public User? Responsibal {  get; private set; }
+    public Guid ResponsibalId {  get; private set; }
 }

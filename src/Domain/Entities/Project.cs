@@ -4,9 +4,20 @@ using System.Text;
 
 namespace Alkonof_Backend.Domain.Entities;
 
-public class Project
+public class Project : BaseAuditableEntity
 {
-    private Project(int id, string status, string title, string description, string location)
+    private Project()
+    {
+        
+    }
+    private Project(
+        Guid id,
+        ProjectStatus status,
+        string title,
+        string description,
+        string location ,
+        DateTimeOffset? ActualEngedDate ,
+        double Progress)
     {
         Id = id;
         Status = status;
@@ -15,17 +26,17 @@ public class Project
         Location = location;
     }
 
-    public int Id { get; set; }
-    public string Status {  get; set; }
-    public String Title {  get; set; }
-    public string Description { get; set; }
-    public string Location {  get; set; }
+    public ProjectStatus Status {  get; private set; }
+    public string Title {  get; private set; } = string.Empty;
+    public string Description { get; private set; } = string.Empty;
+    public string Location { get; private set; } = string.Empty;
+    public DateTimeOffset? ActualEngedDate { get; private set; }
+    public double Progress { get; private set; }
 
     //Realational
-    public List<ProjectStaff>? StaffList { get; set; }
-    public List<Stage>? Stages { get; set; }
-    //forgin Key
-
+    public Contract? Contract { get; private set; }
+    public List<ProjectStaff>? ProjectStaffs { get; private set; }
+    public List<Stage>? Stages { get; private set; }
 
     
 }

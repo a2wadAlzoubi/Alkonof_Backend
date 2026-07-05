@@ -10,22 +10,20 @@ public class AuditChange : BaseAuditableEntity
     {
         
     }
-    private AuditChange(Guid id, Guid auditEntryId, string oldValue, string newValue, string content)
+    private AuditChange(Guid id, string oldValue, string newValue, string content)
     {
         Id = id;
-        AuditEntryId = auditEntryId;
         OldValue = oldValue;
         NewValue = newValue;
         Content = content;
     }
 
-    public string OldValue { get; set; } = string.Empty;
-    public string NewValue { get; set; } = string.Empty!;
-    public string Content { get; set; } = string.Empty;
+    public string OldValue { get; private set; } = string.Empty;
+    public string NewValue { get; private set; } = string.Empty!;
+    public string Content { get; private set; } = string.Empty;
 
     // Relations :
-    public AuditEntity? AuditEntity { get; set; }
-    public Guid AuditEntryId { get; set; }
+    public ICollection<AuditEntity> AuditEntities { get; private set; } = new List<AuditEntity>();
 
     // وراثه من BaseAuditableEntity
     // حدف Id

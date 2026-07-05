@@ -4,39 +4,60 @@ using System.Text;
 
 namespace Alkonof_Backend.Domain.Entities;
 
-public class Booking
+public class Booking : BaseAuditableEntity
 {
-   
-    private Booking(int id, int responsibalId, string statuse, string title, 
-        string location, DateTimeOffset expiredAt, int customerAnser, int responsiplAnser)
+    private Booking(
+        Guid id,
+        BokingStatus status,
+        string title,
+        string location,
+        DateTimeOffset expiredAt,
+        Decision customerAnser,
+        Decision responsiplAnser,
+        Guid? contractId,
+        Guid customerId,
+        Guid responsibalId)
     {
-        Id = id;
-        ResponsibalId = responsibalId;
-        Statuse = statuse;
-        Title = title;
-        Location = location;
-        ExpiredAt = expiredAt;
-        CustomerAnser = customerAnser;
-        ResponsiplAnser = responsiplAnser;
+        this.Id = id;
+        this.Status = status;
+        this.Title = title;
+        this.Location = location;
+        this.ExpiredAt = expiredAt;
+        this.CustomerAnser = customerAnser;
+        this.ResponsiplAnser = responsiplAnser;
+        this.ContractId = contractId;
+        this.CustomerId = customerId;
+        this.ResponsibalId = responsibalId;
     }
 
-    public int Id { get; set; }
-    public int ResponsibalId {  get; set; }
-    public string Statuse {  get; set; }
-    public string Title {  get; set; }
-    public string Location {  get; set; }
-    public DateTimeOffset ExpiredAt {  get; set; }
-    public int CustomerAnser {  get; set; }
-    public int ResponsiplAnser {  get; set; }
+    private Booking()
+    {
+        
+    }
+
+
+
+
+    public BokingStatus Status { get; private set; } = BokingStatus.UnCreated;
+    public string Title { get; private set; } = string.Empty;
+    public string Location { get; private set; } = string.Empty;    
+    public DateTimeOffset ExpiredAt {  get; private set; }
+    public Decision CustomerAnser {  get; private set; }
+    public Decision ResponsiplAnser {  get; private set; }
 
 
     //relationals
-    public List<Contract>?Contracts { get; set; }
-    public List<PrepareMeeting>?PrepareMeetings { get; set; }
+    public Contract? Contract { get; private set; }
+    public Guid? ContractId { get; private set; }
+    public User? Customer { get; private set; }
+    public Guid CustomerId { get; private set; }
+    public User? Responsibal { get; private set; }
+    public Guid ResponsibalId { get; private set; }
+    public List<PrepareMeeting> PrepareMeetings { get; private set; } = new List<PrepareMeeting>();
 
-    public enum enBokingStatus
+    public enum BokingStatus
     {
-        Created=0,
+        UnCreated=0,
         InReviewCustomer=1,
         InReviewResponsibal=2,
         Confirmed=3,
@@ -44,17 +65,12 @@ public class Booking
         Expired=5,
         Delied=6
     }
-    public enum enDecision
+    public enum Decision
     {
         Approved=0,
         Rejected=1,
         Pending=2,
         Dely=3
-    }
-    public enum enPrepare
-    {
-        Temporary=0,
-        Confirmed=1
     }
 
 }

@@ -5,44 +5,43 @@ using System.Text;
 
 namespace Alkonof_Backend.Domain.Entities;
 
-public class Contract
+public class Contract : BaseAuditableEntity
 {
-  private Contract(int id, DateTimeOffset date, string pathImage, string projectType, Booking booking, Project project, int bokingId, int projectId)
+    private Contract()
+    {
+        
+    }
+    private Contract(Guid id ,DateTimeOffset date, string pathImage, ProjectType type, Guid projectId)
     {
         Id = id;
         Date = date;
         PathImage = pathImage;
-        ProjectType = projectType;
-        Booking = booking;
-        Project = project;
-        BokingId = bokingId;
+        Type = type;
         ProjectId = projectId;
     }
 
-    public int Id { get; set; }
-    public DateTimeOffset Date {  get; set; }
-    public string PathImage {  get; set; }
-    public string ProjectType {  get; set; }
-    
+    public DateTimeOffset Date {  get; private set; }
+    public string PathImage {  get; private set; } = string.Empty;
+    public ProjectType Type { get; private set; } = ProjectType.Non;
+
     //Relatinal
-    public Booking Booking { get; set; }
-    public Project Project { get; set; }
+    public Booking? Booking { get; private set; }
+    public Project? Project { get; private set; }
+    public Guid? ProjectId { get; private set; }
    
     
-    //Forign Key
-    public int BokingId {  get; set; }
-    public int ProjectId {  get; set; }
    
     
     //Enum
-    public enum enContrucStatus
+    public enum ContrucStatus
     {
         OnWorking=0,
         Archeved=1
     }
-    public enum enProjectType
+    public enum ProjectType
     {
         Advisory=0,
-        Field=1
+        Field=1 , 
+        Non = 2
     }
 }

@@ -16,11 +16,12 @@ internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Gui
     public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var user = User.Create(
-        request.CreateUser.IdentityId,
-        request.CreateUser.FullName,
+        request.CreateUser.Name,
         request.CreateUser.Number,
         request.CreateUser.Email,
-        request.CreateUser.Password
+        request.CreateUser.Password,
+        request.CreateUser.Status,
+        request.CreateUser.Role
             );
 
         _context.User.Add(user);

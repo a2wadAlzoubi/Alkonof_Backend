@@ -21,7 +21,7 @@ public class JwtGenerator(IOptionsSnapshot<JwtOptions> jwtOptions) : IJwtGenerat
         [
             new Claim("Id", user.Id.ToString()),
             new Claim("Name", user.Name),
-            new Claim("Type", user.Type.ToString()),
+            new Claim("Type", user.Role.ToString()),
             new Claim("RefreshTokenId", id.ToString())
         ];
 

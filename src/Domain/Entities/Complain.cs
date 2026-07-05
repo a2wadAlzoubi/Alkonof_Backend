@@ -7,32 +7,47 @@ namespace Alkonof_Backend.Domain.Entities;
 
 public class Complain : BaseAuditableEntity
 {
-    private Complain()
-    {
-        
-    }
-    private Complain(Guid id, Guid customerId, string type, string status, string subject, string description, ReferenceType referenceType, Guid referenceId, string content)
+
+    private Complain(
+        Guid id ,
+        string type,
+        ComplainStatus status,
+        string subject,
+        string description,
+        ReferenceType referenceType,
+        string content,
+        Guid customerId ,
+        Guid resolutionId
+        )
     {
         Id = id;
-        CustomerId = customerId;
         Type = type;
         Status = status;
         Subject = subject;
         Description = description;
         ReferenceType = referenceType;
-        ReferenceId = referenceId;
         Content = content;
+        CustomerId = customerId;
+        ResolutionId = resolutionId;
     }
 
-    public Guid CustomerId { get; set; }
-    public string Type { get; set; } = string.Empty;
-    public string Status { get; set; } = string.Empty;
-    public string Subject { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
+    private Complain()
+    {
+        
+    }
 
-    public ReferenceType ReferenceType { get; set; } = ReferenceType.non;
-    public Guid ReferenceId { get; set; }
-    public string Content { get; set; } = string.Empty;
 
-    public ICollection<Resolution> Resolutions { get; set; } = new List<Resolution>();
+    public string Type { get; private set; } = string.Empty;
+    public ComplainStatus Status { get; private set; } = ComplainStatus.unReaded;
+    public string Subject { get; private set; } = string.Empty;
+    public string Description { get; private set; } = string.Empty;
+
+    public ReferenceType ReferenceType { get; private set; } = ReferenceType.non;
+    public string Content { get; private set; } = string.Empty;
+
+    // Relations
+    public User? Customer { get; private set; }
+    public Guid CustomerId { get; private set; }
+    public Resolution? Resolution { get; private set; }
+    public Guid? ResolutionId { get; private set; }
 }

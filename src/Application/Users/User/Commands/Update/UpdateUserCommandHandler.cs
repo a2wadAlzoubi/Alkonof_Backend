@@ -20,12 +20,12 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
         Guard.Against.NotFound(request.UserDto.Id, user);
 
         user.Update(
-        request.UserDto.Id,
-        request.UserDto.IdentityId,
-        request.UserDto.FullName,
+        request.UserDto.Name,
         request.UserDto.Number,
         request.UserDto.Email,
-        request.UserDto.Password
+        request.UserDto.Password,
+        request.UserDto.Status,
+        request.UserDto.Role
             );
 
         await _context.SaveChangesAsync(cancellationToken);

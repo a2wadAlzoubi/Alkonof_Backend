@@ -20,19 +20,17 @@ public class Notification : BaseAuditableEntity
         ReferenceId = referenceId;
         IsRead = isRead;
         CreatedAt = createdAt;
-        User = user;
-        Templet = templet;
     }
 
-    public NotificationStatus Status { get; set; } = NotificationStatus.unRead;
-    public ReferenceType ReferenceType { get; set; } = ReferenceType.non;
-    public Guid ReferenceId { get; set; }
-    public bool IsRead { get; set; }
-    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+    public NotificationStatus Status { get; private set; } = NotificationStatus.unRead;
+    public ReferenceType ReferenceType { get; private set; } = ReferenceType.non;
+    public Guid ReferenceId { get; private set; }
+    public bool IsRead { get; private set; }
+    public DateTimeOffset CreatedAt { get; private set; } = DateTimeOffset.UtcNow;
 
     // Relations :
-    public User? User { get; set; }
-    public Guid UserId { get; set; }
-    public NotificationTemplet? Templet { get; set; }
-    public Guid TemplateId { get; set; }
+    public User? User { get; private set; }
+    public Guid UserId { get; private set; }
+    public NotificationTemplet? Templet { get; private set; }
+    public Guid TemplateId { get; private set; }
 }

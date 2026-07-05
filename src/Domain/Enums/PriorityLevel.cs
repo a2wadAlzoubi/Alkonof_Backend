@@ -7,7 +7,7 @@ public enum PriorityLevel
     Medium = 2,
     High = 3
 }
-public enum enProjectStatus
+public enum ProjectStatus
 {
     Created=0,
     Planeng=1,
@@ -20,21 +20,21 @@ public enum enProjectStatus
     Closed=8,
     Cancelled=9
 }
-public enum enTask_StageStatus
+public enum Task_StageStatus
 {
     NotStarted=0,
     InProgress=1,
     Completed=2,
     Cancelled=3
 }
-public enum enTaskPriority
+public enum TaskPriority
 {
     Low = 1,
     Medium = 2,
     High = 3,
     Critical=4
 }
-public enum enReprotType
+public enum ReprotType
 {
     Daily=0,
     Weekly=1,

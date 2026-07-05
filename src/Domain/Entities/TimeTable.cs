@@ -10,20 +10,20 @@ public class TimeTable : BaseAuditableEntity
     {
         
     }
-    private TimeTable(DayOfWeek dayOfWeek, int hour, bool isFalse, User responsibal, Guid responsibalId)
+    private TimeTable(Guid id ,DayOfWeek dayOfWeek, int hour, bool isFalse, Guid responsibalId)
     {
+        Id = id;
         DayOfWeek = dayOfWeek;
         Hour = hour;
         IsFalse = isFalse;
-        Responsibal = responsibal;
         ResponsibalId = responsibalId;
     }
 
-    DayOfWeek DayOfWeek { get; set; } = DayOfWeek.Sunday;
-    public int Hour { get; set; } = 0;
-    public bool IsFalse { get; set; } = false;
+    public DayOfWeek DayOfWeek { get; set; } = DayOfWeek.Sunday;
+    public int Hour { get; private set; } = 0;
+    public bool IsFalse { get; private set; } = false;
     
     //Relations :
-    public User? Responsibal { get; set; }
-    public Guid ResponsibalId { get; set; } 
+    public User? Responsibal { get; private set; }
+    public Guid ResponsibalId { get; private set; } 
 }

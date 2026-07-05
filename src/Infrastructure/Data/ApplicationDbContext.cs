@@ -17,6 +17,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<TodoItem> TodoItems => Set<TodoItem>();
 
     public DbSet<AuditChange> AuditChange => Set<AuditChange>();
+    public DbSet<BookingType> BookingType => Set<BookingType>();
 
     public DbSet<AuditEntity> AuditEntity => Set<AuditEntity>();
 

@@ -41,7 +41,7 @@ public enum ReferenceType
     complain = 8,
     non = 9
 }
-public enum UserType
+public enum UserRole
 {
     admin = 0,
     responsible = 1,

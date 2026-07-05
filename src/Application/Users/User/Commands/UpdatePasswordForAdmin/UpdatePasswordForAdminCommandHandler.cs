@@ -26,7 +26,7 @@ public class UpdatePasswordForAdminCommandHandler : IRequestHandler<UpdatePasswo
             .FindAsync([request.PasswordDto.userId], cancellationToken);
         Guard.Against.NotFound(request.PasswordDto.userId, user);
 
-        if (request.PasswordDto.userId != _currentUser.Id && user.Type == Domain.Enums.UserType.admin)
+        if (request.PasswordDto.userId != _currentUser.Id && user.Role == Domain.Enums.UserRole.admin)
             return false;
 
 

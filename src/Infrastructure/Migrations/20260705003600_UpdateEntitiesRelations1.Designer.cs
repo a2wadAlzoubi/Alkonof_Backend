@@ -4,6 +4,7 @@ using Alkonof_Backend.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Alkonof_Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260705003600_UpdateEntitiesRelations1")]
+    partial class UpdateEntitiesRelations1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -615,45 +618,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.ToTable("Project");
                 });
 
-            modelBuilder.Entity("Alkonof_Backend.Domain.Entities.ProjectReport", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset?>("Created")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset?>("LastModified")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("StageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StageId");
-
-                    b.ToTable("ProjectReport");
-                });
-
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.ProjectStaff", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1031,6 +995,9 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("PermissionGropId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("PermissionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1038,6 +1005,8 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PermissionGropId");
 
                     b.HasIndex("PermissionId");
 
@@ -1423,17 +1392,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Navigation("Meeting");
                 });
 
-            modelBuilder.Entity("Alkonof_Backend.Domain.Entities.ProjectReport", b =>
-                {
-                    b.HasOne("Alkonof_Backend.Domain.Entities.Stage", "Stage")
-                        .WithMany("ProjectReport")
-                        .HasForeignKey("StageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Stage");
-                });
-
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.ProjectStaff", b =>
                 {
                     b.HasOne("Alkonof_Backend.Domain.Entities.Project", "Project")
@@ -1544,6 +1502,10 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.UserPermission", b =>
                 {
+                    b.HasOne("Alkonof_Backend.Domain.Entities.PermissionGrop", null)
+                        .WithMany("UserPermissions")
+                        .HasForeignKey("PermissionGropId");
+
                     b.HasOne("Alkonof_Backend.Domain.Entities.Permission", "Permission")
                         .WithMany("UserPermissions")
                         .HasForeignKey("PermissionId")
@@ -1666,6 +1628,8 @@ namespace Alkonof_Backend.Infrastructure.Migrations
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.PermissionGrop", b =>
                 {
                     b.Navigation("Permissions");
+
+                    b.Navigation("UserPermissions");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Project", b =>
@@ -1679,8 +1643,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Stage", b =>
                 {
-                    b.Navigation("ProjectReport");
-
                     b.Navigation("StageImages");
 
                     b.Navigation("Tasks");

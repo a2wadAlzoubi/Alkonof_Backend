@@ -5,6 +5,5 @@ namespace Alkonof_Backend.Infrastructure.Identity;
 
 public class ApplicationUser : IdentityUser
 {
-
     public User? User { get; }
 }

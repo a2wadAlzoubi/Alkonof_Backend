@@ -5,11 +5,11 @@ namespace Application.Entities.Users.Dtos
 {
     public class UserDto : BaseAuditableEntity 
     {
-        public string FullName { get;  set; } = string.Empty;
-        public string Number { get;  set; } = string.Empty;
-        public string Email { get;  set; } = string.Empty;
-        public string Password { get;  set; } = string.Empty;
-        public UserType Type { get;  set; } = UserType.customer;
-        public Guid IdentityId { get;  set; }
+        public string Name { get; private set; } = string.Empty;
+        public string Number { get; private set; } = string.Empty;
+        public string Email { get; private set; } = string.Empty;
+        public string Password { get; private set; } = string.Empty;
+        public UserStatus Status { get; private set; } = UserStatus.unActive;
+        public UserRole Role { get; private set; } = UserRole.customer;
     }
 }
