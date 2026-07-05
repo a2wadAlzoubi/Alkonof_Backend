@@ -28,7 +28,7 @@ public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListComman
             Colour = Colour.From(request.Colour ?? Colour.Grey)
         };
 
-        _context.TodoLists.Add(entity);
+        //_context.TodoLists.Add(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
 

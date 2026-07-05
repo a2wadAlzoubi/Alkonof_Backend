@@ -40,11 +40,11 @@ public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
                 new ColourDto { Code = Colour.Red, Name = nameof(Colour.Red) },
             ],
 
-            Lists = await _context.TodoLists
-                .AsNoTracking()
-                .ProjectTo<TodoListDto>(_mapper.ConfigurationProvider)
-                .OrderBy(t => t.Title)
-                .ToListAsync(cancellationToken)
+            //Lists = await _context.TodoLists
+                //.AsNoTracking()
+                //.ProjectTo<TodoListDto>(_mapper.ConfigurationProvider)
+                //.OrderBy(t => t.Title)
+                //.ToListAsync(cancellationToken)
         };
     }
 }

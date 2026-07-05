@@ -38,9 +38,34 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 
     public DbSet<UserPermission> UserPermission => Set<UserPermission>();
 
+    public DbSet<Booking> Booking => throw new NotImplementedException();
+
+    public DbSet<Contract> Contract => throw new NotImplementedException();
+
+    public DbSet<Meeting> Meeting => throw new NotImplementedException();
+
+    public DbSet<OrderBooking> OrderBooking => throw new NotImplementedException();
+
+    public DbSet<PermissionGrop> PermissionGrop => throw new NotImplementedException();
+
+    public DbSet<PrepareMeeting> PrepareMeeting => throw new NotImplementedException();
+
+    public DbSet<Project> Project => throw new NotImplementedException();
+
+    public DbSet<ProjectReport> ProjectReport => throw new NotImplementedException();
+
+    public DbSet<ProjectStaff> ProjectStaff => throw new NotImplementedException();
+
+    public DbSet<Stage> Stage => throw new NotImplementedException();
+
+    public DbSet<StageImage> StageImage => throw new NotImplementedException();
+
+    public DbSet<TaskTabel> TaskTabel => throw new NotImplementedException();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
+
 }

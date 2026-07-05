@@ -13,14 +13,14 @@ public class CreateTodoListCommandValidator : AbstractValidator<CreateTodoListCo
         RuleFor(v => v.Title)
             .NotEmpty()
             .MaximumLength(200)
-            .MustAsync(BeUniqueTitle)
+            //.MustAsync(BeUniqueTitle)
                 .WithMessage("'{PropertyName}' must be unique.")
                 .WithErrorCode("Unique");
     }
 
-    public async Task<bool> BeUniqueTitle(string title, CancellationToken cancellationToken)
-    {
-        return !await _context.TodoLists
-            .AnyAsync(l => l.Title == title, cancellationToken);
-    }
+    //public async Task<bool> BeUniqueTitle(string title, CancellationToken cancellationToken)
+    //{
+        //return !await _context.TodoLists
+            //.AnyAsync(l => l.Title == title, cancellationToken);
+    //}
 }

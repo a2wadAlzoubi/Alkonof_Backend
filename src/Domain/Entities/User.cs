@@ -1,10 +1,7 @@
 ﻿using System.Globalization;
-using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml.Linq;
 using Domain.RefreshTokens;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Alkonof_Backend.Domain.Entities;
 
@@ -15,7 +12,14 @@ public class User : BaseAuditableEntity
         
     }
 
-    private User(Guid id , string name, string number, string email, string password, UserStatus status, UserRole role)
+    private User(
+        Guid id ,
+        string name,
+        string number,
+        string email,
+        string password,
+        UserStatus status = UserStatus.unActive,
+        UserRole role = UserRole.customer)
     {
         Id = id;
         Name = name;
@@ -30,8 +34,8 @@ public class User : BaseAuditableEntity
     public string Number { get; private set; } = string.Empty;
     public string Email { get; private set; } =string.Empty;
     public string Password { get; private set; } = string.Empty;
-    public UserStatus Status{ get; private set; } = UserStatus.unActive;
-    public UserRole Role { get; private set; } = UserRole.customer;
+    public UserStatus Status{ get; private set; }
+    public UserRole Role { get; private set; }
 
 
     // Relations
@@ -49,6 +53,10 @@ public class User : BaseAuditableEntity
     public static User Create(string name, string number, string email, string password, UserStatus status, UserRole role)
     {
         return new User(Guid.NewGuid(), name, number, email, password , status , role);
+    }
+    public static User Register(string name, string number, string email, string password)
+    {
+        return new User(Guid.NewGuid(), name, number, email, password);
     }
     //public decimal CalculateBalance => User_Accounts.Sum(ua=>ua.Transaction!.Amount);
     public void Update

@@ -33,15 +33,12 @@ namespace Application.Authentication.SignIn
                 }
             }
             context.User.Update(user);
-            //if(!context.User.Update(user))
-            //{
-            //    Guard.Against.NotFound(request.Email, user);
-            //}
+
             var refreshToken = RefreshToken.CreateRefreshToken();
             var grefreshToken = generateRefreshToken.GRefreshToken(refreshToken, user);
             var acessToken = jwtGenerator.Generate(user, grefreshToken.Id);
-            //await context..Add(grefreshToken, cancellationToken);
-            //await context.SaveChangesAsync();
+            await context.RefreshToken.AddAsync(grefreshToken, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
 
             return new RefreshTokenResponce(acessToken, refreshToken);
         }

@@ -1,48 +1,40 @@
-﻿//using Application.Abstractions;
-//using Application.Abstractions.JWT;
-//using Application.Abstractions.Messaging;
-//using Application.Authentication.Dtos;
-//using Application.Entities.Users.Services;
-//using Application.Entities.Users.Specifications;
-//using Domain.Abstractions;
-//using Domain.RefreshTokens;
-//using FainancialGuard.Domain.Entities.Users;
+﻿using Alkonof_Backend.Application.Common.Interfaces;
+using Alkonof_Backend.Domain.Entities;
+using Application.Abstractions.JWT;
+using Application.Authentication.Dtos;
+using Application.Entities.Users.Services;
+using Domain.RefreshTokens;
 
-//namespace Application.Authentication.Register
-//{
-//    internal sealed record RegisterCommandHandler(
-//        IRepository<User> Repository,
-//        IRepository<RefreshToken> rtRepository,
-//        IPasswordService passwordService,
-//        IJwtGenerator jwtGenerator,
-//        IGenerateRefreshToken GenerateRefreshToken,
-//        IUnitOfWork unitOfWork
-//        ) : ICommandHandler<RegisterCommand, RefreshTokenResponce>
-//    {
-//        public async Task<Result<RefreshTokenResponce>> Handle(RegisterCommand request, CancellationToken cancellationToken)
-//        {
-//            var exsitedUsers = await Repository.GetAllWithRelated(new GetUserByEmail(request.Register.Email), cancellationToken);
+namespace Application.Authentication.Register
+{
+    internal sealed record RegisterCommandHandler(
+        IApplicationDbContext context ,
+        IPasswordService passwordService,
+        IJwtGenerator jwtGenerator,
+        IGenerateRefreshToken GenerateRefreshToken
+        ) : IRequestHandler<RegisterCommand, RefreshTokenResponce>
+    {
+        public async Task<RefreshTokenResponce> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        {
+            var exsitedUser = await context.User.FindAsync(request.Register.Email);
 
-//            if ((exsitedUsers != null && exsitedUsers.Count() > 0) || string.IsNullOrEmpty(request.Register.Email))
-//            {
-//                return Result.Failure<RefreshTokenResponce>(ErrorType.EmailExists);
-//            }
-//            if(request.Register.Password != request.Register.ConfirmPassword)
-//            {
-//                return Result.Failure<RefreshTokenResponce>(ErrorType.IncorrectCredentials);
-//            }
-//            var hashPassword = passwordService.Hash(request.Register.Password);
-//            User user = User.Create(request.Register.FullName, request.Register.Email, hashPassword , Role.member);
+            if ((exsitedUser != null) || string.IsNullOrEmpty(request.Register.Email))
+                Guard.Against.NotFound(request.Register.Email, exsitedUser);
+            if (request.Register.Password != request.Register.ConfirmPassword)
+                Guard.Against.NotFound(request.Register.Email, exsitedUser);
 
-//            var refreshToken = RefreshToken.CreateRefreshToken();
-//            var grefreshToken = GenerateRefreshToken.GRefreshToken(refreshToken, user);
-//            var acessToken = jwtGenerator.Generate(user, grefreshToken.Id);
-//            await rtRepository.Add(grefreshToken, cancellationToken);
-//            await Repository.Add(user,cancellationToken);
+            var hashPassword = passwordService.Hash(request.Register.Password);
+            User user = User.Register(request.Register.Name,request.Register.Number, request.Register.Email, hashPassword);
 
-//            await unitOfWork.SaveChangesAsync();
+            var refreshToken = RefreshToken.CreateRefreshToken();
+            var grefreshToken = GenerateRefreshToken.GRefreshToken(refreshToken, user);
+            var acessToken = jwtGenerator.Generate(user, grefreshToken.Id);
+            await context.RefreshToken.AddAsync(grefreshToken, cancellationToken);
+            await context.User.AddAsync(user, cancellationToken);
 
-//            return new RefreshTokenResponce(acessToken , refreshToken);
-//        }
-//    }
-//}
+            await context.SaveChangesAsync(cancellationToken);
+
+            return new RefreshTokenResponce(acessToken, refreshToken);
+        }
+    }
+}

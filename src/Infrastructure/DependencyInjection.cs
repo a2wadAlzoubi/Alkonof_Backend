@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
@@ -73,6 +74,18 @@ public static class DependencyInjection
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtOptions:Key"]!)),
                 ClockSkew = TimeSpan.Zero
             };
+            //opts.TokenValidationParameters = new TokenValidationParameters
+            //{
+            //    ValidateIssuer = !string.IsNullOrWhiteSpace(issuer),
+            //    ValidIssuer = issuer,
+            //    ValidateAudience = !string.IsNullOrWhiteSpace(audience),
+            //    ValidAudience = audience,
+            //    ValidateLifetime = true,
+            //    ValidateIssuerSigningKey = true,
+            //    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+            //    ClockSkew = TimeSpan.Zero,
+            //    ValidAlgorithms = new[] { SecurityAlgorithms.HmacSha512 }
+            //};
         });
 
         builder.Services.AddHttpContextAccessor();

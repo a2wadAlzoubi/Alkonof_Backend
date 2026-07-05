@@ -26,4 +26,5 @@ public class Users : IEndpointGroup
 
         return TypedResults.Unauthorized();
     }
+
 }

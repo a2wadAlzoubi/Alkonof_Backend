@@ -15,13 +15,13 @@ public class DeleteTodoListCommandHandler : IRequestHandler<DeleteTodoListComman
 
     public async Task Handle(DeleteTodoListCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.TodoLists
-            .Where(l => l.Id == request.Id)
-            .SingleOrDefaultAsync(cancellationToken);
+        //var entity = await _context.TodoLists
+            //.Where(l => l.Id == request.Id)
+            //.SingleOrDefaultAsync(cancellationToken);
 
-        Guard.Against.NotFound(request.Id, entity);
+        //Guard.Against.NotFound(request.Id, entity);
 
-        _context.TodoLists.Remove(entity);
+        //_context.TodoLists.Remove(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
     }

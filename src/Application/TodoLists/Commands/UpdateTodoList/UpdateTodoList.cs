@@ -23,17 +23,17 @@ public class UpdateTodoListCommandHandler : IRequestHandler<UpdateTodoListComman
 
     public async Task Handle(UpdateTodoListCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.TodoLists
-            .FindAsync([request.Id], cancellationToken);
+        //var entity = await _context.TodoLists
+        //    .FindAsync([request.Id], cancellationToken);
 
-        Guard.Against.NotFound(request.Id, entity);
+        //Guard.Against.NotFound(request.Id, entity);
 
-        entity.Title = request.Title;
+        //entity.Title = request.Title;
 
-        if (request.Colour is not null)
-        {
-            entity.Colour = Colour.From(request.Colour);
-        }
+        //if (request.Colour is not null)
+        //{
+        //    entity.Colour = Colour.From(request.Colour);
+        //}
 
         await _context.SaveChangesAsync(cancellationToken);
     }
