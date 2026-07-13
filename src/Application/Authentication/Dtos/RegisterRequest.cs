@@ -7,11 +7,11 @@ namespace Application.Authentication.Dtos
 {
     public record RegisterRequest
     {
-        public string Name { get; private set; } = string.Empty;
-        public string Number { get; private set; } = string.Empty;
-        public string Email { get; private set; } = string.Empty;
-        public string Password { get; private set; } = string.Empty;
-        public string ConfirmPassword { get; set; } = null!;
+        public string name { get; set; } = string.Empty;
+        public string number { get; set; } = string.Empty;
+        public string email { get; set; } = string.Empty;
+        public string password { get; set; } = string.Empty;
+        public string confirmPassword { get; set; } = string.Empty;
 
     }
 }

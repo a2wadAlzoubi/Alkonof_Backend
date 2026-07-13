@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Alkonof_Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260705010202_UpdateEntitiesRelations2")]
-    partial class UpdateEntitiesRelations2
+    [Migration("20260711005501_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,12 +29,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AuditEntityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AuditEntryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -63,8 +57,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuditEntityId");
-
                     b.ToTable("AuditChange");
                 });
 
@@ -76,6 +68,9 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
                     b.Property<int>("Action")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("AuditChangeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Category")
                         .HasColumnType("int");
@@ -113,6 +108,8 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuditChangeId");
 
                     b.HasIndex("UserId");
 
@@ -248,6 +245,9 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Property<int>("ReferenceType")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("ResolutionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -262,6 +262,8 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("ResolutionId");
 
                     b.ToTable("Complain");
                 });
@@ -696,9 +698,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ComplainId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTimeOffset?>("Created")
                         .HasColumnType("datetimeoffset");
 
@@ -716,8 +715,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ComplainId");
 
                     b.ToTable("Resolution");
                 });
@@ -1289,22 +1286,21 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Alkonof_Backend.Domain.Entities.AuditChange", b =>
-                {
-                    b.HasOne("Alkonof_Backend.Domain.Entities.AuditEntity", "AuditEntity")
-                        .WithMany("AuditChanges")
-                        .HasForeignKey("AuditEntityId");
-
-                    b.Navigation("AuditEntity");
-                });
-
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.AuditEntity", b =>
                 {
+                    b.HasOne("Alkonof_Backend.Domain.Entities.AuditChange", "AuditChange")
+                        .WithMany("AuditEntities")
+                        .HasForeignKey("AuditChangeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Alkonof_Backend.Domain.Entities.User", "User")
                         .WithMany("AuditEntities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AuditChange");
 
                     b.Navigation("User");
                 });
@@ -1350,7 +1346,13 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Alkonof_Backend.Domain.Entities.Resolution", "Resolution")
+                        .WithMany("Complains")
+                        .HasForeignKey("ResolutionId");
+
                     b.Navigation("Customer");
+
+                    b.Navigation("Resolution");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Contract", b =>
@@ -1454,17 +1456,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("Responsibal");
-                });
-
-            modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Resolution", b =>
-                {
-                    b.HasOne("Alkonof_Backend.Domain.Entities.Complain", "Complain")
-                        .WithMany("Resolutions")
-                        .HasForeignKey("ComplainId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Complain");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Stage", b =>
@@ -1626,9 +1617,9 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Alkonof_Backend.Domain.Entities.AuditEntity", b =>
+            modelBuilder.Entity("Alkonof_Backend.Domain.Entities.AuditChange", b =>
                 {
-                    b.Navigation("AuditChanges");
+                    b.Navigation("AuditEntities");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Booking", b =>
@@ -1639,11 +1630,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.BookingType", b =>
                 {
                     b.Navigation("OrderBookings");
-                });
-
-            modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Complain", b =>
-                {
-                    b.Navigation("Resolutions");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Contract", b =>
@@ -1678,6 +1664,11 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Navigation("ProjectStaffs");
 
                     b.Navigation("Stages");
+                });
+
+            modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Resolution", b =>
+                {
+                    b.Navigation("Complains");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Stage", b =>

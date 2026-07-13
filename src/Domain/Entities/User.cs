@@ -5,7 +5,7 @@ using Domain.RefreshTokens;
 
 namespace Alkonof_Backend.Domain.Entities;
 
-public class User : BaseAuditableEntity
+public class User : BaseAuditableEntity 
 {
     private User()
     {

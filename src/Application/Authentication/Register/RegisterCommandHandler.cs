@@ -16,22 +16,28 @@ namespace Application.Authentication.Register
     {
         public async Task<RefreshTokenResponce> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            var exsitedUser = await context.User.FindAsync(request.Register.Email);
+            var email = request.Register.email;
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentException("Email is required.", nameof(request.Register.email));
 
-            if ((exsitedUser != null) || string.IsNullOrEmpty(request.Register.Email))
-                Guard.Against.NotFound(request.Register.Email, exsitedUser);
-            if (request.Register.Password != request.Register.ConfirmPassword)
-                Guard.Against.NotFound(request.Register.Email, exsitedUser);
+            var exsitedUser = await context.User.SingleOrDefaultAsync(u => u.Email == email, cancellationToken);
+            if (exsitedUser != null)
+                throw new InvalidOperationException("A user with this email already exists.");
+            if (request.Register.password != request.Register.confirmPassword)
+                throw new ArgumentException("Password and confirmation do not match.", nameof(request.Register.confirmPassword));
 
-            var hashPassword = passwordService.Hash(request.Register.Password);
-            User user = User.Register(request.Register.Name,request.Register.Number, request.Register.Email, hashPassword);
+            var hashPassword = passwordService.Hash(request.Register.password);
+            User user = User.Register(request.Register.name,request.Register.number, email, hashPassword);
+            //User user = User.Register(request.Register.name, request.Register.number, email, hashPassword);
 
             var refreshToken = RefreshToken.CreateRefreshToken();
             var grefreshToken = GenerateRefreshToken.GRefreshToken(refreshToken, user);
             var acessToken = jwtGenerator.Generate(user, grefreshToken.Id);
-            await context.RefreshToken.AddAsync(grefreshToken, cancellationToken);
+            var before = context.User.Count();
             await context.User.AddAsync(user, cancellationToken);
+            await context.RefreshToken.AddAsync(grefreshToken, cancellationToken);
 
+            var after = context.User.Count();
             await context.SaveChangesAsync(cancellationToken);
 
             return new RefreshTokenResponce(acessToken, refreshToken);

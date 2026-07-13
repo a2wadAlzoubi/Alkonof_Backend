@@ -25,4 +25,5 @@ public static class Services
     /// This is the name of the database that will be created and used by the application.
     /// </summary>
     public const string Database = "alkonofbackenddb";
+    public const string ConnectionStrings = "Server=(localdb)\\MSSQLLocalDB;Database=AlKnof;Trusted_Connection=True;";
 }

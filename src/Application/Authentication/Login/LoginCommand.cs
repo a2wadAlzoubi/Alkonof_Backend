@@ -2,6 +2,6 @@
 
 namespace Application.Authentication.SignIn
 {
-    public sealed record LoginCommand : LoginRequest, IRequest<RefreshTokenResponce>;
+    public sealed record LoginCommand (LoginRequest Login) : IRequest<RefreshTokenResponce>;
     
 }

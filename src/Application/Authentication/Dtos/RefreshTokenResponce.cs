@@ -2,8 +2,8 @@
 {
     public sealed record RefreshTokenResponce
     {
-        public string AccessToken { get; set; } = null!;
-        public string RefreshToken { get; set; } = null!;
+        public string AccessToken { get; set; } = string.Empty;
+        public string RefreshToken { get; set; } = string.Empty;
 
         public RefreshTokenResponce(string accessToken , string refreshToken)
         {

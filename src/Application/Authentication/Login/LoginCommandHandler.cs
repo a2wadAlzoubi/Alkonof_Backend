@@ -15,15 +15,15 @@ namespace Application.Authentication.SignIn
     {
         public async Task<RefreshTokenResponce> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await context.User.FindAsync([request.Email], cancellationToken);
-            Guard.Against.NotFound(request.Email, user);
+            var user = await context.User.SingleOrDefaultAsync(u=>u.Email == request.Login.Email, cancellationToken);
+            Guard.Against.NotFound(request.Login.Email, user);
 
-            if (user == null || !passwordService.Compare(request.Password, user.Password))
+            if (user == null || !passwordService.Compare(request.Login.Password, user.Password))
             {
-                Guard.Against.NotFound(request.Email, user);
+                Guard.Against.NotFound(request.Login.Email, user);
             }
             if (user.RefreshTokens == null)
-                Guard.Against.NotFound(request.Email, user.RefreshTokens);
+                Guard.Against.NotFound(request.Login.Email, user.RefreshTokens);
 
             foreach (var refreshtoken in user.RefreshTokens)
             {
