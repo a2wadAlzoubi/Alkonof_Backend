@@ -1,4 +1,4 @@
-﻿using Alkonof_Backend.Domain.Entities;
+﻿using Alkonof_Backend.Domain.Entities.Booking;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

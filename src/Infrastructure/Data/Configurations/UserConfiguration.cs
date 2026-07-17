@@ -1,5 +1,5 @@
 ﻿using System.Net.NetworkInformation;
-using Alkonof_Backend.Domain.Entities;
+using Alkonof_Backend.Domain.Entities.Identity;
 using Alkonof_Backend.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

@@ -1,4 +1,4 @@
-﻿using Alkonof_Backend.Domain.Entities;
+﻿using Alkonof_Backend.Domain.Entities.Identity;
 
 namespace Application.Abstractions.JWT;
 

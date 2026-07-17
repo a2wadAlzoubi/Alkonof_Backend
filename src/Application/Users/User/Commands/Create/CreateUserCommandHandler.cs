@@ -1,5 +1,5 @@
 ﻿using Alkonof_Backend.Application.Common.Interfaces;
-using Alkonof_Backend.Domain.Entities;
+using Alkonof_Backend.Domain.Entities.Identity;
 
 namespace Alkonof_Backend.Application.Users.ToDoUser.Commands.Create;
 

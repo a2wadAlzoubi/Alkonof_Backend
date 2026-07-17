@@ -1,5 +1,5 @@
 ﻿using Alkonof_Backend.Application.Common.Interfaces;
-using Alkonof_Backend.Domain.Entities;
+using Alkonof_Backend.Domain.Entities.Identity;
 using Application.Abstractions.JWT;
 using Application.Authentication.Dtos;
 using Application.Entities.Users.Services;

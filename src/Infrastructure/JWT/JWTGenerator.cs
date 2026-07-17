@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Alkonof_Backend.Domain.Entities;
+using Alkonof_Backend.Domain.Entities.Identity;
 using Application.Abstractions.JWT;
 using Application.Options;
 using Microsoft.Extensions.Options;

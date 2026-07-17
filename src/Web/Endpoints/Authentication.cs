@@ -2,7 +2,7 @@ using Alkonof_Backend.Application.TodoItems.Commands.CreateTodoItem;
 using Alkonof_Backend.Application.TodoItems.Commands.DeleteTodoItem;
 using Alkonof_Backend.Application.TodoItems.Commands.UpdateTodoItem;
 using Alkonof_Backend.Application.TodoItems.Commands.UpdateTodoItemDetail;
-using Alkonof_Backend.Domain.Entities;
+using Alkonof_Backend.Domain.Entities.Identity;
 using Application.Authentication.Dtos;
 using Application.Authentication.Register;
 using Application.Authentication.SignIn;

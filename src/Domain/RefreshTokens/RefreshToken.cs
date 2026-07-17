@@ -1,4 +1,6 @@
-﻿namespace Domain.RefreshTokens;
+﻿using Alkonof_Backend.Domain.Entities.Identity;
+
+namespace Domain.RefreshTokens;
 
 public sealed class RefreshToken : BaseAuditableEntity
 {

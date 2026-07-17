@@ -1,6 +1,15 @@
 ﻿using System.Reflection;
 using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Domain.Entities;
+using Alkonof_Backend.Domain.Entities.Audit;
+using Alkonof_Backend.Domain.Entities.Booking;
+using Alkonof_Backend.Domain.Entities.Complain;
+using Alkonof_Backend.Domain.Entities.Contract;
+using Alkonof_Backend.Domain.Entities.Identity;
+using Alkonof_Backend.Domain.Entities.Meeting;
+using Alkonof_Backend.Domain.Entities.Notifications;
+using Alkonof_Backend.Domain.Entities.ProjectMonitoring;
+using Alkonof_Backend.Domain.Entities.Schedualing;
 using Alkonof_Backend.Infrastructure.Identity;
 using Domain.RefreshTokens;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

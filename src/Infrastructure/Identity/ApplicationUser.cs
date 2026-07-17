@@ -1,4 +1,4 @@
-﻿using Alkonof_Backend.Domain.Entities;
+﻿using Alkonof_Backend.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace Alkonof_Backend.Infrastructure.Identity;

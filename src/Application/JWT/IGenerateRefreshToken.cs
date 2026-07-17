@@ -1,4 +1,4 @@
-﻿using Alkonof_Backend.Domain.Entities;
+﻿using Alkonof_Backend.Domain.Entities.Identity;
 using Domain.RefreshTokens;
 
 namespace Application.Abstractions.JWT;
