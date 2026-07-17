@@ -10,26 +10,27 @@ public class Booking : BaseAuditableEntity
 {
     private Booking(
         Guid id,
-        BokingStatus status,
         string title,
         string location,
         DateTimeOffset expiredAt,
-        Decision customerAnser,
-        Decision responsiplAnser,
-        Guid? contractId,
         Guid customerId,
-        Guid responsibalId)
+        Guid responsibleId,
+        Decision customerAnser = Decision.Pending,
+        Decision responsiplAnser = Decision.Pending,
+        BokingStatus status = BokingStatus.UnCreated,
+        Guid? contractId = null
+        )
     {
         this.Id = id;
         this.Status = status;
         this.Title = title;
         this.Location = location;
         this.ExpiredAt = expiredAt;
-        this.CustomerAnser = customerAnser;
-        this.ResponsiplAnser = responsiplAnser;
-        this.ContractId = contractId;
+        this.CustomerAnswer = customerAnser;
+        this.ResponsibleAnswer = responsiplAnser;
         this.CustomerId = customerId;
-        this.ResponsibalId = responsibalId;
+        this.ResponsibleId = responsibleId;
+        this.ContractId = contractId;
     }
 
     private Booking()
@@ -47,9 +48,9 @@ public class Booking : BaseAuditableEntity
     public string Location { get; private set; } = string.Empty;    
     public DateTimeOffset ExpiredAt {  get; private set; }
     [Required]
-    public Decision CustomerAnser {  get; private set; }
+    public Decision CustomerAnswer {  get; private set; } = Decision.Pending;
     [Required]
-    public Decision ResponsiplAnser {  get; private set; }
+    public Decision ResponsibleAnswer {  get; private set; } = Decision.Pending;
 
 
     //relationals
@@ -58,12 +59,67 @@ public class Booking : BaseAuditableEntity
     public User? Customer { get; private set; }
     [Required]
     public Guid CustomerId { get; private set; }
-    public User? Responsibal { get; private set; }
+    public User? Responsible { get; private set; }
     [Required]
-    public Guid ResponsibalId { get; private set; }
+    public Guid ResponsibleId { get; private set; }
     public List<PrepareMeeting> PrepareMeetings { get; private set; } = new List<PrepareMeeting>();
 
-
-
+    public static Booking CreateBooking(
+        string title,
+        string location,
+        DateTimeOffset expiredAt,
+        Guid customerId,
+        Guid responsibleId,
+        Decision customerAnser = Decision.Pending,
+        Decision responsiplAnser = Decision.Pending,
+        BokingStatus status = BokingStatus.UnCreated,
+        Guid? contractId = null
+        )
+    {
+        return new Booking(
+        Guid.NewGuid(),
+        title,
+        location,
+        expiredAt,
+        customerId,
+        responsibleId,
+        customerAnser,
+        responsiplAnser,
+        status,
+        contractId);
+    }
+    public void UpdateBooking(
+        string title,
+        string location,
+        DateTimeOffset expiredAt,
+        Guid customerId,
+        Guid responsibleId,
+        Decision customerAnser = Decision.Pending,
+        Decision responsiplAnser = Decision.Pending,
+        BokingStatus status = BokingStatus.UnCreated,
+        Guid? contractId = null)
+    {
+        this.Status = status;
+        this.Title = title;
+        this.Location = location;
+        this.ExpiredAt = expiredAt;
+        this.CustomerAnswer = customerAnser;
+        this.ResponsibleAnswer = responsiplAnser;
+        this.CustomerId = customerId;
+        this.ResponsibleId = responsibleId;
+        this.ContractId = contractId;
+    }
+    public void AssignResposibleAnswer(Decision decision)
+    {
+        ResponsibleAnswer = decision;
+    }
+    public void AssignCustomerAnswer(Decision decision)
+    {
+        CustomerAnswer = decision;
+    }
+    
+    
 
 }
+
+

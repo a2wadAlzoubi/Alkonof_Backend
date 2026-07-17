@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Timers;
+﻿using System.ComponentModel.DataAnnotations;
 using Alkonof_Backend.Domain.Entities.Identity;
 using Alkonof_Backend.Domain.Entities.Schedualing.Event;
 
@@ -14,13 +10,13 @@ public class TimeTable : BaseAuditableEntity
     {
         
     }
-    private TimeTable(Guid id ,DayOfWeek dayOfWeek, int hour, bool isReserved, Guid responsibalId)
+    private TimeTable(Guid id ,DayOfWeek dayOfWeek, int hour, bool isReserved, Guid responsibleId)
     {
         Id = id;
         DayOfWeek = dayOfWeek;
         Hour = hour;
         IsReserved = isReserved;
-        ResponsibalId = responsibalId;
+        ResponsibleId = responsibleId;
     }
 
     [Required]
@@ -30,13 +26,13 @@ public class TimeTable : BaseAuditableEntity
     public bool IsReserved { get; private set; } = false;
     
     //Relations :
-    public User? Responsibal { get; private set; }
+    public User? Responsible { get; private set; }
     [Required]
-    public Guid ResponsibalId { get; private set; } 
+    public Guid ResponsibleId { get; private set; } 
 
-    public static TimeTable CreateSchedual(DayOfWeek day , int hour , bool isReserved , Guid responsibalId)
+    public static TimeTable CreateSchedual(DayOfWeek day , int hour , bool isReserved , Guid responsibleId)
     {
-        return new TimeTable(Guid.NewGuid() , day, hour , isReserved , responsibalId);
+        return new TimeTable(Guid.NewGuid() , day, hour , isReserved , responsibleId);
     }
 
     public void EnableReservation(TimeTable time)

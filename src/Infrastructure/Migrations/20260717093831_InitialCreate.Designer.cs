@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Alkonof_Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260717075308_UpdateRelations1")]
-    partial class UpdateRelations1
+    [Migration("20260717093831_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,7 +131,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerAnser")
+                    b.Property<int>("CustomerAnswer")
                         .HasColumnType("int");
 
                     b.Property<Guid>("CustomerId")
@@ -150,11 +150,11 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ResponsibalId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ResponsiplAnser")
+                    b.Property<int>("ResponsibleAnswer")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("ResponsibleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -177,7 +177,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("ResponsibalId");
+                    b.HasIndex("ResponsibleId");
 
                     b.HasIndex("UserId");
 
@@ -976,12 +976,12 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ResponsibalId")
+                    b.Property<Guid>("ResponsibleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ResponsibalId");
+                    b.HasIndex("ResponsibleId");
 
                     b.ToTable("TimeTable");
                 });
@@ -1330,9 +1330,9 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Alkonof_Backend.Domain.Entities.Identity.User", "Responsibal")
+                    b.HasOne("Alkonof_Backend.Domain.Entities.Identity.User", "Responsible")
                         .WithMany()
-                        .HasForeignKey("ResponsibalId")
+                        .HasForeignKey("ResponsibleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1348,7 +1348,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
                     b.Navigation("Customer");
 
-                    b.Navigation("Responsibal");
+                    b.Navigation("Responsible");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Bookings.OrderBooking", b =>
@@ -1521,13 +1521,13 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Schedualing.TimeTable", b =>
                 {
-                    b.HasOne("Alkonof_Backend.Domain.Entities.Identity.User", "Responsibal")
+                    b.HasOne("Alkonof_Backend.Domain.Entities.Identity.User", "Responsible")
                         .WithMany()
-                        .HasForeignKey("ResponsibalId")
+                        .HasForeignKey("ResponsibleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Responsibal");
+                    b.Navigation("Responsible");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.TodoItem", b =>

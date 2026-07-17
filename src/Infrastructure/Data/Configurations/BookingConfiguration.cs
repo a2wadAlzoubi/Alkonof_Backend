@@ -15,9 +15,9 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder
-            .HasOne(b => b.Responsibal)
+            .HasOne(b => b.Responsible)
             .WithMany()
-            .HasForeignKey(b => b.ResponsibalId)
+            .HasForeignKey(b => b.ResponsibleId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

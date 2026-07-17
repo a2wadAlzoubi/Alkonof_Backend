@@ -74,6 +74,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ServiceName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -126,11 +127,11 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PermissionGrop",
+                name: "Permission",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -139,7 +140,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PermissionGrop", x => x.Id);
+                    table.PrimaryKey("PK_Permission", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -201,11 +202,11 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -324,13 +325,13 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Permission",
+                name: "PermissionGrop",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PermissionGropId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PermissionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -338,13 +339,12 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Permission", x => x.Id);
+                    table.PrimaryKey("PK_PermissionGrop", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Permission_PermissionGrop_PermissionGropId",
-                        column: x => x.PermissionGropId,
-                        principalTable: "PermissionGrop",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_PermissionGrop_Permission_PermissionId",
+                        column: x => x.PermissionId,
+                        principalTable: "Permission",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -355,6 +355,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     Date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     PathImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -621,8 +622,8 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DayOfWeek = table.Column<int>(type: "int", nullable: false),
                     Hour = table.Column<int>(type: "int", nullable: false),
-                    IsFalse = table.Column<bool>(type: "bit", nullable: false),
-                    ResponsibalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsReserved = table.Column<bool>(type: "bit", nullable: false),
+                    ResponsibleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -632,8 +633,8 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_TimeTable", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TimeTable_User_ResponsibalId",
-                        column: x => x.ResponsibalId,
+                        name: "FK_TimeTable_User_ResponsibleId",
+                        column: x => x.ResponsibleId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -646,7 +647,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsGranted = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PermissionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PermissionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -659,8 +660,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         name: "FK_UserPermission_Permission_PermissionId",
                         column: x => x.PermissionId,
                         principalTable: "Permission",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_UserPermission_User_UserId",
                         column: x => x.UserId,
@@ -678,11 +678,11 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExpiredAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    CustomerAnser = table.Column<int>(type: "int", nullable: false),
-                    ResponsiplAnser = table.Column<int>(type: "int", nullable: false),
+                    CustomerAnswer = table.Column<int>(type: "int", nullable: false),
+                    ResponsibleAnswer = table.Column<int>(type: "int", nullable: false),
                     ContractId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ResponsibalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ResponsibleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -705,8 +705,8 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Booking_User_ResponsibalId",
-                        column: x => x.ResponsibalId,
+                        name: "FK_Booking_User_ResponsibleId",
+                        column: x => x.ResponsibleId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -890,9 +890,9 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Booking_ResponsibalId",
+                name: "IX_Booking_ResponsibleId",
                 table: "Booking",
-                column: "ResponsibalId");
+                column: "ResponsibleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Booking_UserId",
@@ -942,9 +942,9 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Permission_PermissionGropId",
-                table: "Permission",
-                column: "PermissionGropId");
+                name: "IX_PermissionGrop_PermissionId",
+                table: "PermissionGrop",
+                column: "PermissionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PrepareMeeting_BookingId",
@@ -994,9 +994,9 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 column: "StageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TimeTable_ResponsibalId",
+                name: "IX_TimeTable_ResponsibleId",
                 table: "TimeTable",
-                column: "ResponsibalId");
+                column: "ResponsibleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TodoItems_ListId1",
@@ -1043,6 +1043,9 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderBooking");
+
+            migrationBuilder.DropTable(
+                name: "PermissionGrop");
 
             migrationBuilder.DropTable(
                 name: "PrepareMeeting");
@@ -1109,9 +1112,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "User");
-
-            migrationBuilder.DropTable(
-                name: "PermissionGrop");
 
             migrationBuilder.DropTable(
                 name: "Project");

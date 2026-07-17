@@ -91,15 +91,15 @@ namespace Application.Authentication.SignIn
 
 
              //4 - Expire old refresh tokens
-            foreach (var token in user.RefreshTokens)
-            {
-                if (token.IsUsed ||
-                    token.Expired <= DateTimeOffset.UtcNow)
-                {
-                    token.ExpireToken();
-                    context.RefreshToken.Remove(token);
-                }
-            }
+            //foreach (var token in user.RefreshTokens)
+            //{
+            //    if (token.IsUsed ||
+            //        token.Expired <= DateTimeOffset.UtcNow)
+            //    {
+            //        token.ExpireToken();
+            //        context.RefreshToken.Remove(token);
+            //    }
+            //}
 
 
             // 5- Create new Refresh Token
