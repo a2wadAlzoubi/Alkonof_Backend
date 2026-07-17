@@ -34,11 +34,12 @@ namespace Application.Authentication.Register
             var grefreshToken = GenerateRefreshToken.GRefreshToken(refreshToken, user);
             var acessToken = jwtGenerator.Generate(user, grefreshToken.Id);
             var before = context.User.Count();
-            await context.User.AddAsync(user, cancellationToken);
-            await context.RefreshToken.AddAsync(grefreshToken, cancellationToken);
+             context.User.Add(user);
+             context.RefreshToken.Add(grefreshToken);
 
-            var after = context.User.Count();
             await context.SaveChangesAsync(cancellationToken);
+            var after = context.User.Count();
+            var after2 = context.RefreshToken.Count();
 
             return new RefreshTokenResponce(acessToken, refreshToken);
         }

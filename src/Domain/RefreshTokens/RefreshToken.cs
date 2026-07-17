@@ -19,8 +19,8 @@ public sealed class RefreshToken : BaseAuditableEntity
     public DateTimeOffset Expired { get; private set; }
     public string UserSecurityHash { get; private set; }
     public bool IsUsed { get; private set; }
-    public Guid UserId { get; private set; }
     public User User { get; set; }
+    public Guid UserId { get; private set; }
 
     public static RefreshToken Create(
         string token,
