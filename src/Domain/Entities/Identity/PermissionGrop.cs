@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Intrinsics;
 using System.Text;
 
@@ -18,7 +19,8 @@ public class PermissionGrop : BaseAuditableEntity
         Description = description;
         PermissionId = permissionId;
     }
-
+    [Required]
+    [StringLength(50, MinimumLength = 2)]
     public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
 

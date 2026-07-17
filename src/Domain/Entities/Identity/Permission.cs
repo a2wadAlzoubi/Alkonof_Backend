@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Alkonof_Backend.Domain.Entities.Identity;
@@ -17,7 +18,8 @@ public class Permission : BaseAuditableEntity
         Description = description;
     }
 
-    public string Name { get; private set; } = string.Empty;
+    [Required]
+    [StringLength(50, MinimumLength = 2)] public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
 
     public ICollection<PermissionGrop> PermissionGrops { get; private set; } = new List<PermissionGrop>();
