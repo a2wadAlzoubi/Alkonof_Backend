@@ -69,18 +69,29 @@ public class User : BaseAuditableEntity
     public ICollection<ProjectStaff>? ProjectStaffs { get; private set; }
     public ICollection<RefreshToken>? RefreshTokens { get; private set; }
 
-    public static User Create(string name, string number, string email, string password, UserRole role)
+    public static User Create(
+        string name,
+        string number,
+        string email,
+        string password,
+        UserRole role = UserRole.customer,
+        bool isDeleted = false)
     {
-        return new User(Guid.NewGuid(), name, number, email, password , role);
+        return new User(Guid.NewGuid(), name, number, email, password , role , isDeleted);
     }
-    public User Register(string name, string number, string email, string password , Guid userId)
+    public static User Register(string name, string number, string email, string password )
     {
-        AddDomainEvent(new UserRegisterEvent(userId , email));
+        //AddDomainEvent(new UserRegisterEvent(userId , email));
         return new User(Guid.NewGuid(), name, number, email, password);
 
     }
-    public void Update
-        (string name, string number, string email, string password, bool isDeleted, UserRole role)
+    public void Update(
+        string name,
+        string number,
+        string email,
+        string password,
+        UserRole role,
+        bool isDeleted)
     {
         Name = name;
         Number = number;

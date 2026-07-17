@@ -20,8 +20,8 @@ internal class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Gui
         request.CreateUser.Number,
         request.CreateUser.Email,
         request.CreateUser.Password,
-        request.CreateUser.Status,
-        request.CreateUser.Role
+        request.CreateUser.Role,
+        request.CreateUser.Status
             );
 
         _context.User.Add(user);

@@ -1,5 +1,6 @@
 ﻿using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Application.Users.ToDoUser.Commands.UpdatePassword;
+using Alkonof_Backend.Domain.Entities.Identity.Enum;
 using Application.Abstractions;
 using Application.Entities.Users.Services;
 
@@ -26,7 +27,7 @@ public class UpdatePasswordForAdminCommandHandler : IRequestHandler<UpdatePasswo
             .FindAsync([request.PasswordDto.userId], cancellationToken);
         Guard.Against.NotFound(request.PasswordDto.userId, user);
 
-        if (request.PasswordDto.userId != _currentUser.Id && user.Role == Domain.Enums.UserRole.admin)
+        if (request.PasswordDto.userId != _currentUser.Id && user.Role == UserRole.admin)
             return false;
 
 
@@ -42,7 +43,7 @@ public class UpdatePasswordForAdminCommandHandler : IRequestHandler<UpdatePasswo
             return false;
         }
         var newPassword = _passwordService.Hash(request.PasswordDto.newPassword);
-        user.UpdatePassword(newPassword);
+        user.UpdatePassword(newPassword , user.Id);
 
         await _context.SaveChangesAsync(cancellationToken);
         return true;

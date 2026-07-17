@@ -1,4 +1,5 @@
-﻿using Alkonof_Backend.Domain.Entities.Bookings.Enum;
+﻿using System.ComponentModel.DataAnnotations;
+using Alkonof_Backend.Domain.Entities.Bookings.Enum;
 using Alkonof_Backend.Domain.Entities.Contracts;
 using Alkonof_Backend.Domain.Entities.Identity;
 using Alkonof_Backend.Domain.Entities.Meetings;
@@ -40,10 +41,14 @@ public class Booking : BaseAuditableEntity
 
 
     public BokingStatus Status { get; private set; } = BokingStatus.UnCreated;
+    [Required]
     public string Title { get; private set; } = string.Empty;
+    [Required]
     public string Location { get; private set; } = string.Empty;    
     public DateTimeOffset ExpiredAt {  get; private set; }
+    [Required]
     public Decision CustomerAnser {  get; private set; }
+    [Required]
     public Decision ResponsiplAnser {  get; private set; }
 
 
@@ -51,8 +56,10 @@ public class Booking : BaseAuditableEntity
     public Contract? Contract { get; private set; }
     public Guid? ContractId { get; private set; }
     public User? Customer { get; private set; }
+    [Required]
     public Guid CustomerId { get; private set; }
     public User? Responsibal { get; private set; }
+    [Required]
     public Guid ResponsibalId { get; private set; }
     public List<PrepareMeeting> PrepareMeetings { get; private set; } = new List<PrepareMeeting>();
 

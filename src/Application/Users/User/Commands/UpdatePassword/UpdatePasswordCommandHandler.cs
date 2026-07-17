@@ -68,7 +68,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdatePasswordCommand, b
             return false;
         }
         var newPassword = _passwordService.Hash(request.PasswordDto.newPassword);
-        user.UpdatePassword(newPassword);
+        user.UpdatePassword(newPassword , user.Id);
 
         await _context.SaveChangesAsync(cancellationToken);
         return true;

@@ -24,8 +24,8 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
         request.UserDto.Number,
         request.UserDto.Email,
         request.UserDto.Password,
-        request.UserDto.Status,
-        request.UserDto.Role
+        request.UserDto.Role,
+        request.UserDto.Status
             );
 
         await _context.SaveChangesAsync(cancellationToken);

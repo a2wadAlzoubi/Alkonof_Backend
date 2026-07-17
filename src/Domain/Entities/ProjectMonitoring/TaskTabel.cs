@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Alkonof_Backend.Domain.Entities.GeneralEnum;
 using Alkonof_Backend.Domain.Entities.ProjectMonitoring.Enum;
 
 namespace Alkonof_Backend.Domain.Entities.ProjectMonitoring;

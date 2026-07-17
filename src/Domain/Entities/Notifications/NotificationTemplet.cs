@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Alkonof_Backend.Domain.Entities.GeneralEnum;
 
 namespace Alkonof_Backend.Domain.Entities.Notifications;
 

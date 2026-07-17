@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Timers;
 using Alkonof_Backend.Domain.Entities.Identity;
+using Alkonof_Backend.Domain.Entities.Schedualing.Event;
 
 namespace Alkonof_Backend.Domain.Entities.Schedualing;
 
@@ -29,6 +31,7 @@ public class TimeTable : BaseAuditableEntity
     
     //Relations :
     public User? Responsibal { get; private set; }
+    [Required]
     public Guid ResponsibalId { get; private set; } 
 
     public static TimeTable CreateSchedual(DayOfWeek day , int hour , bool isReserved , Guid responsibalId)
@@ -36,12 +39,15 @@ public class TimeTable : BaseAuditableEntity
         return new TimeTable(Guid.NewGuid() , day, hour , isReserved , responsibalId);
     }
 
-    public void EnableReservation()
+    public void EnableReservation(TimeTable time)
     {
         IsReserved = false;
+        AddDomainEvent(new EnableReservationEvent(time));
     }
-    public void BanReservation()
+    public void BanReservation(TimeTable time)
     {
         IsReserved = true;
+
+        AddDomainEvent(new BanReservationEvent(time));
     }
 }

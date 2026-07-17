@@ -27,7 +27,7 @@ namespace Application.Authentication.Register
                 throw new ArgumentException("Password and confirmation do not match.", nameof(request.Register.confirmPassword));
 
             var hashPassword = passwordService.Hash(request.Register.password);
-            User user = User.Register(request.Register.name,request.Register.number, email, hashPassword);
+            User user = User.Register(request.Register.name,request.Register.number, email, hashPassword );
             //User user = User.Register(request.Register.name, request.Register.number, email, hashPassword);
 
             var refreshToken = RefreshToken.CreateRefreshToken();
