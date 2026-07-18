@@ -1,0 +1,138 @@
+version: "3.9"
+
+services:
+
+  ########################################################
+  # SQL SERVER DATABASE
+  ########################################################
+
+  sqlserver:
+
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+    container_name: alkonof-sqlserver
+
+    restart: unless-stopped
+
+    environment:
+
+      ACCEPT_EULA: "Y"
+
+      MSSQL_SA_PASSWORD: ${DB_PASSWORD}
+
+      MSSQL_PID: Developer
+
+
+    ports:
+
+      - "${SQL_PORT}:1433"
+
+
+    volumes:
+
+      - alkonof_sql_data:/var/opt/mssql
+
+
+    healthcheck:
+
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P ${DB_PASSWORD} -C -Q 'SELECT 1'"
+        ]
+
+      interval: 10s
+
+      timeout: 5s
+
+      retries: 10
+
+      start_period: 30s
+    networks:
+      - alkonof-network
+
+
+
+  ########################################################
+  # WEB API
+  ########################################################
+
+  api:
+
+
+    image: alknof-api:latest
+
+
+    container_name: alkonof-api
+
+
+    restart: unless-stopped
+
+
+    depends_on:
+
+      sqlserver:
+
+        condition: service_healthy
+
+
+
+    ports:
+
+      - "${API_HTTP_PORT}:8080"
+
+
+
+    environment:
+
+
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+
+
+      ASPNETCORE_URLS: http://+:8080
+
+
+
+      ConnectionStrings__alkonofbackenddb:
+
+        Server=sqlserver,1433;
+        Database=${DB_NAME};
+        User Id=${DB_USER};
+        Password=${DB_PASSWORD};
+        TrustServerCertificate=True;
+
+
+
+      JwtOptions__Key: ${JWT_KEY}
+
+      JwtOptions__Issuer: ${JWT_ISSUER}
+
+      JwtOptions__Audience: ${JWT_AUDIENCE}
+
+
+
+    networks:
+
+      - alkonof-network
+
+
+
+########################################################
+# STORAGE
+########################################################
+
+volumes:
+
+  alkonof_sql_data:
+
+
+
+########################################################
+# NETWORK
+########################################################
+
+networks:
+
+  alkonof-network:
+
+    driver: bridge
