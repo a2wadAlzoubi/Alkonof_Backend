@@ -15,7 +15,6 @@ public class Booking : BaseAuditableEntity
     private Booking(
         Guid id,
         string title,
-        string location,
         DateTimeOffset expiredAt,
         Guid customerId,
         Guid responsibleId,
@@ -28,7 +27,6 @@ public class Booking : BaseAuditableEntity
         this.Id = id;
         this.Status = status;
         this.Title = title;
-        this.Location = location;
         this.ExpiredAt = expiredAt;
         this.CustomerAnswer = customerAnser;
         this.ResponsibleAnswer = responsiplAnser;
@@ -48,8 +46,7 @@ public class Booking : BaseAuditableEntity
     public BookingStatus Status { get; private set; } = BookingStatus.UnCreated;
     [Required]
     public string Title { get; private set; } = string.Empty;
-    [Required]
-    public string Location { get; private set; } = string.Empty;    
+ 
     public DateTimeOffset ExpiredAt {  get; private set; }
     [Required]
     public Decision CustomerAnswer {  get; private set; } = Decision.Pending;
@@ -70,7 +67,6 @@ public class Booking : BaseAuditableEntity
 
     public static Booking CreateBooking(
         string title,
-        string location,
         DateTimeOffset expiredAt,
         Guid customerId,
         Guid responsibleId,
@@ -83,7 +79,6 @@ public class Booking : BaseAuditableEntity
         var booking = new Booking(
         Guid.NewGuid(),
         title,
-        location,
         expiredAt,
         customerId,
         responsibleId,
@@ -97,7 +92,6 @@ public class Booking : BaseAuditableEntity
     }
     public void UpdateBooking(
         string title,
-        string location,
         DateTimeOffset expiredAt,
         Guid customerId,
         Guid responsibleId,
@@ -108,7 +102,6 @@ public class Booking : BaseAuditableEntity
     {
         this.Status = status;
         this.Title = title;
-        this.Location = location;
         this.ExpiredAt = expiredAt;
         this.CustomerAnswer = customerAnser;
         this.ResponsibleAnswer = responsiplAnser;

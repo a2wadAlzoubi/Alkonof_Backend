@@ -6,7 +6,7 @@ namespace Alkonof_Backend.Domain.Entities.Meetings.Enum;
 
 public enum MeetingStatus
 {
-    Scheduled = 0,
+    Started = 0,
     Completed = 1,
     Cancelled = 3,
     NoShow = 4,
@@ -23,5 +23,6 @@ public enum MeetingOutCome
 public enum MeetingUserStatus
 {
     Attended = 0,
-    Adsent = 1
+    Apsent = 1,
+    Non = 2
 }
