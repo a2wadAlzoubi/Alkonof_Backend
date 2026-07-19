@@ -143,10 +143,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ResponsibleAnswer")
                         .HasColumnType("int");
 
@@ -341,7 +337,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("Date")
+                    b.Property<DateTimeOffset?>("EndedDate")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset?>("LastModified")
@@ -357,10 +353,13 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Property<Guid?>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("ProjectType")
                         .HasColumnType("int");
 
-                    b.Property<int>("Type")
+                    b.Property<DateTimeOffset>("StartedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -557,11 +556,16 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Property<int>("OutCome")
                         .HasColumnType("int");
 
-                    b.Property<int>("ResponsibalStatus")
+                    b.Property<int>("ResponsibleStatus")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -583,22 +587,32 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTimeOffset>("EndedAt")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<DateTimeOffset?>("LastModified")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("MeetingId")
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<Guid>("MeetingId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("StartedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BookingId");
 
                     b.HasIndex("MeetingId")
-                        .IsUnique()
-                        .HasFilter("[MeetingId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("PrepareMeeting");
                 });
@@ -700,9 +714,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTimeOffset?>("ActualEngedDate")
-                        .HasColumnType("datetimeoffset");
-
                     b.Property<DateTimeOffset?>("Created")
                         .HasColumnType("datetimeoffset");
 
@@ -712,6 +723,9 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("EndDate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset?>("LastModified")
                         .HasColumnType("datetimeoffset");
@@ -1429,7 +1443,9 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
                     b.HasOne("Alkonof_Backend.Domain.Entities.Meetings.Meeting", "Meeting")
                         .WithOne("PrepareMeeting")
-                        .HasForeignKey("Alkonof_Backend.Domain.Entities.Meetings.PrepareMeeting", "MeetingId");
+                        .HasForeignKey("Alkonof_Backend.Domain.Entities.Meetings.PrepareMeeting", "MeetingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Booking");
 

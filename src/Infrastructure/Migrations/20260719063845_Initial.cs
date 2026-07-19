@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Alkonof_Backend.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -90,11 +90,12 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OutCome = table.Column<int>(type: "int", nullable: false),
                     MeetingNumber = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    ResponsibalStatus = table.Column<int>(type: "int", nullable: false),
+                    ResponsibleStatus = table.Column<int>(type: "int", nullable: false),
                     CustomerStatus = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -152,7 +153,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ActualEngedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EndDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     Progress = table.Column<double>(type: "float", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -352,9 +353,10 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    StartedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    EndedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     PathImage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
+                    ProjectType = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -676,7 +678,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExpiredAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CustomerAnswer = table.Column<int>(type: "int", nullable: false),
                     ResponsibleAnswer = table.Column<int>(type: "int", nullable: false),
@@ -805,8 +806,11 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MeetingId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    StartedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    EndedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     BookingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MeetingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -825,7 +829,8 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         name: "FK_PrepareMeeting_Meeting_MeetingId",
                         column: x => x.MeetingId,
                         principalTable: "Meeting",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -955,8 +960,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 name: "IX_PrepareMeeting_MeetingId",
                 table: "PrepareMeeting",
                 column: "MeetingId",
-                unique: true,
-                filter: "[MeetingId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectReport_StageId",

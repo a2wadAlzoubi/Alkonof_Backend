@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 using Alkonof_Backend.Application.Common.Interfaces;
+using Alkonof_Backend.Domain.Entities.Identity;
 using Alkonof_Backend.Infrastructure.Data;
 using Alkonof_Backend.Infrastructure.Data.Interceptors;
 using Alkonof_Backend.Infrastructure.Identity;

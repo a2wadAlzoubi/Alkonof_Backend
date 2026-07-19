@@ -8,11 +8,11 @@ namespace Application.Entities.Users.Dtos
     public class CreateUser
     {
 
-        public string Name { get; private set; } = string.Empty;
-        public string Number { get; private set; } = string.Empty;
-        public string Email { get; private set; } = string.Empty;
-        public string Password { get; private set; } = string.Empty;
-        public bool Status { get; private set; } 
-        public UserRole Role { get; private set; } = UserRole.customer;
+        public string    Name       { get; set; } = string.Empty;
+        public string    Number     { get; set; } = string.Empty;
+        public string   Email      { get; set; } = string.Empty;
+        public string   Password   { get; set; } = string.Empty;
+        public bool     Status       { get; set; } 
+        public UserRole Role    { get; set; } = UserRole.customer;
     }
 }

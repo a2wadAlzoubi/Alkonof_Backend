@@ -2,8 +2,6 @@
 
 namespace Alkonof_Backend.Application.Users.ToDoUser.Commands.Create;
 
-public record CreateUserCommand : IRequest<Guid>
-{
-    public CreateUser CreateUser { get; init; } = new CreateUser();
-}
+public record CreateUserCommand(CreateUser CreateUser) : IRequest<Guid>;
+
 
