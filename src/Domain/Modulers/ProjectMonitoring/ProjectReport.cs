@@ -12,7 +12,7 @@ public class ProjectReport : BaseAuditableEntity
     {
         
     }
-    private ProjectReport(Guid id, Guid stageId, ReportType type, string title, string content)
+    private ProjectReport(Guid id, Guid stageId, string title, string content , ReportType type = ReportType.Daily)
     {
         Id = id;
         StageId = stageId;
@@ -34,7 +34,7 @@ public class ProjectReport : BaseAuditableEntity
 
     public static ProjectReport CreateProjectType(Guid stageId, ReportType type, string title, string content)
     {
-        var report = new ProjectReport(Guid.NewGuid() , stageId , type , title , content);
+        var report = new ProjectReport(Guid.NewGuid() , stageId , title , content, type);
         return report;
     }
     public void UpdateProjectType(Guid stageId, ReportType type, string title, string content)
@@ -44,4 +44,9 @@ public class ProjectReport : BaseAuditableEntity
         Title = title;
         Content = content;
     }
+    public void ChangeReportType(ReportType type)
+    {
+        Type = type;
+    }
+
 }

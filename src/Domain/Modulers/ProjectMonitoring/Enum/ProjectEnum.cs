@@ -14,7 +14,7 @@ public enum ProjectStatus
     Completed = 4,
     Cancelled = 5
 }
-public enum Task_StageStatus
+public enum StageStatus
 {
     NotStarted = 0,
     InProgress = 1,

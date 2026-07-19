@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Alkonof_Backend.Domain.Entities.Contracts;
 using Alkonof_Backend.Domain.Entities.ProjectMonitoring.Enum;
+using Alkonof_Backend.Domain.Modulers.ProjectMonitoring.Events.Projects;
 
 namespace Alkonof_Backend.Domain.Entities.ProjectMonitoring;
 
@@ -54,6 +55,7 @@ public class Project : BaseAuditableEntity
         ProjectStatus status = ProjectStatus.Created)
     {
         var project = new Project(Guid.NewGuid() , title , description , location , ActualEngedDate , Progress , status);
+        project.AddDomainEvent(new ProjectCreatedEvent(project.Id));
         return project;
     }
     public void UpdateProject(
@@ -69,16 +71,18 @@ public class Project : BaseAuditableEntity
         Description = description;
         Location = location;
     }
-     public void ChangeProjectState(ProjectStatus status)
+     public void ChangeProjectState(Guid projectId , ProjectStatus status)
     {
         Status = status;
+        AddDomainEvent(new ProjectStatusChangedEvent(projectId , status));
     }
      public void SetActualEndDate(DateTimeOffset dateTime)
     {
         EndDate = dateTime;
     }
-     public void SetProgress(double progress)
+     public void SetProgress(Guid projectId, double progress)
     {
-        Progress = progress;
+        Progress = progress; 
+        AddDomainEvent(new ProgressProjectUpdatedEvent(projectId , progress));
     }
 }
