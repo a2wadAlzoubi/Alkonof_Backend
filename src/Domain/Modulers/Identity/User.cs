@@ -28,7 +28,8 @@ public class User : BaseAuditableEntity
         string email,
         string password,
         UserRole role = UserRole.customer,
-        bool isDeleted = false 
+        bool isDeleted = false, 
+        Guid? permissionId = null
         )
     {
         Id = id;
@@ -37,6 +38,7 @@ public class User : BaseAuditableEntity
         Email = email;
         Password = password;
         IsDeleted = isDeleted;
+        PermissionId = permissionId;
         Role = role;
     }
     [Required]
@@ -55,6 +57,8 @@ public class User : BaseAuditableEntity
     public string Password { get; private set; } = string.Empty;
     public bool IsDeleted{ get; private set; } = false;
     public UserRole Role { get; private set; }
+    public Permission? Permission { get; private set; }
+    public Guid? PermissionId { get; private set; }
 
 
     // Relations
@@ -62,7 +66,6 @@ public class User : BaseAuditableEntity
     public ICollection<OrderBooking>? OrderBookings { get; private set; }
     public ICollection<Booking>? ResponsibalBookings { get; private set; }
     public ICollection<Booking>? CustomerBookings { get; private set; }
-    public ICollection<UserPermission>? UserPermissions { get; private set; }
     public ICollection<Complain>? Complains { get; private set; }
     public ICollection<AuditEntity>? AuditEntities { get; private set; }
     public ICollection<Notification>? Notifications { get; private set; }
@@ -75,9 +78,10 @@ public class User : BaseAuditableEntity
         string email,
         string password,
         UserRole role = UserRole.customer,
-        bool isDeleted = false)
+        bool isDeleted = false,
+        Guid? permissionId = null)
     {
-        return new User(Guid.NewGuid(), name, number, email, password , role , isDeleted);
+        return new User(Guid.NewGuid(), name, number, email, password , role , isDeleted , permissionId);
     }
     public static User Register(string name, string number, string email, string password )
     {
@@ -90,8 +94,9 @@ public class User : BaseAuditableEntity
         string number,
         string email,
         string password,
-        UserRole role,
-        bool isDeleted)
+        UserRole role ,
+        bool isDeleted,
+        Guid? permissionId)
     {
         Name = name;
         Number = number;
@@ -99,11 +104,16 @@ public class User : BaseAuditableEntity
         Password = password;
         IsDeleted = isDeleted;
         Role = role;
+        PermissionId = permissionId;
     }
     public void UpdateEmail(string email , Guid userId)
     {
         Email = email;
         AddDomainEvent(new ProfileUpdatedEvent(userId));
+    }
+    public void GrantPermission(Guid permissionId)
+    {
+        PermissionId = permissionId;
     }
 
     public void UpdatePassword(string password, Guid userId)

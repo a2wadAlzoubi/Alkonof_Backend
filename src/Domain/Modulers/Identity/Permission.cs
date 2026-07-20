@@ -23,7 +23,7 @@ public class Permission : BaseAuditableEntity
     public string Description { get; private set; } = string.Empty;
 
     public ICollection<PermissionGrop> PermissionGrops { get; private set; } = new List<PermissionGrop>();
-    public ICollection<UserPermission> UserPermissions { get; private set; } = new List<UserPermission>();
+    public ICollection<User> Users { get; private set; } = new List<User>();
 
     public static Permission Create(string name, string description)
     {

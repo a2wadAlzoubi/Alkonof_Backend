@@ -36,5 +36,6 @@ public class PermissionGrop : BaseAuditableEntity
     {
         Name = name;
         Description = description;
+        PermissionId = permissionId;
     }
 }

@@ -24,7 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Users\Users\Commands\" />
+    <Folder Include="Modulers\Bookings\" />
+    <Folder Include="Modulers\Meetings\" />
+    <Folder Include="Modulers\Contracts\" />
+    <Folder Include="Modulers\ProjectMonitoring\" />
+    <Folder Include="Modulers\Notifications\" />
+    <Folder Include="Modulers\Schedualing\" />
   </ItemGroup>
 
 </Project>

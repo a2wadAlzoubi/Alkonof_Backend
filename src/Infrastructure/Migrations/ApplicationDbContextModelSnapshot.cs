@@ -481,48 +481,17 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<Guid?>("PermissionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
-                });
-
-            modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Identity.UserPermission", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset?>("Created")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsGranted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LastModified")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("PermissionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("PermissionId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserPermission");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Meetings.Meeting", b =>
@@ -774,7 +743,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("StageId")
+                    b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
@@ -786,7 +755,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StageId");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectReport");
                 });
@@ -851,7 +820,8 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
 
                     b.Property<double>("Progress")
                         .HasColumnType("float");
@@ -1070,71 +1040,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.ToTable("TodoLists");
                 });
 
-            modelBuilder.Entity("Alkonof_Backend.Infrastructure.Identity.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-                });
-
             modelBuilder.Entity("Domain.RefreshTokens.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1227,6 +1132,71 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -1416,21 +1386,13 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Navigation("Permission");
                 });
 
-            modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Identity.UserPermission", b =>
+            modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Identity.User", b =>
                 {
                     b.HasOne("Alkonof_Backend.Domain.Entities.Identity.Permission", "Permission")
-                        .WithMany("UserPermissions")
+                        .WithMany("Users")
                         .HasForeignKey("PermissionId");
 
-                    b.HasOne("Alkonof_Backend.Domain.Entities.Identity.User", "User")
-                        .WithMany("UserPermissions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Permission");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Meetings.PrepareMeeting", b =>
@@ -1471,13 +1433,13 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.ProjectMonitoring.ProjectReport", b =>
                 {
-                    b.HasOne("Alkonof_Backend.Domain.Entities.ProjectMonitoring.Stage", "Stage")
+                    b.HasOne("Alkonof_Backend.Domain.Entities.ProjectMonitoring.Project", "Project")
                         .WithMany("ProjectReport")
-                        .HasForeignKey("StageId")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Stage");
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.ProjectMonitoring.ProjectStaff", b =>
@@ -1599,7 +1561,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Alkonof_Backend.Infrastructure.Identity.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1608,7 +1570,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Alkonof_Backend.Infrastructure.Identity.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1623,7 +1585,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Alkonof_Backend.Infrastructure.Identity.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1632,7 +1594,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Alkonof_Backend.Infrastructure.Identity.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1668,7 +1630,7 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 {
                     b.Navigation("PermissionGrops");
 
-                    b.Navigation("UserPermissions");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Identity.User", b =>
@@ -1688,8 +1650,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.Navigation("RefreshTokens");
 
                     b.Navigation("ResponsibalBookings");
-
-                    b.Navigation("UserPermissions");
                 });
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.Meetings.Meeting", b =>
@@ -1706,6 +1666,8 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                 {
                     b.Navigation("Contract");
 
+                    b.Navigation("ProjectReport");
+
                     b.Navigation("ProjectStaffs");
 
                     b.Navigation("Stages");
@@ -1713,8 +1675,6 @@ namespace Alkonof_Backend.Infrastructure.Migrations
 
             modelBuilder.Entity("Alkonof_Backend.Domain.Entities.ProjectMonitoring.Stage", b =>
                 {
-                    b.Navigation("ProjectReport");
-
                     b.Navigation("StageImages");
 
                     b.Navigation("Tasks");

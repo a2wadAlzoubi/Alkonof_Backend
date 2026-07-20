@@ -1,7 +1,7 @@
+using Alkonof_Backend.Application.Modulers.Identities.Authentication.Dtos;
+using Alkonof_Backend.Application.Modulers.Identities.Authentication.Login;
+using Alkonof_Backend.Application.Modulers.Identities.Authentication.Register;
 using Alkonof_Backend.Domain.Entities.Identity;
-using Application.Authentication.Dtos;
-using Application.Authentication.Register;
-using Application.Authentication.SignIn;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 

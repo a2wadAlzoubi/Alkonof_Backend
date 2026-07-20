@@ -53,11 +53,12 @@ public class Meeting : BaseAuditableEntity
     public static Meeting CreateMeeting(
         string content,
         string title,
-        MeetingOutCome outCome,
         int meetingNumber,
         MeetingStatus status,
         MeetingUserStatus responsibalStatus,
-        MeetingUserStatus customerStatus)
+        MeetingUserStatus customerStatus,
+        MeetingOutCome outCome = MeetingOutCome.NotStarted
+        )
     {
         var meeting = new Meeting(Guid.NewGuid() , content , title  , meetingNumber , outCome , status , responsibalStatus , customerStatus);
         meeting.AddDomainEvent(new MeetingCreatedEvent(meeting.Id, meetingNumber));

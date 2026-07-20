@@ -118,7 +118,7 @@ public class Booking : BaseAuditableEntity
     }
     public void AssignCustomerAnswer(Decision decision , Guid bookingId, Guid customerId)
     {
-        ResponsibleAnswer = decision;
+        CustomerAnswer = decision;
         AddDomainEvent(new AssignCustomerAnswerEvent(bookingId,customerId , decision));
     }
 

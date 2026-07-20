@@ -42,7 +42,6 @@ public class Stage : BaseAuditableEntity
     [Required]
     public Guid ProjectId { get; private set; }
     public ICollection<StageImage> StageImages { get; private set; } = new List<StageImage>();
-    public ICollection<ProjectReport> ProjectReport { get; private set; } = new List<ProjectReport>();
     public ICollection<TaskTabel> Tasks { get; private set; } = new List<TaskTabel>();
 
     public static Stage CreateStage(string name, string description, double progress, DateTimeOffset startedDate, DateTimeOffset actualEndedDate, Guid projectId, StageStatus status = StageStatus.NotStarted)

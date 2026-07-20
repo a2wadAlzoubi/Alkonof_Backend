@@ -1,9 +1,9 @@
 ﻿using System.Configuration;
 using System.Reflection;
 using Alkonof_Backend.Application.Common.Behaviours;
+using Alkonof_Backend.Application.Modulers.Identities.Users.Services;
 using Application.Abstractions;
 using Application.Abstractions.JWT;
-using Application.Entities.Users.Services;
 using Application.Options;
 using Mapster;
 using MapsterMapper;

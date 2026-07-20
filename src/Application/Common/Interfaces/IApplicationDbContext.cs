@@ -35,7 +35,6 @@ public interface IApplicationDbContext
     DbSet<Resolution> Resolution { get; }
     DbSet<TimeTable> TimeTable { get; }
     DbSet<User> User { get; }
-    DbSet<UserPermission> UserPermission { get; }
     DbSet<RefreshToken> RefreshToken { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);

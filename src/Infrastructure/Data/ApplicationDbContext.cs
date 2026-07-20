@@ -45,7 +45,6 @@ public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
     public DbSet<User> User => Set<User>();
     public DbSet<RefreshToken> RefreshToken => Set<RefreshToken>();
 
-    public DbSet<UserPermission> UserPermission => Set<UserPermission>();
 
     public DbSet<Booking> Booking => throw new NotImplementedException();
 

@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using Application.Entities.Users.Services;
+using Alkonof_Backend.Application.Modulers.Identities.Users.Services;
 
 namespace Application.Abstractions;
 

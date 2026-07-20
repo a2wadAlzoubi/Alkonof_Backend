@@ -45,6 +45,8 @@ public class Project : BaseAuditableEntity
     public Contract? Contract { get; private set; }
     public List<ProjectStaff>? ProjectStaffs { get; private set; }
     public List<Stage>? Stages { get; private set; }
+    public ICollection<ProjectReport> ProjectReport { get; private set; } = new List<ProjectReport>();
+
 
     public static Project CreateProject(
          string title,
