@@ -12,17 +12,17 @@ public class OrderBooking : BaseAuditableEntity
     {
         
     }
-    private OrderBooking(Guid id ,Guid customerId, Guid bookingTypeId)
+    private OrderBooking(Guid id ,Guid customerId, Guid serviceId)
     {
         Id = id;
         CustomerId = customerId;
-        BookingTypeId = bookingTypeId;
+        ServiceId = serviceId;
     }
 
     public User? Customer { get; private set; }
     public Guid CustomerId { get; private set; }
-    public BookingType? BookingType { get; private set; }
-    public Guid BookingTypeId { get; private set; }
+    public Service? Service { get; private set; }
+    public Guid ServiceId { get; private set; }
 
     public static OrderBooking CreateOrderBooking(Guid customerId, Guid bookingTypeId)
     {
@@ -30,10 +30,10 @@ public class OrderBooking : BaseAuditableEntity
         orderBooking.AddDomainEvent(new CreateOrderBookingEvent(orderBooking.Id, customerId));
         return orderBooking;
     }
-    public void UpdateOrderBooking(Guid customerId, Guid bookingTypeId)
+    public void UpdateOrderBooking(Guid customerId, Guid serviceId)
     {
         CustomerId = customerId;
-        BookingTypeId = bookingTypeId;
+        ServiceId = serviceId;
     }
 
 }

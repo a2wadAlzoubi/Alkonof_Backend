@@ -21,3 +21,9 @@ public enum Decision
     Pending = 2,
     Delay = 3
 }
+public enum ServiceType
+{
+    Informaticse = 0,
+    Civial = 1,
+    Decor = 2,
+}

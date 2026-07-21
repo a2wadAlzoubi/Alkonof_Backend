@@ -111,15 +111,15 @@ public class Booking : BaseAuditableEntity
 
 
     }
-    public void AssignResposibleAnswer(Decision decision , Guid bookingId , Guid responsibleId)
+    public void AssignResposibleAnswer(Decision decision, Guid bookingId, Guid responsibleId)
     {
         ResponsibleAnswer = decision;
-        AddDomainEvent(new AssignResponsibleAnswerEvent(bookingId , responsibleId , decision));
+        AddDomainEvent(new AssignResponsibleAnswerEvent(bookingId, responsibleId, decision));
     }
-    public void AssignCustomerAnswer(Decision decision , Guid bookingId, Guid customerId)
+    public void AssignCustomerAnswer(Decision decision, Guid bookingId, Guid customerId)
     {
         CustomerAnswer = decision;
-        AddDomainEvent(new AssignCustomerAnswerEvent(bookingId,customerId , decision));
+        AddDomainEvent(new AssignCustomerAnswerEvent(bookingId, customerId, decision));
     }
 
     // Booking Status

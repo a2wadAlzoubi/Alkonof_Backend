@@ -16,7 +16,7 @@ public interface IApplicationDbContext
     DbSet<AuditChange> AuditChange { get; }
     DbSet<AuditEntity> AuditEntity{ get; }
     DbSet<Booking> Booking { get; }
-    DbSet<BookingType> BookingType { get; }
+    DbSet<Service> Service { get; }
     DbSet<Complain> Complain { get; }
     DbSet<Contract> Contract { get; }
     DbSet<Meeting> Meeting { get; }

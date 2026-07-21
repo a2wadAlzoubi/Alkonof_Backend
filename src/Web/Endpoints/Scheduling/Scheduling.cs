@@ -34,7 +34,7 @@ public class Scheduling : IEndpointGroup
     }
 
     [EndpointSummary("Create a new timetable")]
-    public static async Task<Ok<List<Guid>>> CreateTimeTable(ISender sender, HttpContext httpContext, [FromBody] List<TimeTableDto> dtos)
+    public static async Task<Ok<List<Guid>>> CreateTimeTable(ISender sender, HttpContext httpContext, [FromBody] List<CreateTimeTableDto> dtos)
     {
         var requesterId = Guid.Parse(httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var command = new CreateTimeTableCommand(dtos, requesterId);
