@@ -7,9 +7,9 @@ namespace Alkonof_Backend.Domain.Entities.Identity.Enum;
 
 public enum UserRole
 {
-    admin = 0,
-    responsible = 1,
-    customer = 2,
+    Admin = 0,
+    Responsible = 1,
+    Customer = 2,
 }
 public enum UserStatus
 {

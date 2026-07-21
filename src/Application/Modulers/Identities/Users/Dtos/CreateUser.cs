@@ -12,7 +12,7 @@ namespace Alkonof_Backend.Application.Modulers.Identities.Users.Dtos
         public string    Number     { get; set; } = string.Empty;
         public string   Email      { get; set; } = string.Empty;
         public string   Password   { get; set; } = string.Empty;
-        public UserRole Role    { get; set; } = UserRole.customer;
+        public UserRole Role    { get; set; } = UserRole.Customer;
         public bool IsDeleted { get; private set; } = false;
         public Guid? PermissionId { get; private set; }
     }

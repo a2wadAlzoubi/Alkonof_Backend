@@ -46,4 +46,12 @@ public class TimeTable : BaseAuditableEntity
 
         AddDomainEvent(new BanReservationEvent(time));
     }
+
+    public void Update(DayOfWeek dayOfWeek, int hour, bool isReserved, Guid responsibleId)
+    {
+        DayOfWeek = dayOfWeek;
+        Hour = hour;
+        IsReserved = isReserved;
+        ResponsibleId = responsibleId;
+    }
 }

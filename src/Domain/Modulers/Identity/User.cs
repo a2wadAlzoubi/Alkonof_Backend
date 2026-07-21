@@ -27,7 +27,7 @@ public class User : BaseAuditableEntity
         string number,
         string email,
         string password,
-        UserRole role = UserRole.customer,
+        UserRole role = UserRole.Customer,
         bool isDeleted = false, 
         Guid? permissionId = null
         )
@@ -77,7 +77,7 @@ public class User : BaseAuditableEntity
         string number,
         string email,
         string password,
-        UserRole role = UserRole.customer,
+        UserRole role = UserRole.Customer,
         bool isDeleted = false,
         Guid? permissionId = null)
     {
