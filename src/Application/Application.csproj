@@ -25,8 +25,8 @@
 
   <ItemGroup>
     <Folder Include="Modulers\Bookings\" />
-    <Folder Include="Modulers\Meetings\" />
     <Folder Include="Modulers\Contracts\" />
+    <Folder Include="Modulers\Meetings\" />
     <Folder Include="Modulers\ProjectMonitoring\" />
     <Folder Include="Modulers\Notifications\" />
     <Folder Include="Modulers\Schedualing\" />

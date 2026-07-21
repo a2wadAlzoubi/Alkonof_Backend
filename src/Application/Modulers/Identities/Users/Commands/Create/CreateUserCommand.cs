@@ -2,6 +2,4 @@
 
 namespace Alkonof_Backend.Application.Modulers.Identities.Users.Commands.Create;
 
-public record CreateUserCommand(CreateUser CreateUser) : IRequest<Guid>;
-
-
+public sealed record CreateUserCommand(CreateUserDto Dto) : IRequest<Guid>;

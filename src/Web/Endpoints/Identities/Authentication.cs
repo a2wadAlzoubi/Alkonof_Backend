@@ -5,7 +5,7 @@ using Alkonof_Backend.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Alkonof_Backend.Web.Endpoints;
+namespace Alkonof_Backend.Web.Endpoints.Identities;
 
 public class Authentication : IEndpointGroup
 {

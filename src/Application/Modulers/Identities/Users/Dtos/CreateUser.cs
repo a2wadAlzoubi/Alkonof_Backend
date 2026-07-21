@@ -5,7 +5,7 @@ using Alkonof_Backend.Domain.Enums;
 
 namespace Alkonof_Backend.Application.Modulers.Identities.Users.Dtos
 {
-    public class CreateUser
+    public sealed record  CreateUserDto
     {
 
         public string    Name       { get; set; } = string.Empty;

@@ -7,9 +7,9 @@ public class WeatherForecasts : IEndpointGroup
 {
     public static void Map(RouteGroupBuilder groupBuilder)
     {
-        groupBuilder.RequireAuthorization();
+        //groupBuilder.RequireAuthorization();
 
-        groupBuilder.MapGet(GetWeatherForecasts);
+        //groupBuilder.MapGet(GetWeatherForecasts);
     }
 
     [EndpointSummary("Get Weather Forecasts")]

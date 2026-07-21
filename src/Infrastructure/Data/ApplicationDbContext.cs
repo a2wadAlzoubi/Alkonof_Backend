@@ -44,31 +44,18 @@ public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
 
     public DbSet<User> User => Set<User>();
     public DbSet<RefreshToken> RefreshToken => Set<RefreshToken>();
-
-
-    public DbSet<Booking> Booking => throw new NotImplementedException();
-
-    public DbSet<Contract> Contract => throw new NotImplementedException();
-
-    public DbSet<Meeting> Meeting => throw new NotImplementedException();
-
-    public DbSet<OrderBooking> OrderBooking => throw new NotImplementedException();
-
-    public DbSet<PermissionGrop> PermissionGrop => throw new NotImplementedException();
-
-    public DbSet<PrepareMeeting> PrepareMeeting => throw new NotImplementedException();
-
-    public DbSet<Project> Project => throw new NotImplementedException();
-
-    public DbSet<ProjectReport> ProjectReport => throw new NotImplementedException();
-
-    public DbSet<ProjectStaff> ProjectStaff => throw new NotImplementedException();
-
-    public DbSet<Stage> Stage => throw new NotImplementedException();
-
-    public DbSet<StageImage> StageImage => throw new NotImplementedException();
-
-    public DbSet<TaskTabel> TaskTabel => throw new NotImplementedException();
+    public DbSet<Booking> Booking => Set<Booking>();
+    public DbSet<Contract> Contract => Set<Contract>();
+    public DbSet<Meeting> Meeting => Set<Meeting>();
+    public DbSet<OrderBooking> OrderBooking => Set<OrderBooking>();
+    public DbSet<PermissionGrop> PermissionGrop => Set<PermissionGrop>();
+    public DbSet<PrepareMeeting> PrepareMeeting => Set<PrepareMeeting>();
+    public DbSet<Project> Project =>Set<Project>();
+    public DbSet<ProjectReport> ProjectReport =>Set<ProjectReport>();
+    public DbSet<ProjectStaff> ProjectStaff =>  Set<ProjectStaff>();
+    public DbSet<Stage> Stage => Set<Stage>();
+    public DbSet<StageImage> StageImage => Set<StageImage>();
+    public DbSet<TaskTabel> TaskTabel => Set<TaskTabel>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

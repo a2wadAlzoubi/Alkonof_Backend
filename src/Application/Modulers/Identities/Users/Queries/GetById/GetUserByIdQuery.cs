@@ -2,4 +2,4 @@
 
 namespace Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetById;
 
-public record GetUserByIdQuery(Guid UserId) : IRequest<UserDto>;
+public sealed record GetUserByIdQuery(Guid Id) : IRequest<UserDto>;
