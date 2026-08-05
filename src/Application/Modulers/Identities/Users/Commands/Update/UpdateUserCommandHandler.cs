@@ -1,4 +1,6 @@
 ﻿using Alkonof_Backend.Application.Common.Interfaces;
+using Alkonof_Backend.Application.Modulers.Identities.Users.Services;
+using Application.Abstractions;
 
 namespace Alkonof_Backend.Application.Modulers.Identities.Users.Commands.Update;
 
@@ -6,10 +8,12 @@ namespace Alkonof_Backend.Application.Modulers.Identities.Users.Commands.Update;
 public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
 {
     private readonly IApplicationDbContext _context;
+    private readonly IPasswordService passwordService;
 
-    public UpdateUserCommandHandler(IApplicationDbContext context)
+    public UpdateUserCommandHandler(IApplicationDbContext context , IPasswordService passwordService)
     {
         _context = context;
+        this.passwordService = passwordService;
     }
 
     public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
@@ -19,11 +23,13 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
 
         Guard.Against.NotFound(request.UserDto.Id, user);
 
+        var hashPassword = passwordService.Hash(request.UserDto.Password);
+
         user.Update(
         request.UserDto.Name,
         request.UserDto.Number,
         request.UserDto.Email,
-        request.UserDto.Password,
+        hashPassword,
         request.UserDto.Role,
         request.UserDto.IsDeleted,
         request.UserDto.PermissionId

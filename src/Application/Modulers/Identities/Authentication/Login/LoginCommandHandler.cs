@@ -7,48 +7,6 @@ using Domain.RefreshTokens;
 
 namespace Alkonof_Backend.Application.Modulers.Identities.Authentication.Login
 {
-    //public sealed record LoginCommandHandler(
-    //    IApplicationDbContext context,
-    //    IPasswordService passwordService,
-    //    IJwtGenerator jwtGenerator,
-    //    IGenerateRefreshToken generateRefreshToken
-    //    ) : IRequestHandler<LoginCommand, RefreshTokenResponce>
-    //{
-    //    public async Task<RefreshTokenResponce> Handle(LoginCommand request, CancellationToken cancellationToken)
-    //    {
-    //        //var user = await context.User.SingleOrDefaultAsync(u=>u.Email == request.Login.Email, cancellationToken);
-    //        var user = await context.User
-    //            .Include(u => u.RefreshTokens)
-    //            .SingleOrDefaultAsync(u => u.Email == request.Login.Email, cancellationToken);
-
-
-
-    //        if (user == null || !passwordService.Compare(request.Login.Password, user.Password))
-    //        {
-    //            Guard.Against.NotFound(request.Login.Email, user);
-    //        }
-    //        if (user.RefreshTokens == null)
-    //            Guard.Against.NotFound(request.Login.Email, user.RefreshTokens);
-
-    //        foreach (var refreshtoken in user.RefreshTokens)
-    //        {
-    //            if (refreshtoken.IsUsed || refreshtoken.Expired < DateTimeOffset.UtcNow)
-    //            {
-    //                refreshtoken.ExpireToken();
-    //            }
-    //        }
-
-    //        var refreshToken = RefreshToken.CreateRefreshToken();
-    //        var grefreshToken = generateRefreshToken.GRefreshToken(refreshToken, user);
-    //        var acessToken = jwtGenerator.Generate(user, grefreshToken.Id);
-    //        await context.RefreshToken.AddAsync(grefreshToken, cancellationToken);
-    //        await context.SaveChangesAsync(cancellationToken);
-
-    //        return new RefreshTokenResponce(acessToken, refreshToken);
-    //    }
-    //}
-
-
     public sealed class LoginCommandHandler(
         IApplicationDbContext context,
         IPasswordService passwordService,

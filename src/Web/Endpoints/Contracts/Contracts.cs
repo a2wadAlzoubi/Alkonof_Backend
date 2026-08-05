@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace Alkonof_Backend.Web.Endpoints;
+namespace Alkonof_Backend.Web.Endpoints.NewFolder;
 
 public class Contracts : IEndpointGroup
 {

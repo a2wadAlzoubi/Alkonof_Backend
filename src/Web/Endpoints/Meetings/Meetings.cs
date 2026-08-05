@@ -24,7 +24,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 
-namespace Alkonof_Backend.Web.Endpoints;
+namespace Alkonof_Backend.Web.Endpoints.NewFolder;
 
 public record SetUserStatusMeetingRequest(Guid UserId, MeetingUserStatus Status, bool IsCustomer);
 
