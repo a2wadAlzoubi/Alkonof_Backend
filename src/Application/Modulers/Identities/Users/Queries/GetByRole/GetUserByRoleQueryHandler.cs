@@ -6,11 +6,11 @@ using Alkonof_Backend.Domain.Entities.Identity;
 namespace Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetByRole;
 
 internal sealed class GetUserByRoleQueryHandler(IApplicationDbContext context)
-    : IRequestHandler<GetUserByRoleQuery, UserDto>
+    : IRequestHandler<GetUserByRoleQuery, List<UserDto>>
 {
-    public async Task<UserDto> Handle(GetUserByRoleQuery request, CancellationToken cancellationToken)
+    public async Task<List<UserDto>> Handle(GetUserByRoleQuery request, CancellationToken cancellationToken)
     {
-        var user = await context.User
+        var users = await context.User
             .Where(u => u.Role == request.Role && !u.IsDeleted)
             .Select(u => new UserDto(
                 u.Id,
@@ -21,13 +21,13 @@ internal sealed class GetUserByRoleQueryHandler(IApplicationDbContext context)
                 u.IsDeleted,
                 u.PermissionId
             ))
-            .FirstOrDefaultAsync(cancellationToken);
+            .ToListAsync();
 
-        if (user is null)
+        if (users is null)
         {
             throw new NotFoundException(nameof(User), request.Role.ToString());
         }
 
-        return user;
+        return users;
     }
 }

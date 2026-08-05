@@ -53,7 +53,7 @@ public class Users : IEndpointGroup
         return result is not null ? TypedResults.Ok(result) : TypedResults.NotFound();
     }
     [EndpointSummary("Get a user by Role")]
-    public static async Task<Results<Ok<UserDto>, NotFound>> GetUserByRole(ISender sender, UserRole role)
+    public static async Task<Results<Ok<List<UserDto>>, NotFound>> GetUserByRole(ISender sender, UserRole role)
     {
         var query = new GetUserByRoleQuery(role);
         var result = await sender.Send(query);
