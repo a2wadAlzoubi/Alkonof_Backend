@@ -9,14 +9,14 @@ internal sealed class CreatePermissionGropCommandHandler(IApplicationDbContext c
     public async Task<Guid> Handle(CreatePermissionGropCommand request, CancellationToken cancellationToken)
     {
         var existingGroup = await context.PermissionGrop
-            .FirstOrDefaultAsync(pg => pg.Name == request.Dto.Name, cancellationToken);
+            .FirstOrDefaultAsync(pg => pg.OperationPermission == request.Dto.OperationPermission, cancellationToken);
 
         if (existingGroup is not null)
         {
             throw new InvalidOperationException("A permission group with this name already exists.");
         }
 
-        var permissionGrop = PermissionGrop.Create(request.Dto.Name, request.Dto.Description, request.Dto.PermissionId);
+        var permissionGrop = PermissionGrop.Create(request.Dto.OperationPermission , request.Dto.PermissionId);
 
         context.PermissionGrop.Add(permissionGrop);
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Intrinsics;
 using System.Text;
+using Alkonof_Backend.Domain.Entities.Identity.Enum;
 
 namespace Alkonof_Backend.Domain.Entities.Identity;
 
@@ -12,30 +13,25 @@ public class PermissionGrop : BaseAuditableEntity
     {
         
     }
-    private PermissionGrop(Guid id ,string name, string description , Guid? permissionId)
+    private PermissionGrop(Guid id , OperationPermission operationPermission , Guid? permissionId)
     {
         Id = id;
-        Name = name;
-        Description = description;
+        this.OperationPermission = operationPermission;
         PermissionId = permissionId;
     }
-    [Required]
-    [StringLength(50, MinimumLength = 2)]
-    public string Name { get; private set; } = string.Empty;
-    public string Description { get; private set; } = string.Empty;
 
+    public OperationPermission OperationPermission { get; private set; }
     // Relations
     public Permission? Permission { get; private set; }
     public Guid? PermissionId { get; private set; }
 
-    public static PermissionGrop Create(string name, string description , Guid? permissionId)
+    public static PermissionGrop Create( OperationPermission operationPermission, Guid? permissionId)
     {
-        return new PermissionGrop(Guid.NewGuid(),  name, description , permissionId);
+        return new PermissionGrop(Guid.NewGuid(), operationPermission, permissionId);
     }
-    public void Update(string name, string description, Guid? permissionId)
+    public void Update(OperationPermission operationPermission, Guid? permissionId)
     {
-        Name = name;
-        Description = description;
         PermissionId = permissionId;
+        this.OperationPermission = OperationPermission;
     }
 }

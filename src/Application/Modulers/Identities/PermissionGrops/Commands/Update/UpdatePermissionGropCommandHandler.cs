@@ -17,7 +17,7 @@ internal sealed class UpdatePermissionGropCommandHandler(IApplicationDbContext c
             throw new NotFoundException(nameof(PermissionGrop), request.Dto.Id.ToString());
         }
 
-        permissionGrop.Update(request.Dto.Name, request.Dto.Description, request.Dto.PermissionId);
+        permissionGrop.Update(request.Dto.OperationPermission, request.Dto.PermissionId);
 
         await context.SaveChangesAsync(cancellationToken);
     }

@@ -4,6 +4,7 @@ using Alkonof_Backend.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Alkonof_Backend.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260805101259_UpdatePermission")]
+    partial class UpdatePermission
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -424,6 +427,11 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                         {
                             Id = new Guid("a9b8c7d6-e5f4-4b3c-8a7b-6f5e4d3c2b1a"),
                             PermissionType = 4
+                        },
+                        new
+                        {
+                            Id = new Guid("d1e2f3a4-b5c6-4b7d-8e9f-6f5e4d3c2b1a"),
+                            PermissionType = 5
                         });
                 });
 
@@ -460,135 +468,81 @@ namespace Alkonof_Backend.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c476b07e-f897-44f5-a95f-6a1fb21469fd"),
+                            Id = new Guid("3d195dfa-b662-4115-9bad-f57d715e1158"),
                             OperationPermission = 0,
                             PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
                         },
                         new
                         {
-                            Id = new Guid("c04306c1-65fc-43e7-b577-6a544815acf0"),
+                            Id = new Guid("3ced91e6-7da0-4950-be05-e717b30c3f55"),
                             OperationPermission = 1,
                             PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
                         },
                         new
                         {
-                            Id = new Guid("3fbf1e53-be00-47c4-adb7-becedcb1487d"),
+                            Id = new Guid("c3f1a07a-c3c5-4662-b953-45ffa98643d0"),
                             OperationPermission = 2,
                             PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
                         },
                         new
                         {
-                            Id = new Guid("6ec9847b-2a5f-4c02-b3df-7dfe516bf725"),
+                            Id = new Guid("0f300faf-8566-46ff-b133-b6df5fa6b43e"),
                             OperationPermission = 3,
                             PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
                         },
                         new
                         {
-                            Id = new Guid("1405431d-4889-4dc6-9030-7adb403bbcd7"),
+                            Id = new Guid("cf7a60fe-5421-4d05-9580-eddd4fa25be8"),
                             OperationPermission = 4,
                             PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
                         },
                         new
                         {
-                            Id = new Guid("6594b791-f7fb-472d-b4b3-cbcbe30d2077"),
-                            OperationPermission = 6,
-                            PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
-                        },
-                        new
-                        {
-                            Id = new Guid("14d6bdfc-4c47-455d-84da-3488d8f95534"),
+                            Id = new Guid("c6f4b527-82d6-48c5-ab06-766e05e2e613"),
                             OperationPermission = 5,
                             PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
                         },
                         new
                         {
-                            Id = new Guid("5ea92efc-2cad-4515-8de2-989b4c3aed25"),
+                            Id = new Guid("1fd63afb-1a6d-4b51-9c05-9fddad3f7fab"),
+                            OperationPermission = 6,
+                            PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
+                        },
+                        new
+                        {
+                            Id = new Guid("4bf1213b-6a3c-4a7b-82b3-cc13cc87c042"),
                             OperationPermission = 7,
                             PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
                         },
                         new
                         {
-                            Id = new Guid("5c181d55-726f-4ccd-b6b6-7e082d3e4c38"),
+                            Id = new Guid("77b92655-b8e3-4907-9d68-84af423d489d"),
+                            OperationPermission = 8,
+                            PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
+                        },
+                        new
+                        {
+                            Id = new Guid("c1a2e273-8025-4495-87ae-7636b8876bab"),
+                            OperationPermission = 9,
+                            PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
+                        },
+                        new
+                        {
+                            Id = new Guid("46ce4f98-284c-4380-ad9a-b740071fa4e3"),
+                            OperationPermission = 10,
+                            PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
+                        },
+                        new
+                        {
+                            Id = new Guid("0705cb83-4823-4e6e-a941-0eb415d3a63e"),
                             OperationPermission = 11,
                             PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
                         },
                         new
                         {
-                            Id = new Guid("119d020d-2b8a-4548-9372-6b695c8f2109"),
-                            OperationPermission = 0,
-                            PermissionId = new Guid("8a5c8e6c-4f3b-4b2c-8a7f-8d3e2f5b9a1b")
-                        },
-                        new
-                        {
-                            Id = new Guid("26e6d8c8-83d6-48e3-8ae9-a3485cb2f619"),
-                            OperationPermission = 1,
-                            PermissionId = new Guid("8a5c8e6c-4f3b-4b2c-8a7f-8d3e2f5b9a1b")
-                        },
-                        new
-                        {
-                            Id = new Guid("47455b92-b0ec-4f5f-8d15-02d3d18b2ba8"),
-                            OperationPermission = 2,
-                            PermissionId = new Guid("8a5c8e6c-4f3b-4b2c-8a7f-8d3e2f5b9a1b")
-                        },
-                        new
-                        {
-                            Id = new Guid("e37be2bb-d473-4af7-b8d5-0f40631e780e"),
-                            OperationPermission = 3,
-                            PermissionId = new Guid("8a5c8e6c-4f3b-4b2c-8a7f-8d3e2f5b9a1b")
-                        },
-                        new
-                        {
-                            Id = new Guid("a8f5f45b-6828-4211-bdf5-2dbfb5fa40dc"),
-                            OperationPermission = 7,
-                            PermissionId = new Guid("8a5c8e6c-4f3b-4b2c-8a7f-8d3e2f5b9a1b")
-                        },
-                        new
-                        {
-                            Id = new Guid("1ff0b3b4-6736-46f9-b66a-f4e774102201"),
-                            OperationPermission = 8,
-                            PermissionId = new Guid("8a5c8e6c-4f3b-4b2c-8a7f-8d3e2f5b9a1b")
-                        },
-                        new
-                        {
-                            Id = new Guid("1146ef4a-198d-4d2d-9bd2-37b7b0cfeda9"),
-                            OperationPermission = 9,
-                            PermissionId = new Guid("8a5c8e6c-4f3b-4b2c-8a7f-8d3e2f5b9a1b")
-                        },
-                        new
-                        {
-                            Id = new Guid("018bcbbc-72e7-4c13-b3bd-3722ce7b73b0"),
-                            OperationPermission = 10,
-                            PermissionId = new Guid("8a5c8e6c-4f3b-4b2c-8a7f-8d3e2f5b9a1b")
-                        },
-                        new
-                        {
-                            Id = new Guid("6b9bc37d-66b8-4214-a9d2-17bbdb912d38"),
-                            OperationPermission = 0,
-                            PermissionId = new Guid("3c1b2a9d-4e8f-4b1a-9c8d-6f5e4d3c2b1a")
-                        },
-                        new
-                        {
-                            Id = new Guid("7e6679cb-751e-4731-8a74-01f05e3d3d49"),
-                            OperationPermission = 1,
-                            PermissionId = new Guid("3c1b2a9d-4e8f-4b1a-9c8d-6f5e4d3c2b1a")
-                        },
-                        new
-                        {
-                            Id = new Guid("fc4ad8ea-c558-422d-9079-3e3fb0805d9c"),
-                            OperationPermission = 2,
-                            PermissionId = new Guid("3c1b2a9d-4e8f-4b1a-9c8d-6f5e4d3c2b1a")
-                        },
-                        new
-                        {
-                            Id = new Guid("c29cd45b-adb4-4d35-9942-4f69317f72a4"),
-                            OperationPermission = 3,
-                            PermissionId = new Guid("3c1b2a9d-4e8f-4b1a-9c8d-6f5e4d3c2b1a")
-                        },
-                        new
-                        {
-                            Id = new Guid("62c17759-656a-42ec-becf-b1119f23abd1"),
-                            OperationPermission = 10,
-                            PermissionId = new Guid("3c1b2a9d-4e8f-4b1a-9c8d-6f5e4d3c2b1a")
+                            Id = new Guid("2d5e23a3-d3c8-4dc0-bb50-348420ad3ec2"),
+                            OperationPermission = 12,
+                            PermissionId = new Guid("0a794768-ab8a-4a07-b8a0-424b5e5df9d5")
                         });
                 });
 

@@ -17,7 +17,7 @@ internal sealed class UpdatePermissionCommandHandler(IApplicationDbContext conte
             throw new NotFoundException(nameof(Permission), request.Dto.Id.ToString());
         }
 
-        permission.Update(request.Dto.Name, request.Dto.Description);
+        permission.Update(request.Dto.PermissionType);
 
         await context.SaveChangesAsync(cancellationToken);
     }

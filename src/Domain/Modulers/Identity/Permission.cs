@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Alkonof_Backend.Domain.Entities.Identity.Enum;
 
 namespace Alkonof_Backend.Domain.Entities.Identity;
 
@@ -11,28 +12,24 @@ public class Permission : BaseAuditableEntity
     {
         
     }
-    private Permission(Guid id , string name, string description)
+    private Permission(Guid id , PermissionType permissionType)
     {
         Id = id;
-        Name = name;
-        Description = description;
+        PermissionType = permissionType;
     }
 
-    [Required]
-    [StringLength(50, MinimumLength = 2)] public string Name { get; private set; } = string.Empty;
-    public string Description { get; private set; } = string.Empty;
 
+    public PermissionType PermissionType { get; set; }
     public ICollection<PermissionGrop> PermissionGrops { get; private set; } = new List<PermissionGrop>();
     public ICollection<User> Users { get; private set; } = new List<User>();
 
-    public static Permission Create(string name, string description)
+    public static Permission Create(PermissionType permissionType)
     {
-        return new Permission(Guid.NewGuid(), name, description);
+        return new Permission(Guid.NewGuid() , permissionType);
     }
-    public void Update( string name, string description)
+    public void Update(PermissionType permissionType)
     {
-        Name = name;
-        Description = description;
+        PermissionType = permissionType;
     }
 
 

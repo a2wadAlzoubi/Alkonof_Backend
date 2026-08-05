@@ -9,14 +9,14 @@ internal sealed class CreatePermissionCommandHandler(IApplicationDbContext conte
     public async Task<Guid> Handle(CreatePermissionCommand request, CancellationToken cancellationToken)
     {
         var existingPermission = await context.Permission
-            .FirstOrDefaultAsync(p => p.Name == request.Dto.Name, cancellationToken);
+            .FirstOrDefaultAsync(p => p.PermissionType == request.Dto.PermissionType, cancellationToken);
 
         if (existingPermission is not null)
         {
             throw new InvalidOperationException("A permission with this name already exists.");
         }
 
-        var permission = Permission.Create(request.Dto.Name, request.Dto.Description);
+        var permission = Permission.Create(request.Dto.PermissionType);
 
         context.Permission.Add(permission);
 

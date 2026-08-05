@@ -1,6 +1,7 @@
+using Alkonof_Backend.Domain.Entities.Identity.Enum;
+
 namespace Alkonof_Backend.Application.Modulers.Identities.Permissions.Dtos;
 
 public sealed record CreatePermissionDto(
-    string Name,
-    string Description
+    PermissionType PermissionType
 );

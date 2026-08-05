@@ -7,6 +7,8 @@ using Alkonof_Backend.Application.Modulers.Identities.Users.Dtos;
 using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetAll;
 using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetByEmail;
 using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetById;
+using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetByRole;
+using Alkonof_Backend.Domain.Entities.Identity.Enum;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +22,7 @@ public class Users : IEndpointGroup
         group.MapGet("/{id:guid}", GetUserById);
         group.MapGet("/email/{email}", GetUserByEmail);
         group.MapPost("/", CreateUser);
+        group.MapGet("/role/{role}", GetUserByRole);
         group.MapPut("/{id:guid}", UpdateUser);
         group.MapPatch("/{id:guid}/soft-delete", SoftDeleteUser);
         group.MapDelete("/{id:guid}", DeleteUser);
@@ -46,6 +49,13 @@ public class Users : IEndpointGroup
     public static async Task<Results<Ok<UserDto>, NotFound>> GetUserByEmail(ISender sender, string email)
     {
         var query = new GetUserByEmailQuery(email);
+        var result = await sender.Send(query);
+        return result is not null ? TypedResults.Ok(result) : TypedResults.NotFound();
+    }
+    [EndpointSummary("Get a user by Role")]
+    public static async Task<Results<Ok<UserDto>, NotFound>> GetUserByRole(ISender sender, UserRole role)
+    {
+        var query = new GetUserByRoleQuery(role);
         var result = await sender.Send(query);
         return result is not null ? TypedResults.Ok(result) : TypedResults.NotFound();
     }

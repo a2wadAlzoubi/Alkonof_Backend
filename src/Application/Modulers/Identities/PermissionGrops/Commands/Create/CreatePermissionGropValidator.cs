@@ -4,11 +4,7 @@ public sealed class CreatePermissionGropValidator : AbstractValidator<CreatePerm
 {
     public CreatePermissionGropValidator()
     {
-        RuleFor(x => x.Dto.Name)
-            .NotEmpty().WithMessage("Permission group name cannot be empty.")
-            .MaximumLength(50).WithMessage("Permission group name cannot exceed 50 characters.");
-
-        RuleFor(x => x.Dto.Description)
-            .MaximumLength(200).WithMessage("Description cannot exceed 200 characters.");
+        RuleFor(x => x.Dto.OperationPermission)
+            .NotEmpty().WithMessage("Permission group name cannot be empty.");
     }
 }
