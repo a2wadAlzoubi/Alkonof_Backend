@@ -13,6 +13,13 @@ using Alkonof_Backend.Application.Modulers.Bookings.Book.Queries.GetBookingByUse
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Queries.GetBookingByUserIdStatusDate;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Queries.GetBookings;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Queries.GetConfirmedBooking;
+using Alkonof_Backend.Application.Modulers.Bookings.OrderBook.Commands.CreateOrderBooking;
+using Alkonof_Backend.Application.Modulers.Bookings.OrderBook.Commands.RemoveOrderBooking;
+using Alkonof_Backend.Application.Modulers.Bookings.OrderBook.Commands.UpdateOrderBooking;
+using Alkonof_Backend.Application.Modulers.Bookings.OrderBook.Dtos;
+using Alkonof_Backend.Application.Modulers.Bookings.OrderBook.Queries.GetOrderBookingByCustomerId;
+using Alkonof_Backend.Application.Modulers.Bookings.OrderBook.Queries.GetOrderBookingById;
+using Alkonof_Backend.Application.Modulers.Bookings.OrderBook.Queries.GetOrderBookings;
 using Alkonof_Backend.Application.Modulers.Bookings.Services.Commands.CreateService;
 using Alkonof_Backend.Application.Modulers.Bookings.Services.Commands.RemoveService;
 using Alkonof_Backend.Application.Modulers.Bookings.Services.Commands.UpdateService;
@@ -33,6 +40,7 @@ public class Bookings : IEndpointGroup
     {
         var servicesGroup = group.MapGroup("/services");
         var bookingsGroup = group.MapGroup("/bookings");
+        var orderBookingsGroup = group.MapGroup("/order-bookings");
 
         #region Services Endpoints
         servicesGroup.MapPost("/", CreateService).RequireAuthorization();
@@ -48,8 +56,8 @@ public class Bookings : IEndpointGroup
         bookingsGroup.MapPut("/{id:guid}", UpdateBooking).RequireAuthorization();
         bookingsGroup.MapDelete("/{id:guid}", RemoveBooking).RequireAuthorization();
         bookingsGroup.MapGet("/{id:guid}", GetBookingById).RequireAuthorization();
-        bookingsGroup.MapGet("/customerdate/{customerId:guid}", GetBookingByUserIdDate).RequireAuthorization();
-        bookingsGroup.MapGet("/customerstatusdate/{customerId:guid}", GetBookingByUserIdStatusDate).RequireAuthorization();
+        bookingsGroup.MapGet("/userdate/{userId:guid}", GetBookingByUserIdDate).RequireAuthorization();
+        bookingsGroup.MapGet("/userstatusdate/{userId:guid}", GetBookingByUserIdStatusDate).RequireAuthorization();
         bookingsGroup.MapGet("/date", GetBookingsByDate).RequireAuthorization();
         bookingsGroup.MapGet("/statusdate", GetBookingsByStatusDate).RequireAuthorization();
         #endregion
@@ -63,6 +71,14 @@ public class Bookings : IEndpointGroup
         bookingsGroup.MapPost("/{bookingId:guid}/expire", ExpireBooking).RequireAuthorization();
         #endregion
 
+        #region Order Booking Endpoints
+        orderBookingsGroup.MapPost("/", CreateOrderBooking).RequireAuthorization();
+        orderBookingsGroup.MapPut("/{id:guid}", UpdateOrderBooking).RequireAuthorization();
+        orderBookingsGroup.MapDelete("/{id:guid}", RemoveOrderBooking).RequireAuthorization();
+        orderBookingsGroup.MapGet("/", GetOrderBookings).RequireAuthorization();
+        orderBookingsGroup.MapGet("/{id:guid}", GetOrderBookingById).RequireAuthorization();
+        orderBookingsGroup.MapGet("/customer/{customerId:guid}", GetOrderBookingByCustomerId).RequireAuthorization();
+        #endregion
     }
 
     #region Services Handlers
@@ -148,17 +164,17 @@ public class Bookings : IEndpointGroup
         return TypedResults.Ok(booking);
     }
 
-    [EndpointSummary("Get bookings by customer ID Date")]
-    public static async Task<Ok<List<BookingDto>>> GetBookingByUserIdDate(ISender sender, Guid customerId , TimeRange range = TimeRange.None)
+    [EndpointSummary("Get bookings by user ID Date")]
+    public static async Task<Ok<List<BookingDto>>> GetBookingByUserIdDate(ISender sender, Guid userId , TimeRange range = TimeRange.None)
     {
-        var query = new GetBookingByUserIdDateQuery(customerId , range);
+        var query = new GetBookingByUserIdDateQuery(userId , range);
         var bookings = await sender.Send(query);
         return TypedResults.Ok(bookings);
     }
-    [EndpointSummary("Get bookings by customer ID Status , Date")]
-    public static async Task<Ok<List<BookingDto>>> GetBookingByUserIdStatusDate(ISender sender, Guid customerId , BookingStatus status , TimeRange range = TimeRange.None)
+    [EndpointSummary("Get bookings by user ID Status , Date")]
+    public static async Task<Ok<List<BookingDto>>> GetBookingByUserIdStatusDate(ISender sender, Guid userId , BookingStatus status , TimeRange range = TimeRange.None)
     {
-        var query = new GetBookingByUserIdStatusDateQuery(customerId , status , range);
+        var query = new GetBookingByUserIdStatusDateQuery(userId , status , range);
         var bookings = await sender.Send(query);
         return TypedResults.Ok(bookings);
     }
@@ -231,4 +247,53 @@ public class Bookings : IEndpointGroup
     }
     #endregion
 
+    #region Order Booking Handlers
+    [EndpointSummary("Create a new order booking")]
+    public static async Task<Results<Created<Guid>, BadRequest<string>>> CreateOrderBooking(ISender sender, [FromBody] CreateOrderBookingDto dto)
+    {
+        var command = new CreateOrderBookingCommand(dto);
+        var orderBookingId = await sender.Send(command);
+        return TypedResults.Created($"/api/bookings/order-bookings/{orderBookingId}", orderBookingId);
+    }
+
+    [EndpointSummary("Update an order booking")]
+    public static async Task<IResult> UpdateOrderBooking(ISender sender, [FromBody] OrderBookingDto dto)
+    {
+        var command = new UpdateOrderBookingCommand(dto);
+        await sender.Send(command);
+        return TypedResults.NoContent();
+    }
+
+    [EndpointSummary("Remove an order booking")]
+    public static async Task<IResult> RemoveOrderBooking(ISender sender, Guid id)
+    {
+        var command = new RemoveOrderBookingCommand(id);
+        await sender.Send(command);
+        return TypedResults.NoContent();
+    }
+
+    [EndpointSummary("Get all order bookings")]
+    public static async Task<Ok<List<OrderBookingDto>>> GetOrderBookings(ISender sender)
+    {
+        var query = new GetOrderBookingsQuery();
+        var orderBookings = await sender.Send(query);
+        return TypedResults.Ok(orderBookings);
+    }
+
+    [EndpointSummary("Get an order booking by ID")]
+    public static async Task<Ok<OrderBookingDto>> GetOrderBookingById(ISender sender, Guid id)
+    {
+        var query = new GetOrderBookingByIdQuery(id);
+        var orderBooking = await sender.Send(query);
+        return TypedResults.Ok(orderBooking);
+    }
+
+    [EndpointSummary("Get order bookings by customer ID")]
+    public static async Task<Ok<List<OrderBookingDto>>> GetOrderBookingByCustomerId(ISender sender, Guid customerId)
+    {
+        var query = new GetOrderBookingByCustomerIdQuery(customerId);
+        var orderBookings = await sender.Send(query);
+        return TypedResults.Ok(orderBookings);
+    }
+    #endregion
 }

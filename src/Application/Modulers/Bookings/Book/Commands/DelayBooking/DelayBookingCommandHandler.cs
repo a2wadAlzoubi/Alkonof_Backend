@@ -1,16 +1,19 @@
 using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Domain.Entities.Bookings;
+using Alkonof_Backend.Domain.Entities.Identity.Enum;
 using Alkonof_Backend.Domain.Exceptions;
+using Application.Abstractions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.DelayBooking;
 
-internal sealed class DelayBookingCommandHandler(IApplicationDbContext context)
+internal sealed class DelayBookingCommandHandler(IApplicationDbContext context , ICurrentUserProvider currentUser)
     : IRequestHandler<DelayBookingCommand>
 {
     public async Task Handle(DelayBookingCommand request, CancellationToken cancellationToken)
     {
+        if (currentUser.Role != UserRole.Admin) { throw new InvalidOperationException("Current user is not authenticated."); }
         var booking = await context.Booking
             .FirstOrDefaultAsync(b => b.Id == request.BookingId, cancellationToken);
 

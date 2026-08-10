@@ -1,4 +1,5 @@
-﻿using Application.Abstractions;
+﻿using Alkonof_Backend.Domain.Entities.Identity.Enum;
+using Application.Abstractions;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
@@ -31,7 +32,18 @@ namespace Infrastructure.Abstraction
             }
         }
 
-
+        public UserRole Role
+        {
+            get
+            {
+                return Enum.Parse<UserRole>(
+                    _httpContextAccessor
+                        .HttpContext?
+                        .User?
+                        .FindFirst("Type")?.Value!
+                );
+            }
+        }
     }
 }
 

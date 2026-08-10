@@ -1,14 +1,17 @@
 using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Domain.Entities.Bookings;
+using Alkonof_Backend.Domain.Entities.Identity.Enum;
+using Application.Abstractions;
 using MediatR;
 
 namespace Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.CreateBooking;
 
-internal sealed class CreateBookingCommandHandler(IApplicationDbContext context)
+internal sealed class CreateBookingCommandHandler(IApplicationDbContext context , ICurrentUserProvider currentUser)
     : IRequestHandler<CreateBookingCommand, Guid>
 {
     public async Task<Guid> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
     {
+        if (currentUser.Role != UserRole.Admin) { throw new InvalidOperationException("Current user is not authenticated."); }
         var booking = Booking.CreateBooking(
             request.Dto.Title,
             request.Dto.ExpiredAt,
