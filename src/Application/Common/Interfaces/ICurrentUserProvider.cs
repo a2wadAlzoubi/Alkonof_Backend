@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Alkonof_Backend.Domain.Entities.Identity.Enum;
 
-namespace Application.Abstractions
+namespace Alkonof_Backend.Application.Common.Interfaces
 {
     public interface ICurrentUserProvider
     {

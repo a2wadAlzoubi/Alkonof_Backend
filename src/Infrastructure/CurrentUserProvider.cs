@@ -1,5 +1,5 @@
-﻿using Alkonof_Backend.Domain.Entities.Identity.Enum;
-using Application.Abstractions;
+﻿using Alkonof_Backend.Application.Common.Interfaces;
+using Alkonof_Backend.Domain.Entities.Identity.Enum;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 

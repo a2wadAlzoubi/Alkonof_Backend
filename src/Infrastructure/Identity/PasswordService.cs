@@ -2,7 +2,7 @@
 using System.Text;
 using Alkonof_Backend.Application.Common.Interfaces;
 
-namespace Application.Abstractions;
+namespace Alkonof_Backend.Infrastructure.Identity;
 
 public sealed class PasswordService : IPasswordService
 {

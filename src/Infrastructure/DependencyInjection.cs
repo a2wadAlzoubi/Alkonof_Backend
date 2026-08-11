@@ -5,7 +5,6 @@ using Alkonof_Backend.Domain.Entities.Identity;
 using Alkonof_Backend.Infrastructure.Data;
 using Alkonof_Backend.Infrastructure.Data.Interceptors;
 using Alkonof_Backend.Infrastructure.Identity;
-using Application.Abstractions;
 using Application.Abstractions.JWT;
 using Infrastructure.Abstraction;
 using Infrastructure.JWT;

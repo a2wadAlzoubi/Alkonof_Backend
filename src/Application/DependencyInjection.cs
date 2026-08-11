@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
 using System.Reflection;
 using Alkonof_Backend.Application.Common.Behaviours;
-using Alkonof_Backend.Application.Modulers.Identities.Users.Services;
+using Alkonof_Backend.Application.Common.Interfaces;
 using Application.Abstractions;
 using Application.Abstractions.JWT;
 using Application.Options;

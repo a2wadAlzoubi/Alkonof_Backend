@@ -1,7 +1,6 @@
 using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Domain.Entities.Bookings;
 using Alkonof_Backend.Domain.Entities.Identity.Enum;
-using Application.Abstractions;
 using MediatR;
 
 namespace Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.CreateBooking;

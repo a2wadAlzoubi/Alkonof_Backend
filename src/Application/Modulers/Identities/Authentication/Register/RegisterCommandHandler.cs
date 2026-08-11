@@ -1,6 +1,5 @@
 ﻿using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Application.Modulers.Identities.Authentication.Dtos;
-using Alkonof_Backend.Application.Modulers.Identities.Users.Services;
 using Alkonof_Backend.Domain.Entities.Identity;
 using Application.Abstractions.JWT;
 using Domain.RefreshTokens;

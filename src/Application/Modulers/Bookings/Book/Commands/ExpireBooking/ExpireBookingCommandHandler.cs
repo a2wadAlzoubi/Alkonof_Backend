@@ -2,7 +2,6 @@ using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Domain.Entities.Bookings;
 using Alkonof_Backend.Domain.Entities.Identity.Enum;
 using Alkonof_Backend.Domain.Exceptions;
-using Application.Abstractions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
