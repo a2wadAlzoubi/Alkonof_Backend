@@ -1,8 +1,10 @@
 using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Application.Modulers.Identities.Users.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetAll;
 
+[Authorize]
 internal sealed class GetUsersQueryHandler(IApplicationDbContext context)
     : IRequestHandler<GetUsersQuery, List<UserDto>>
 {

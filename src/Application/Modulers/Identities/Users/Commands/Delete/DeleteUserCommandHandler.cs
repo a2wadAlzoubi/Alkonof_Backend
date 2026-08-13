@@ -20,7 +20,7 @@ internal class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
     public async Task Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
 
-        if (_currentUserProvider.Role != UserRole.Admin) { throw new InvalidOperationException("Current user is not authenticated."); }
+        //if (_currentUserProvider.Role != UserRole.Admin) { throw new InvalidOperationException("Current user is not authenticated."); }
         
         var user = await _context.User
             .FindAsync([request.Id], cancellationToken);

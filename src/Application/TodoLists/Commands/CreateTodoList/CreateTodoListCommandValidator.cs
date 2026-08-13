@@ -1,7 +1,9 @@
 ﻿using Alkonof_Backend.Application.Common.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Alkonof_Backend.Application.TodoLists.Commands.CreateTodoList;
 
+[Authorize]
 public class CreateTodoListCommandValidator : AbstractValidator<CreateTodoListCommand>
 {
     private readonly IApplicationDbContext _context;

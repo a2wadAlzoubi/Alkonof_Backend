@@ -19,7 +19,7 @@ internal sealed class GetBookingByUserIdDateQueryHandler(IApplicationDbContext c
             {
                 Id = b.Id,
                 Title = b.Title,
-                ExpiredAt = b.ExpiredAt,
+                //ExpiredAt = b.ExpiredAt,
                 CustomerId = b.CustomerId,
                 ResponsibleId = b.ResponsibleId,
                 CustomerAnswer = b.CustomerAnswer,

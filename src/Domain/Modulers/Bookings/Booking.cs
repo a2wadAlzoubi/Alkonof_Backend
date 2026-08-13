@@ -15,13 +15,13 @@ public class Booking : BaseAuditableEntity
     private Booking(
         Guid id,
         string title,
-        DateTimeOffset expiredAt,
         Guid customerId,
         Guid responsibleId,
         Decision customerAnser = Decision.Pending,
         Decision responsiplAnser = Decision.Pending,
         BookingStatus status = BookingStatus.UnCreated,
-        Guid? contractId = null
+        Guid? contractId = null,
+        DateTimeOffset? expiredAt = null
         )
     {
         this.Id = id;
@@ -47,7 +47,7 @@ public class Booking : BaseAuditableEntity
     [Required]
     public string Title { get; private set; } = string.Empty;
  
-    public DateTimeOffset ExpiredAt {  get; private set; }
+    public DateTimeOffset? ExpiredAt {  get; private set; }
     [Required]
     public Decision CustomerAnswer {  get; private set; } = Decision.Pending;
     [Required]
@@ -67,38 +67,39 @@ public class Booking : BaseAuditableEntity
 
     public static Booking CreateBooking(
         string title,
-        DateTimeOffset expiredAt,
         Guid customerId,
         Guid responsibleId,
         Decision customerAnser = Decision.Pending,
         Decision responsiplAnser = Decision.Pending,
         BookingStatus status = BookingStatus.UnCreated,
-        Guid? contractId = null
+        Guid? contractId = null,
+        DateTimeOffset? expiredAt = null
         )
     {
         var booking = new Booking(
         Guid.NewGuid(),
         title,
-        expiredAt,
         customerId,
         responsibleId,
         customerAnser,
         responsiplAnser,
         status,
-        contractId);
-
+        contractId,
+        expiredAt
+        );
         booking.AddDomainEvent(new CreateBookingEvent(booking.Id , customerId , responsibleId , expiredAt));
         return booking;
     }
     public void UpdateBooking(
         string title,
-        DateTimeOffset expiredAt,
         Guid customerId,
         Guid responsibleId,
         Decision customerAnser = Decision.Pending,
         Decision responsiplAnser = Decision.Pending,
         BookingStatus status = BookingStatus.UnCreated,
-        Guid? contractId = null)
+        Guid? contractId = null,
+        DateTimeOffset? expiredAt = null
+        )
     {
         this.Status = status;
         this.Title = title;

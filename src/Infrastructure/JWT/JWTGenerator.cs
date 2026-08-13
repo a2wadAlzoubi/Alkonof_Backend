@@ -27,7 +27,8 @@ public class JwtGenerator(IOptionsSnapshot<JwtOptions> jwtOptions) : IJwtGenerat
 
         var token = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.UtcNow.AddDays(_jwtOptions.AccessTokenLifetime),
+            //expires: DateTime.UtcNow.AddDays(_jwtOptions.AccessTokenLifetime),
+            expires: DateTime.UtcNow.AddDays(30),
             signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512)
         );
 

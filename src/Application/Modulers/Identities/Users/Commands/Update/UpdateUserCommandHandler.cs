@@ -25,7 +25,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
         Guard.Against.NotFound(request.UserDto.Id, user);
 
 
-        if (user.Role != UserRole.Admin) { throw new InvalidOperationException("Current user is not authenticated."); }
+        //if (user.Role != UserRole.Admin) { throw new InvalidOperationException("Current user is not authenticated."); }
 
         var hashPassword = passwordService.Hash(request.UserDto.Password);
 

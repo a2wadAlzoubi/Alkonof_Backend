@@ -9,6 +9,7 @@ using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetByEmail;
 using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetById;
 using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetByRole;
 using Alkonof_Backend.Domain.Entities.Identity.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 

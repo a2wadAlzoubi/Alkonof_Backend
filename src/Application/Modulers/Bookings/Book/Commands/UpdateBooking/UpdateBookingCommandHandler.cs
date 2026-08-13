@@ -20,13 +20,13 @@ internal sealed class UpdateBookingCommandHandler(IApplicationDbContext context 
 
         booking.UpdateBooking(
             request.Dto.Title,
-            request.Dto.ExpiredAt,
             request.Dto.CustomerId,
             request.Dto.ResponsibleId,
             request.Dto.CustomerAnswer,
             request.Dto.ResponsibleAnswer,
             request.Dto.Status,
-            request.Dto.ContractId
+            request.Dto.ContractId,
+            request.Dto.ExpiredAt
         );
 
         await context.SaveChangesAsync(cancellationToken);
