@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Application.Modulers.Scheduling.Commands.CreateTimeTable;
 using Alkonof_Backend.Application.Modulers.Scheduling.Commands.RemoveTimeTable;
 using Alkonof_Backend.Application.Modulers.Scheduling.Commands.RestartTimeTable;
@@ -34,9 +35,9 @@ public class Scheduling : IEndpointGroup
     }
 
     [EndpointSummary("Create a new timetable")]
-    public static async Task<Ok<List<Guid>>> CreateTimeTable(ISender sender, HttpContext httpContext, [FromBody] List<CreateTimeTableDto> dtos)
+    public static async Task<Ok<List<Guid>>> CreateTimeTable(ISender sender, ICurrentUserProvider currentUser , HttpContext httpContext, [FromBody] List<CreateTimeTableDto> dtos)
     {
-        var requesterId = Guid.Parse(httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var requesterId = currentUser.Id;
         var command = new CreateTimeTableCommand(dtos, requesterId);
         var result = await sender.Send(command);
         return TypedResults.Ok(result);

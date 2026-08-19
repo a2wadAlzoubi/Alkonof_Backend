@@ -83,7 +83,7 @@ public class Bookings : IEndpointGroup
 
     #region Services Handlers
     [EndpointSummary("Create a new service")]
-    public static async Task<Results<Created<Guid>, BadRequest<string>>> CreateService(ISender sender, [FromBody] CreateServiceDto dto)
+    public static async Task<Results<Created<Guid>, BadRequest<string>>> CreateService(ISender sender,  CreateServiceDto dto)
     {
         var command = new CreateServiceCommand(dto);
         var serviceId = await sender.Send(command);

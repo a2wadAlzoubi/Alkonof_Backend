@@ -19,7 +19,7 @@ internal sealed class CreateServiceCommandHandler(IApplicationDbContext context 
             request.Dto.ServiceType
         );
 
-        await context.Service.AddAsync(service, cancellationToken);
+        context.Service.Add(service);
         await context.SaveChangesAsync(cancellationToken);
 
         return service.Id;
