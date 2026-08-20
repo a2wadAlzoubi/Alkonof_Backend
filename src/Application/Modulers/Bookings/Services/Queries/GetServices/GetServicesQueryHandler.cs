@@ -12,6 +12,7 @@ internal sealed class GetServicesQueryHandler(IApplicationDbContext context)
             .AsNoTracking()
             .Select(s => new ServiceDto
             {
+                Id = s.Id,
                 ServiceName = s.ServiceName,
                 Description = s.Description,
                 ServiceType = s.ServiceType,
