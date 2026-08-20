@@ -4,7 +4,7 @@ namespace Alkonof_Backend.Application.Modulers.Identities.Users.Dtos;
 
 public class UserDto
 {
-    public UserDto(Guid id, string name, string number, string email, UserRole role, bool isDeleted, Guid? permissionId)
+    public UserDto(Guid id, string name, string number, string email, UserRole role, bool isDeleted, Guid? permissionId , Specialization? specialization)
     {
         Id = id;
         Name = name;
@@ -13,6 +13,7 @@ public class UserDto
         Role = role;
         IsDeleted = isDeleted;
         PermissionId = permissionId;
+        Specialization = specialization;
     }
 
     public Guid Id { get; set; }
@@ -23,5 +24,6 @@ public class UserDto
     public UserRole Role { get; set; } = UserRole.Customer;
     public bool IsDeleted { get; set; } = false;
     public Guid? PermissionId { get; set; }
+    public Specialization? Specialization { get; set; } = Domain.Entities.Identity.Enum.Specialization.None;
 
 }

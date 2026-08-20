@@ -19,7 +19,8 @@ internal sealed class GetUserByIdQueryHandler(IApplicationDbContext context)
                 u.Email,
                 u.Role,
                 u.IsDeleted,
-                u.PermissionId
+                u.PermissionId,
+                u.Specialization
             ))
             .FirstOrDefaultAsync(cancellationToken);
 

@@ -11,6 +11,23 @@ public enum UserRole
     Responsible = 1,
     Customer = 2,
 }
+public enum Specialization
+{
+    Civil = 0,
+    Structural = 1,
+    Architectural = 2,
+    Mep = 3,
+    Electrical = 4,
+    Mechanical = 5,
+    Geotechnical = 6,
+    Surveying = 7,
+    ProjectManagement = 8,
+    SiteEngineer = 9,
+    QaQc = 10,
+    Hse = 11,
+    QuantitySurveying = 12,
+    None = 13,
+}
 public enum UserStatus
 {
     Active = 0,

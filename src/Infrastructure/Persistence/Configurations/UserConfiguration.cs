@@ -57,7 +57,8 @@ public class UserConfiguration() : IEntityTypeConfiguration<User>
                     Password = passwordService.Hash("Aaaa1111"),
                     CreatedAt = new DateTimeOffset(2026, 1, 2, 0, 0, 0, TimeSpan.Zero),
                     Role = UserRole.Customer,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Specialization = Specialization.Civil
                 },
                 new
                 {
@@ -68,7 +69,8 @@ public class UserConfiguration() : IEntityTypeConfiguration<User>
                     Password = passwordService.Hash("Aaaa1111"),
                     CreatedAt = new DateTimeOffset(2026, 1, 3, 0, 0, 0, TimeSpan.Zero),
                     Role = UserRole.Responsible,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    Specialization = Specialization.Mechanical
                 },
                 new
                 {

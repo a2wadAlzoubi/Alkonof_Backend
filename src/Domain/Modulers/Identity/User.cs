@@ -29,7 +29,8 @@ public class User : BaseAuditableEntity
         string password,
         UserRole role = UserRole.Customer,
         bool isDeleted = false, 
-        Guid? permissionId = null
+        Guid? permissionId = null,
+        Specialization? specialization = Enum.Specialization.None
         )
     {
         Id = id;
@@ -40,6 +41,7 @@ public class User : BaseAuditableEntity
         IsDeleted = isDeleted;
         PermissionId = permissionId;
         Role = role;
+        Specialization = specialization;
     }
     [Required]
     [StringLength(50 , MinimumLength =2)]
@@ -57,6 +59,7 @@ public class User : BaseAuditableEntity
     public string Password { get; private set; } = string.Empty;
     public bool IsDeleted{ get; private set; } = false;
     public UserRole Role { get; private set; }
+    public Specialization? Specialization { get; private set; }
     public Permission? Permission { get; private set; }
     public Guid? PermissionId { get; private set; }
 
@@ -79,7 +82,9 @@ public class User : BaseAuditableEntity
         string password,
         UserRole role = UserRole.Customer,
         bool isDeleted = false,
-        Guid? permissionId = null)
+        Guid? permissionId = null,
+        Specialization? specialization = Enum.Specialization.None
+        )
     {
         return new User(Guid.NewGuid(), name, number, email, password , role , isDeleted , permissionId);
     }
@@ -96,7 +101,8 @@ public class User : BaseAuditableEntity
         string password,
         UserRole role ,
         bool isDeleted,
-        Guid? permissionId)
+        Guid? permissionId,
+         Specialization? specialization = Enum.Specialization.None)
     {
         Name = name;
         Number = number;
@@ -105,6 +111,7 @@ public class User : BaseAuditableEntity
         IsDeleted = isDeleted;
         Role = role;
         PermissionId = permissionId;
+        Specialization = specialization;
     }
     public void UpdateEmail(string email , Guid userId)
     {

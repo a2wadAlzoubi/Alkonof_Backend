@@ -36,7 +36,8 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
         hashPassword,
         request.UserDto.Role,
         request.UserDto.IsDeleted,
-        request.UserDto.PermissionId
+        request.UserDto.PermissionId,
+        request.UserDto.Specialization
             );
 
         await _context.SaveChangesAsync(cancellationToken);

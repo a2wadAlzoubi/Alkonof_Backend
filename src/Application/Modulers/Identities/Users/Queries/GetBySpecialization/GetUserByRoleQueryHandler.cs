@@ -3,15 +3,15 @@ using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Application.Modulers.Identities.Users.Dtos;
 using Alkonof_Backend.Domain.Entities.Identity;
 
-namespace Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetByRole;
+namespace Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetBySpecialization;
 
-internal sealed class GetUserByRoleQueryHandler(IApplicationDbContext context)
-    : IRequestHandler<GetUserByRoleQuery, List<UserDto>>
+internal sealed class GetUserBySpecializationQueryHandler(IApplicationDbContext context)
+    : IRequestHandler<GetUserBySpecializationQuery, List<UserDto>>
 {
-    public async Task<List<UserDto>> Handle(GetUserByRoleQuery request, CancellationToken cancellationToken)
+    public async Task<List<UserDto>> Handle(GetUserBySpecializationQuery request, CancellationToken cancellationToken)
     {
         var users = await context.User
-            .Where(u => u.Role == request.Role && !u.IsDeleted)
+            .Where(u => u.Specialization == request.Specialization && !u.IsDeleted)
             .Select(u => new UserDto(
                 u.Id,
                 u.Name,
@@ -26,7 +26,7 @@ internal sealed class GetUserByRoleQueryHandler(IApplicationDbContext context)
 
         if (users is null)
         {
-            throw new NotFoundException(nameof(User), request.Role.ToString());
+            throw new NotFoundException(nameof(User), request.Specialization.ToString());
         }
 
         return users;

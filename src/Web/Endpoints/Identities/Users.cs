@@ -8,6 +8,7 @@ using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetAll;
 using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetByEmail;
 using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetById;
 using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetByRole;
+using Alkonof_Backend.Application.Modulers.Identities.Users.Queries.GetBySpecialization;
 using Alkonof_Backend.Domain.Entities.Identity.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -24,6 +25,7 @@ public class Users : IEndpointGroup
         group.MapGet("/email/{email}", GetUserByEmail);
         group.MapPost("/", CreateUser);
         group.MapGet("/role/{role}", GetUserByRole);
+        group.MapGet("/specialization/{specialization}", GetUserBySpecialization);
         group.MapPut("/{id:guid}", UpdateUser);
         group.MapPatch("/{id:guid}/soft-delete", SoftDeleteUser);
         group.MapDelete("/{id:guid}", DeleteUser);
@@ -57,6 +59,13 @@ public class Users : IEndpointGroup
     public static async Task<Results<Ok<List<UserDto>>, NotFound>> GetUserByRole(ISender sender, UserRole role)
     {
         var query = new GetUserByRoleQuery(role);
+        var result = await sender.Send(query);
+        return result is not null ? TypedResults.Ok(result) : TypedResults.NotFound();
+    }
+    [EndpointSummary("Get a user by Specialization")]
+    public static async Task<Results<Ok<List<UserDto>>, NotFound>> GetUserBySpecialization(ISender sender, Specialization specialization)
+    {
+        var query = new GetUserBySpecializationQuery(specialization);
         var result = await sender.Send(query);
         return result is not null ? TypedResults.Ok(result) : TypedResults.NotFound();
     }

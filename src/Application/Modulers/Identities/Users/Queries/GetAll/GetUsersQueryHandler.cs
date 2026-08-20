@@ -19,7 +19,8 @@ internal sealed class GetUsersQueryHandler(IApplicationDbContext context)
                 u.Email,
                 u.Role,
                 u.IsDeleted,
-                u.PermissionId
+                u.PermissionId,
+                u.Specialization
             ))
             .ToListAsync(cancellationToken);
 

@@ -28,7 +28,8 @@ internal sealed class CreateUserCommandHandler(IApplicationDbContext context, IP
             hashedPassword,
             request.Dto.Role,
             false, // IsDeleted
-            request.Dto.PermissionId
+            request.Dto.PermissionId,
+            request.Dto.Specialization
         );
 
         context.User.Add(user);
