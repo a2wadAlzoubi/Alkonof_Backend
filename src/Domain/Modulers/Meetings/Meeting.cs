@@ -17,7 +17,7 @@ public class Meeting : BaseAuditableEntity
         string content,
         string title,
         int meetingNumber,
-        MeetingOutCome outCome = MeetingOutCome.NotStarted,
+        MeetingOutCome outCome = MeetingOutCome.Non,
         MeetingStatus status = MeetingStatus.NotStarted,
         MeetingUserStatus responsibleStatus = MeetingUserStatus.Non,
         MeetingUserStatus customerStatus = MeetingUserStatus.Non

@@ -21,6 +21,22 @@ public class Notification : BaseAuditableEntity
         CreatedAt = createdAt;
     }
 
+    public static Notification Create(Guid userId, Guid templateId, NotificationStatus status, ReferenceType referenceType, Guid referenceId, bool isRead)
+    {
+        var notification = new Notification
+        {
+            Id = Guid.NewGuid(),
+            UserId = userId,
+            TemplateId = templateId,
+            Status = status,
+            ReferenceType = referenceType,
+            ReferenceId = referenceId,
+            IsRead = isRead,
+            CreatedAt = DateTimeOffset.UtcNow
+        };
+        return notification;
+    }
+
     public NotificationStatus Status { get; private set; } = NotificationStatus.unRead;
     public ReferenceType ReferenceType { get; private set; } = ReferenceType.Non;
     public Guid ReferenceId { get; private set; }

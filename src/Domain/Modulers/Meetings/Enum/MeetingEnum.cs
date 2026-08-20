@@ -18,7 +18,8 @@ public enum MeetingOutCome
     AgreementReched = 0,
     NeededAnotherMeeting = 1,
     Rejected = 2,
-    NotStarted = 3
+    NotStarted = 3,
+    Non= 4,
 }
 public enum MeetingUserStatus
 {

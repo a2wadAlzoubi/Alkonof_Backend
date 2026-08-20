@@ -26,7 +26,7 @@ public class Stage : BaseAuditableEntity
 
     }
     [Required]
-    [StringLength(05)]
+    [StringLength(50)]
     public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     [Required]
@@ -50,7 +50,14 @@ public class Stage : BaseAuditableEntity
         stage.AddDomainEvent(new StageCreatedEvent(stage.Id, status));
         return stage;
     }
-    public void UpdateStage(string name, string description, double progress, DateTimeOffset startedDate, DateTimeOffset actualEndedDate, Guid projectId, StageStatus status = StageStatus.NotStarted)
+    public void UpdateStage(
+        string name,
+        string description,
+        double progress,
+        DateTimeOffset startedDate,
+        DateTimeOffset actualEndedDate,
+        Guid projectId,
+        StageStatus status = StageStatus.NotStarted)
     {
         this.Name = name;
         this.Description = description;

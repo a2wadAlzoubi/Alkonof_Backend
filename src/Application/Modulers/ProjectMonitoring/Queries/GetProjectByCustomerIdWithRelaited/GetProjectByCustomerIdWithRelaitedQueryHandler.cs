@@ -23,7 +23,9 @@ public class GetProjectByCustomerIdWithRelaitedQueryHandler : IRequestHandler<Ge
     {
         // افتراض أن Project تحتوي على CustomerId (الخاصية موجودة في الكيان الأساسي)
         var projects = await _context.Project
-            .Where(p => EF.Property<Guid>(p, "CustomerId") == request.CustomerId)
+            //.Where(p => EF.Property<Guid>(p, "CustomerId") == request.CustomerId)
+            .Where(p => p.Contract != null && p.Contract.Booking != null)
+            .Where(p => p.Contract!.Booking!.CustomerId == request.CustomerId)
             .ProjectToType<ProjectWithRelationsDto>()
             .ToListAsync(cancellationToken);
 

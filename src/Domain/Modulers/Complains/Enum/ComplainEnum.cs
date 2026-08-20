@@ -7,7 +7,7 @@ namespace Alkonof_Backend.Domain.Entities.Complains.Enum;
 public enum ComplainStatus
 {
     UnReaded = 0,
-    Reared = 1,
+    Readed = 1,
     Resolved = 2,
 
 }
