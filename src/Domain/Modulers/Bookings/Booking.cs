@@ -17,17 +17,17 @@ public class Booking : BaseAuditableEntity
         string title,
         Guid customerId,
         Guid responsibleId,
+        DateTimeOffset confirmedAt, 
         Decision customerAnser = Decision.Pending,
         Decision responsiplAnser = Decision.Pending,
         BookingStatus status = BookingStatus.UnCreated,
-        Guid? contractId = null,
-        DateTimeOffset? expiredAt = null
+        Guid? contractId = null
         )
     {
         this.Id = id;
         this.Status = status;
         this.Title = title;
-        this.ExpiredAt = expiredAt;
+        this.ConfirmedAt = confirmedAt;
         this.CustomerAnswer = customerAnser;
         this.ResponsibleAnswer = responsiplAnser;
         this.CustomerId = customerId;
@@ -46,8 +46,8 @@ public class Booking : BaseAuditableEntity
     public BookingStatus Status { get; private set; } = BookingStatus.UnCreated;
     [Required]
     public string Title { get; private set; } = string.Empty;
- 
-    public DateTimeOffset? ExpiredAt {  get; private set; }
+    [Required]
+    public DateTimeOffset ConfirmedAt {  get; private set; }
     [Required]
     public Decision CustomerAnswer {  get; private set; } = Decision.Pending;
     [Required]
@@ -69,11 +69,11 @@ public class Booking : BaseAuditableEntity
         string title,
         Guid customerId,
         Guid responsibleId,
+        DateTimeOffset confirmedAt,
         Decision customerAnser = Decision.Pending,
         Decision responsiplAnser = Decision.Pending,
         BookingStatus status = BookingStatus.UnCreated,
-        Guid? contractId = null,
-        DateTimeOffset? expiredAt = null
+        Guid? contractId = null
         )
     {
         var booking = new Booking(
@@ -81,29 +81,29 @@ public class Booking : BaseAuditableEntity
         title,
         customerId,
         responsibleId,
+        confirmedAt,
         customerAnser,
         responsiplAnser,
         status,
-        contractId,
-        expiredAt
+        contractId
         );
-        booking.AddDomainEvent(new CreateBookingEvent(booking.Id , customerId , responsibleId , expiredAt));
+        booking.AddDomainEvent(new CreateBookingEvent(booking.Id , customerId , responsibleId , confirmedAt));
         return booking;
     }
     public void UpdateBooking(
         string title,
         Guid customerId,
         Guid responsibleId,
+        DateTimeOffset confirmedAt,
         Decision customerAnser = Decision.Pending,
         Decision responsiplAnser = Decision.Pending,
         BookingStatus status = BookingStatus.UnCreated,
-        Guid? contractId = null,
-        DateTimeOffset? expiredAt = null
+        Guid? contractId = null
         )
     {
         this.Status = status;
         this.Title = title;
-        this.ExpiredAt = expiredAt;
+        this.ConfirmedAt = confirmedAt;
         this.CustomerAnswer = customerAnser;
         this.ResponsibleAnswer = responsiplAnser;
         this.CustomerId = customerId;

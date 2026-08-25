@@ -21,7 +21,7 @@ public class Contracts : IEndpointGroup
 {
     public static void Map(RouteGroupBuilder group)
     {
-        group.WithTags("Contracts");
+        group.WithTags("Contracts").RequireAuthorization();
 
         // Commands
         group.MapPost("/", CreateContract)

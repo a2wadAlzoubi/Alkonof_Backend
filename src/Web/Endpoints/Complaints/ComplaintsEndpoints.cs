@@ -30,7 +30,7 @@ public class ComplaintsEndpoints : IEndpointGroup
 {
     public static void Map(RouteGroupBuilder group)
     {
-        group.WithTags("Complaints");
+        group.WithTags("Complaints").RequireAuthorization();
 
         // Complain Commands
         group.MapPost("/", CreateComplain)

@@ -22,11 +22,11 @@ internal sealed class UpdateBookingCommandHandler(IApplicationDbContext context 
             request.Dto.Title,
             request.Dto.CustomerId,
             request.Dto.ResponsibleId,
+            request.Dto.ConfirmedAt,
             request.Dto.CustomerAnswer,
             request.Dto.ResponsibleAnswer,
             request.Dto.Status,
-            request.Dto.ContractId,
-            request.Dto.ExpiredAt
+            request.Dto.ContractId
         );
 
         await context.SaveChangesAsync(cancellationToken);

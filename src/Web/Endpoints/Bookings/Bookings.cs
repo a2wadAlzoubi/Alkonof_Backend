@@ -6,8 +6,10 @@ using Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.CreateBooking;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.DelayBooking;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.ExpireBooking;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.RemoveBooking;
+using Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.UpdateBookingResponsibleId;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.UpdateBooking;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Dtos;
+using Alkonof_Backend.Application.Modulers.Bookings.Book.Queries.GetBookingByDayOfWeekAndResponsibleId;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Queries.GetBookingById;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Queries.GetBookingByUserId;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Queries.GetBookingByUserIdStatusDate;
@@ -46,9 +48,9 @@ public class Bookings : IEndpointGroup
         servicesGroup.MapPost("/", CreateService).RequireAuthorization();
         servicesGroup.MapPut("/{id:guid}", UpdateService).RequireAuthorization();
         servicesGroup.MapDelete("/{id:guid}", RemoveService).RequireAuthorization();
-        servicesGroup.MapGet("/{id:guid}", GetServiceById).RequireAuthorization();
+        servicesGroup.MapGet("/{id:guid}", GetServiceById);
         servicesGroup.MapGet("/type/{serviceType}", GetServiceByServiceType).RequireAuthorization();
-        servicesGroup.MapGet("/", GetServices).RequireAuthorization();
+        servicesGroup.MapGet("/", GetServices);
         #endregion
 
         #region Booking Endpoints
@@ -60,6 +62,7 @@ public class Bookings : IEndpointGroup
         bookingsGroup.MapGet("/userstatusdate/{userId:guid}", GetBookingByUserIdStatusDate).RequireAuthorization();
         bookingsGroup.MapGet("/date", GetBookingsByDate).RequireAuthorization();
         bookingsGroup.MapGet("/statusdate", GetBookingsByStatusDate).RequireAuthorization();
+        bookingsGroup.MapGet("/responsible/{responsibleId:guid}/day/{dayOfWeek}", GetBookingByDayOfWeekAndResponsibleId).RequireAuthorization();
         #endregion
 
         #region Booking State Management Endpoints
@@ -69,6 +72,7 @@ public class Bookings : IEndpointGroup
         bookingsGroup.MapPost("/{bookingId:guid}/delay", DelayBooking).RequireAuthorization();
         bookingsGroup.MapPost("/{bookingId:guid}/cancel", CancellBooking).RequireAuthorization();
         bookingsGroup.MapPost("/{bookingId:guid}/expire", ExpireBooking).RequireAuthorization();
+        bookingsGroup.MapPatch("/{bookingId:guid}/responsible/{responsibleId:guid}", UpdateBookingResponsibleId).RequireAuthorization();
         #endregion
 
         #region Order Booking Endpoints
@@ -193,6 +197,14 @@ public class Bookings : IEndpointGroup
         var bookings = await sender.Send(query);
         return TypedResults.Ok(bookings);
     }
+
+    [EndpointSummary("Get bookings by responsible ID and day of the week")]
+    public static async Task<Ok<List<BookingDto>>> GetBookingByDayOfWeekAndResponsibleId(ISender sender, Guid responsibleId, DayOfWeek dayOfWeek)
+    {
+        var query = new GetBookingByDayOfWeekAndResponsibleIdQuery(responsibleId, dayOfWeek);
+        var bookings = await sender.Send(query);
+        return TypedResults.Ok(bookings);
+    }
     #endregion
 
     #region Booking State Management Handlers
@@ -242,6 +254,14 @@ public class Bookings : IEndpointGroup
     public static async Task<IResult> ExpireBooking(ISender sender, Guid bookingId)
     {
         var command = new ExpireBookingCommand(bookingId);
+        await sender.Send(command);
+        return TypedResults.NoContent();
+    }
+
+    [EndpointSummary("Update the responsible ID of a booking")]
+    public static async Task<IResult> UpdateBookingResponsibleId(ISender sender, Guid bookingId, Guid responsibleId)
+    {
+        var command = new UpdateBookingResponsibleIdCommand(bookingId, responsibleId);
         await sender.Send(command);
         return TypedResults.NoContent();
     }

@@ -20,6 +20,7 @@ public class Users : IEndpointGroup
 {
     public static void Map(RouteGroupBuilder group)
     {
+        group.WithTags("Users").RequireAuthorization();
         group.MapGet("/", GetUsers);
         group.MapGet("/{id:guid}", GetUserById);
         group.MapGet("/email/{email}", GetUserByEmail);

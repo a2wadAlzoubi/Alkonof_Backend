@@ -57,7 +57,7 @@ public class ApplicationDbContextInitialiser
     {
         try
         {
-            await _context.Database.EnsureDeletedAsync();
+            //await _context.Database.EnsureDeletedAsync();
             await _context.Database.EnsureCreatedAsync();
         }
         catch (Exception ex)
@@ -71,6 +71,7 @@ public class ApplicationDbContextInitialiser
     {
         try
         {
+            
             await TrySeedAsync();
 
             await _context.Database.MigrateAsync();
@@ -131,6 +132,7 @@ public class ApplicationDbContextInitialiser
             var booking1 = Booking.CreateBooking("New Interior Design Consultation",
                 customer1.Id,
                 responsible.Id,
+                DateTimeOffset.Now,
                 Decision.Pending,
                 Decision.Pending,
                 BookingStatus.InReviewCustomer
@@ -144,6 +146,7 @@ public class ApplicationDbContextInitialiser
             var booking2 = Booking.CreateBooking("Civil Works Initial Meeting",
                 customer2.Id,
                 responsible.Id,
+                DateTimeOffset.Now,
                 Decision.Approved,
                 Decision.Approved,
                 BookingStatus.Confirmed);
@@ -156,6 +159,7 @@ public class ApplicationDbContextInitialiser
             var booking3 = Booking.CreateBooking("Cancelled IT Consultation",
                 customer3.Id,
                 responsible.Id,
+                DateTimeOffset.Now,
                 Decision.Rejected,
                 Decision.Approved,
                 BookingStatus.Cancelled);
@@ -322,8 +326,78 @@ public class ApplicationDbContextInitialiser
         if (!_context.TimeTable.Any())
         {
             // Scenario 5 (cont.): Staff Scheduling
-            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 0, true, responsible.Id));
-            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 0, true, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 8, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 9, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 10, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 11, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 12, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 13, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 14, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 15, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 16, false, responsible.Id));
+            // ..
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 8, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 9, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 10, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 11, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 12, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 13, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 14, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 15, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 16, false, responsible.Id));
+            // ..
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Sunday, 8, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Sunday, 9, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Sunday, 10, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Sunday, 11, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Sunday, 12, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Sunday, 13, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Sunday, 14, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Sunday, 15, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Sunday, 16, false, responsible.Id));
+            // ..
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Monday, 8, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Monday, 9, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Monday, 10, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Monday, 11, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Monday, 12, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Monday, 13, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Monday, 14, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Monday, 15, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Monday, 16, false, responsible.Id));
+            // ..
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Tuesday, 8, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Tuesday, 9, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Tuesday, 10, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Tuesday, 11, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Tuesday, 12, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Tuesday, 13, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Tuesday, 14, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Tuesday, 15, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Tuesday, 16, false, responsible.Id));
+            // ..
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Wednesday, 8, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Wednesday, 9, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Wednesday, 10, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Wednesday, 11, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Wednesday, 12, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Wednesday, 13, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Wednesday, 14, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Wednesday, 15, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Wednesday, 16, false, responsible.Id));
+            // ..
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Thursday, 8, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Thursday, 9, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Thursday, 10, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Thursday, 11, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Thursday, 12, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Thursday, 13, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Thursday, 14, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Thursday, 15, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Thursday, 16, false, responsible.Id));
+            // ..
+
+
             await _context.SaveChangesAsync();
         }
     }

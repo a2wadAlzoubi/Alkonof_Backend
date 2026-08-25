@@ -19,7 +19,7 @@ public class Identity : IEndpointGroup
 
     public static void Map(RouteGroupBuilder group)
     {
-        group.WithTags("Identity");
+        group.WithTags("Identity").RequireAuthorization();
 
         // Authentication Endpoints
         group.MapPost("/register", Register)

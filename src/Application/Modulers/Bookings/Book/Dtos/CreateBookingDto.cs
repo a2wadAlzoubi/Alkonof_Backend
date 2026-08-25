@@ -5,7 +5,7 @@ namespace Alkonof_Backend.Application.Modulers.Bookings.Book.Dtos;
 public class CreateBookingDto
 {
     public string Title { get; set; } = string.Empty;
-    public DateTimeOffset? ExpiredAt { get; set; }
+    public DateTimeOffset ConfirmedAt { get; set; }
     public Guid CustomerId { get; set; }
     public Guid ResponsibleId { get; set; }
     public Decision CustomerAnswer { get; set; }

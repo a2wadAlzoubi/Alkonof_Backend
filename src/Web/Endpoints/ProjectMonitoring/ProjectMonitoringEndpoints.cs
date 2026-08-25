@@ -36,7 +36,7 @@ public class ProjectMonitoringEndpoints : IEndpointGroup
 {
     public static void Map(RouteGroupBuilder group)
     {
-        group.WithTags("ProjectMonitoring");
+        group.WithTags("ProjectMonitoring").RequireAuthorization();
 
         // Stage Commands
         group.MapPost("/stages", CreateStage)

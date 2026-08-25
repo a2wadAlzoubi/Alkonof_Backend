@@ -32,7 +32,7 @@ public class Meetings : IEndpointGroup
 {
     public static void Map(RouteGroupBuilder group)
     {
-        group.WithTags("Meetings");
+        group.WithTags("Meetings").RequireAuthorization();
 
         // Commands
         group.MapPost("/", CreateMeeting)
