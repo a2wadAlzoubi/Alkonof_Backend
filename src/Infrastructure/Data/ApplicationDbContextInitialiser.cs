@@ -74,7 +74,7 @@ public class ApplicationDbContextInitialiser
             
             await TrySeedAsync();
 
-            await _context.Database.MigrateAsync();
+            //await _context.Database.MigrateAsync();
         }
         catch (Exception ex)
         {
