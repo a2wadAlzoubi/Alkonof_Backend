@@ -1,12 +1,14 @@
 using Alkonof_Backend.Application.Common.Interfaces;
+using Alkonof_Backend.Application.Modulers.Bookings.Book.Events;
 using Alkonof_Backend.Domain.Entities.Bookings;
 using Alkonof_Backend.Domain.Exceptions;
+using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.AssignCustomerAnswer;
 
-internal sealed class AssignCustomerAnswerCommandHandler(IApplicationDbContext context)
+internal sealed class AssignCustomerAnswerCommandHandler(IApplicationDbContext context, IPublishEndpoint publishEndpoint)
     : IRequestHandler<AssignCustomerAnswerCommand>
 {
     public async Task Handle(AssignCustomerAnswerCommand request, CancellationToken cancellationToken)
@@ -22,5 +24,7 @@ internal sealed class AssignCustomerAnswerCommandHandler(IApplicationDbContext c
         booking.AssignCustomerAnswer(request.Decision, request.BookingId, request.CustomerId);
 
         await context.SaveChangesAsync(cancellationToken);
+
+        await publishEndpoint.Publish(new CustomerAnswerAssignedEvent(booking.Id), cancellationToken);
     }
 }

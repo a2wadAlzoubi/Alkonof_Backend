@@ -12,6 +12,7 @@
     <PackageReference Include="Mapster" />
     <PackageReference Include="Mapster.DependencyInjection" />
     <PackageReference Include="Mapster.JsonNet" />
+    <PackageReference Include="MassTransit.Abstractions" />
     <PackageReference Include="MediatR" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" />

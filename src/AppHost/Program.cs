@@ -16,8 +16,11 @@ var sql = builder.AddSqlServer("sql").WithContainerName("alknof-sql").WithEndpoi
 var databaseServer = sql.AddDatabase("Alknof");
 
 
+var messaging = builder.AddRabbitMQ("messaging");
+
 var web = builder.AddProject<Projects.Web>(Services.WebApi)
     .WithReference(databaseServer)
+    .WithReference(messaging)
     .WaitFor(databaseServer)
     .WithExternalHttpEndpoints()
     .WithAspNetCoreEnvironment()

@@ -6,11 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit.EntityFrameworkCore" />
+    <PackageReference Include="MassTransit.RabbitMQ" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
-    <PackageReference Include="RabbitMQ.Client" />
     <PackageReference Include="System.Security.Cryptography.Xml" />
   </ItemGroup>
 

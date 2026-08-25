@@ -57,7 +57,7 @@ public class ApplicationDbContextInitialiser
     {
         try
         {
-            //await _context.Database.EnsureDeletedAsync();
+            await _context.Database.EnsureDeletedAsync();
             await _context.Database.EnsureCreatedAsync();
         }
         catch (Exception ex)
@@ -74,7 +74,7 @@ public class ApplicationDbContextInitialiser
             
             await TrySeedAsync();
 
-            //await _context.Database.MigrateAsync();
+            await _context.Database.MigrateAsync();
         }
         catch (Exception ex)
         {

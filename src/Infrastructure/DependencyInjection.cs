@@ -4,6 +4,7 @@ using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Domain.Entities.Identity;
 using Alkonof_Backend.Infrastructure.Data;
 using Alkonof_Backend.Infrastructure.Data.Interceptors;
+using MassTransit;
 using Alkonof_Backend.Infrastructure.Identity;
 using Application.Abstractions.JWT;
 using Infrastructure.Abstraction;
@@ -89,5 +90,28 @@ public static class DependencyInjection
         });
 
         builder.Services.AddHttpContextAccessor();
+        
+        // MassTransit
+        builder.Services.AddMassTransit(x =>
+        {
+            x.AddEntityFrameworkOutbox<ApplicationDbContext>(o =>
+            {
+                o.QueryDelay = TimeSpan.FromSeconds(10);
+
+                o.UseSqlServer();
+                o.UseBusOutbox();
+            });
+            
+            x.SetKebabCaseEndpointNameFormatter();
+
+            x.AddConsumers(typeof(ApplicationDbContext).Assembly);
+
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(configuration.GetConnectionString("messaging"));
+                
+                cfg.ConfigureEndpoints(context);
+            });
+        });
     }
 }
