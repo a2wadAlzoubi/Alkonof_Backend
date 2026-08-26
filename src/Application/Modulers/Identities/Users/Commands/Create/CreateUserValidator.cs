@@ -11,5 +11,6 @@ public sealed class CreateUserValidator : AbstractValidator<CreateUserCommand>
         RuleFor(x => x.Dto.Password).NotEmpty().MinimumLength(6).MaximumLength(200);
         RuleFor(x => x.Dto.Number).NotEmpty().MaximumLength(20);
         RuleFor(x => x.Dto.Role).IsInEnum();
+        RuleFor(x => x.Dto.Specialization).IsInEnum();
     }
 }

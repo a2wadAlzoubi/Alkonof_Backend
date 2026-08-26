@@ -20,8 +20,8 @@ internal sealed class GetBookingByUserIdStatusDateQueryHandler(IApplicationDbCon
             {
                 Id = b.Id,
                 Title = b.Title,
-                //ExpiredAt = b.ExpiredAt,
                 CustomerId = b.CustomerId,
+                ConfirmedAt = b.ConfirmedAt,
                 ResponsibleId = b.ResponsibleId,
                 CustomerAnswer = b.CustomerAnswer,
                 ResponsibleAnswer = b.ResponsibleAnswer,

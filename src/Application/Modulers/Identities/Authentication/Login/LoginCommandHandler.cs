@@ -21,7 +21,7 @@ namespace Alkonof_Backend.Application.Modulers.Identities.Authentication.Login
             var user = await context.User
                 .Include(u => u.RefreshTokens)
                 .SingleOrDefaultAsync(
-                    u => u.Email == request.Login.Email,
+                    u => u.Email == request.Login.Email && u.IsDeleted != true,
                     cancellationToken);
 
 

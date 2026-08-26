@@ -29,8 +29,8 @@ public class User : BaseAuditableEntity
         string password,
         UserRole role = UserRole.Customer,
         bool isDeleted = false, 
-        Guid? permissionId = null,
-        Specialization? specialization = Enum.Specialization.None
+        Specialization? specialization = Enum.Specialization.None,
+        Guid? permissionId = null
         )
     {
         Id = id;
@@ -82,11 +82,11 @@ public class User : BaseAuditableEntity
         string password,
         UserRole role = UserRole.Customer,
         bool isDeleted = false,
-        Guid? permissionId = null,
-        Specialization? specialization = Enum.Specialization.None
+        Specialization? specialization = Enum.Specialization.None,
+        Guid? permissionId = null
         )
     {
-        return new User(Guid.NewGuid(), name, number, email, password , role , isDeleted , permissionId);
+        return new User(Guid.NewGuid(), name, number, email, password , role , isDeleted , specialization , permissionId);
     }
     public static User Register(string name, string number, string email, string password )
     {

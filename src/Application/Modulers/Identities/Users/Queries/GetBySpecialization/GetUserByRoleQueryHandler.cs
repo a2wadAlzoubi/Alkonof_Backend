@@ -19,8 +19,8 @@ internal sealed class GetUserBySpecializationQueryHandler(IApplicationDbContext 
                 u.Email,
                 u.Role,
                 u.IsDeleted,
-                u.PermissionId,
-                u.Specialization
+                u.Specialization,
+                u.PermissionId
             ))
             .ToListAsync();
 

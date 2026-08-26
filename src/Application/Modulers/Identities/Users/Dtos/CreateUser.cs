@@ -14,7 +14,7 @@ namespace Alkonof_Backend.Application.Modulers.Identities.Users.Dtos
         public string   Password   { get; set; } = string.Empty;
         public UserRole Role    { get; set; } = UserRole.Customer;
         public bool IsDeleted { get; set; } = false;
+        public Specialization? Specialization { get; set; }
         public Guid? PermissionId { get; set; }
-        public Specialization? Specialization { get; set; } = Domain.Entities.Identity.Enum.Specialization.None;
     }
 }
