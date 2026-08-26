@@ -1,138 +1,144 @@
-version: "3.9"
-
 services:
 
-  ########################################################
-  # SQL SERVER DATABASE
-  ########################################################
-
+  # ========================================================
+  # SQL SERVER
+  # ========================================================
   sqlserver:
-
     image: mcr.microsoft.com/mssql/server:2022-latest
-
     container_name: alkonof-sqlserver
 
     restart: unless-stopped
 
     environment:
-
       ACCEPT_EULA: "Y"
-
-      MSSQL_SA_PASSWORD: ${DB_PASSWORD}
-
-      MSSQL_PID: Developer
-
+      MSSQL_SA_PASSWORD: "${DB_PASSWORD}"
+      MSSQL_PID: "Developer"
 
     ports:
-
       - "${SQL_PORT}:1433"
 
-
     volumes:
-
       - alkonof_sql_data:/var/opt/mssql
 
-
     healthcheck:
-
       test:
         [
           "CMD-SHELL",
-          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P ${DB_PASSWORD} -C -Q 'SELECT 1'"
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${DB_PASSWORD}\" -C -Q \"SELECT 1\""
         ]
-
       interval: 10s
-
       timeout: 5s
-
       retries: 10
+      start_period: 40s
 
-      start_period: 30s
     networks:
       - alkonof-network
 
 
-
-  ########################################################
-  # WEB API
-  ########################################################
-
-  api:
-
-
-    image: alknof-api:latest
-
-
-    container_name: alkonof-api
-
+  # ========================================================
+  # RABBITMQ
+  # ========================================================
+  messaging:
+    image: rabbitmq:3-management
+    container_name: alkonof-rabbitmq
 
     restart: unless-stopped
 
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+    environment:
+      RABBITMQ_DEFAULT_USER: "${RABBITMQ_USER}"
+      RABBITMQ_DEFAULT_PASS: "${RABBITMQ_PASSWORD}"
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "rabbitmq-diagnostics",
+          "ping"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+    networks:
+      - alkonof-network
+
+
+  # ========================================================
+  # ALKONOF API
+  # ========================================================
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: alkonof-api:latest
+
+    container_name: alkonof-api
+
+    restart: unless-stopped
 
     depends_on:
 
       sqlserver:
-
         condition: service_healthy
 
-
+      messaging:
+        condition: service_healthy
 
     ports:
-
-      - "${API_HTTP_PORT}:8080"
-
-
+      - "${API_HTTP_PORT:-8000}:8080"
 
     environment:
 
+      ASPNETCORE_ENVIRONMENT: "${ASPNETCORE_ENVIRONMENT:-Production}"
 
-      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      ASPNETCORE_URLS: "http://+:8080"
 
-
-      ASPNETCORE_URLS: http://+:8080
-
-
-
-      ConnectionStrings__alkonofbackenddb:
-
+      # ----------------------------------------------------
+      # SQL SERVER
+      # ----------------------------------------------------
+      ConnectionStrings__alkonofbackenddb: >-
         Server=sqlserver,1433;
         Database=${DB_NAME};
         User Id=${DB_USER};
         Password=${DB_PASSWORD};
         TrustServerCertificate=True;
+        Encrypt=False;
 
+      # ----------------------------------------------------
+      # RABBITMQ
+      # ----------------------------------------------------
+      ConnectionStrings__messaging: >-
+        amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@messaging:5672
 
-
-      JwtOptions__Key: ${JWT_KEY}
-
-      JwtOptions__Issuer: ${JWT_ISSUER}
-
-      JwtOptions__Audience: ${JWT_AUDIENCE}
-
-
+      # ----------------------------------------------------
+      # JWT
+      # ----------------------------------------------------
+      JwtOptions__Key: "${JWT_KEY}"
+      JwtOptions__Issuer: "${JWT_ISSUER}"
+      JwtOptions__Audience: "${JWT_AUDIENCE}"
 
     networks:
-
       - alkonof-network
 
 
-
-########################################################
-# STORAGE
-########################################################
-
+# ==========================================================
+# VOLUMES
+# ==========================================================
 volumes:
 
   alkonof_sql_data:
 
 
-
-########################################################
+# ==========================================================
 # NETWORK
-########################################################
-
+# ==========================================================
 networks:
 
   alkonof-network:
-
     driver: bridge
