@@ -12,7 +12,7 @@ internal sealed class RestartTimeTableCommandHandler(IApplicationDbContext conte
         foreach (var timeTable in allTimeTables)
         {
             // The EnableReservation method already sets IsReserved to false.
-            timeTable.EnableReservation(timeTable);
+            timeTable.Reserve();
         }
 
         await context.SaveChangesAsync(cancellationToken);

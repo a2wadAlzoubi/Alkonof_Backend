@@ -10,6 +10,7 @@ using Alkonof_Backend.Domain.Entities.Identity.Enum;
 using Alkonof_Backend.Domain.Entities.Identity.IdentityEvents;
 using Alkonof_Backend.Domain.Entities.Notifications;
 using Alkonof_Backend.Domain.Entities.ProjectMonitoring;
+using Alkonof_Backend.Domain.Entities.Schedualing;
 using Domain.RefreshTokens;
 
 namespace Alkonof_Backend.Domain.Entities.Identity;
@@ -74,6 +75,7 @@ public class User : BaseAuditableEntity
     public ICollection<Notification>? Notifications { get; private set; }
     public ICollection<ProjectStaff>? ProjectStaffs { get; private set; }
     public ICollection<RefreshToken>? RefreshTokens { get; private set; }
+    public ICollection<TimeTable>? TimeTables { get; private set; }
 
     public static User Create(
         string name,

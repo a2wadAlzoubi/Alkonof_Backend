@@ -27,6 +27,7 @@ internal sealed class GetBookingByDayOfWeekAndResponsibleIdQueryHandler(IApplica
                 CustomerId = b.CustomerId,
                 ResponsibleId = b.ResponsibleId,
                 CustomerAnswer = b.CustomerAnswer,
+                ConfirmedAt = b.ConfirmedAt,
                 ResponsibleAnswer = b.ResponsibleAnswer,
                 Status = b.Status,
                 ContractId = b.ContractId,

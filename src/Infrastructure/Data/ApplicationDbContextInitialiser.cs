@@ -74,7 +74,7 @@ public class ApplicationDbContextInitialiser
             
             await TrySeedAsync();
 
-            await _context.Database.MigrateAsync();
+            //await _context.Database.MigrateAsync();
         }
         catch (Exception ex)
         {
@@ -132,7 +132,7 @@ public class ApplicationDbContextInitialiser
             var booking1 = Booking.CreateBooking("New Interior Design Consultation",
                 customer1.Id,
                 responsible.Id,
-                DateTimeOffset.Now,
+                DateTimeOffset.Parse("2026-08-27T10:00:00+03:00"),
                 BookingStatus.InReviewCustomer
                 );
             _context.Booking.Add(booking1);
@@ -306,6 +306,8 @@ public class ApplicationDbContextInitialiser
                 await _context.SaveChangesAsync();
             }
         }
+
+
 
         // Seed Project Reports
         if (!_context.ProjectReport.Any())

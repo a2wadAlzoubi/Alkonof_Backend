@@ -35,16 +35,16 @@ public class TimeTable : BaseAuditableEntity
         return new TimeTable(Guid.NewGuid() , day, hour , isReserved , responsibleId);
     }
 
-    public void EnableReservation(TimeTable time)
-    {
-        IsReserved = false;
-        AddDomainEvent(new EnableReservationEvent(time));
-    }
-    public void BanReservation(TimeTable time)
+    public void Reserve()
     {
         IsReserved = true;
+        //AddDomainEvent(new EnableReservationEvent(time));
+    }
+    public void UnReserve()
+    {
+        IsReserved = false;
 
-        AddDomainEvent(new BanReservationEvent(time));
+        //AddDomainEvent(new BanReservationEvent(time));
     }
 
     public void Update(DayOfWeek dayOfWeek, int hour, bool isReserved, Guid responsibleId)
