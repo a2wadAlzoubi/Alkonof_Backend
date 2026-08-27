@@ -1,5 +1,7 @@
 // This file configures and starts the main web service.
 using Alkonof_Backend.Infrastructure.Data;
+using Alkonof_Backend.Infrastructure.Hangfire;
+using Hangfire;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +42,12 @@ app.MapOpenApi();
 app.MapScalarApiReference();
 
 app.UseExceptionHandler(options => { });
+
+// Use Hangfire Dashboard
+app.UseHangfireDashboard("/hangfire");
+
+// Schedule recurring jobs using the centralized scheduler
+RecurringJobsScheduler.ScheduleJobs(app.Services);
 
 app.Map("/", () => Results.Redirect("/scalar"));
 

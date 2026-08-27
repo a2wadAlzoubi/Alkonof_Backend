@@ -7,6 +7,7 @@ using Alkonof_Backend.Infrastructure.Data;
 using Alkonof_Backend.Infrastructure.Data.Interceptors;
 using Alkonof_Backend.Infrastructure.Identity;
 using Application.Abstractions.JWT;
+using Hangfire;
 using Infrastructure.Abstraction;
 using Infrastructure.JWT;
 using MassTransit;
@@ -114,5 +115,15 @@ public static class DependencyInjection
                 cfg.ConfigureEndpoints(context);
             });
         });
+
+        // Add Hangfire services.
+        builder.Services.AddHangfire(config => config
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(connectionString));
+
+        // Add the processing server as IHostedService
+        builder.Services.AddHangfireServer();
     }
 }

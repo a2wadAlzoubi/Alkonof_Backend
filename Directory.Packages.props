@@ -12,6 +12,9 @@
     <PackageVersion Include="CommunityToolkit.Aspire.Hosting.SqlServer.Extensions" Version="13.4.0" />
     <PackageVersion Include="coverlet.collector" Version="8.0.1" />
     <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageVersion Include="Hangfire.AspNetCore" Version="1.8.24" />
+    <PackageVersion Include="Hangfire.PostgreSql" Version="1.21.1" />
+    <PackageVersion Include="Hangfire.SqlServer" Version="1.8.24" />
     <PackageVersion Include="Mapster" Version="10.0.10" />
     <PackageVersion Include="Mapster.DependencyInjection" Version="10.0.10" />
     <PackageVersion Include="Mapster.JsonNet" Version="10.0.10" />

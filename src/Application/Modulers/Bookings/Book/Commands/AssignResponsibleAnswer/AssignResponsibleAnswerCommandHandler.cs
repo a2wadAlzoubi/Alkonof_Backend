@@ -27,6 +27,7 @@ internal sealed class AssignResponsibleAnswerCommandHandler(IApplicationDbContex
         }
 
         booking.AssignResposibleAnswer(request.Decision);
+        booking.Updated();
 
         await publishEndpoint.Publish(new ResponsibleAnswerAssignedEvent(booking.Id, request.Decision), cancellationToken);
 

@@ -28,6 +28,7 @@ internal sealed class UpdateBookingCommandHandler(IApplicationDbContext context 
             request.Dto.Status,
             request.Dto.ContractId
         );
+        booking.Updated();
 
         await context.SaveChangesAsync(cancellationToken);
     }

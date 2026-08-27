@@ -29,6 +29,7 @@ internal sealed class AssignCustomerAnswerCommandHandler(IApplicationDbContext c
         }
             
         booking.AssignCustomerAnswer(request.Decision);
+        booking.Updated();
 
         await publishEndpoint.Publish(new CustomerAnswerAssignedEvent(booking.Id, request.Decision), cancellationToken);
         

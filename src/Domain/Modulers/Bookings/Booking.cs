@@ -112,6 +112,12 @@ public class Booking : BaseAuditableEntity
 
 
     }
+
+    public void Updated()
+    {
+        LastModified = DateTimeOffset.UtcNow;
+    }
+
     public void AssignResposibleAnswer(Decision decision)
     {
         ResponsibleAnswer = decision;

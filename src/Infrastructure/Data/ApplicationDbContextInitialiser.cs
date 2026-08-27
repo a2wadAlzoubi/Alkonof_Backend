@@ -328,15 +328,15 @@ public class ApplicationDbContextInitialiser
         if (!_context.TimeTable.Any())
         {
             // Scenario 5 (cont.): Staff Scheduling
-            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 8, false, responsible.Id));
-            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 9, false, responsible.Id));
-            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 10, false, responsible.Id));
-            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 11, false, responsible.Id));
-            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 12, false, responsible.Id));
-            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 13, false, responsible.Id));
-            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 14, false, responsible.Id));
-            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 15, false, responsible.Id));
-            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 16, false, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 8, true, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 9, true, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 10,true, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 11,true, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 12,true, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 13,true, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 14,true, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 15,true, responsible.Id));
+            _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Friday, 16,true, responsible.Id));
             // ..
             _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 8, false, responsible.Id));
             _context.TimeTable.Add(TimeTable.CreateSchedual(DayOfWeek.Saturday, 9, false, responsible.Id));
