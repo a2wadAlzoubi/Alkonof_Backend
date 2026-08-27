@@ -1,3 +1,4 @@
+// This file configures and starts the main web service.
 using Alkonof_Backend.Infrastructure.Data;
 using Scalar.AspNetCore;
 

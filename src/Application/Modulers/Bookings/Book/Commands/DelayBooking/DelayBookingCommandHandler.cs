@@ -21,7 +21,7 @@ internal sealed class DelayBookingCommandHandler(IApplicationDbContext context ,
             throw new NotFoundException(nameof(Booking), request.BookingId.ToString());
         }
 
-        booking.DelayBookingStatus(request.BookingId);
+        booking.DelayBookingStatus();
 
         await context.SaveChangesAsync(cancellationToken);
     }

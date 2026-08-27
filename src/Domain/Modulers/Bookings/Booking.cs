@@ -19,8 +19,8 @@ public class Booking : BaseAuditableEntity
         Guid responsibleId,
         DateTimeOffset confirmedAt, 
         Decision customerAnser = Decision.Pending,
-        Decision responsiplAnser = Decision.Pending,
-        BookingStatus status = BookingStatus.UnCreated,
+        Decision responsiplAnser = Decision.None,
+        BookingStatus status = BookingStatus.InReviewResponsible,
         Guid? contractId = null
         )
     {
@@ -43,7 +43,7 @@ public class Booking : BaseAuditableEntity
 
 
 
-    public BookingStatus Status { get; private set; } = BookingStatus.UnCreated;
+    public BookingStatus Status { get; private set; } = BookingStatus.InReviewResponsible;
     [Required]
     public string Title { get; private set; } = string.Empty;
     [Required]
@@ -70,9 +70,9 @@ public class Booking : BaseAuditableEntity
         Guid customerId,
         Guid responsibleId,
         DateTimeOffset confirmedAt,
-        Decision customerAnser = Decision.Pending,
-        Decision responsiplAnser = Decision.Pending,
-        BookingStatus status = BookingStatus.UnCreated,
+        //Decision customerAnser = Decision.Pending,
+        //Decision responsiplAnser = Decision.Pending,
+        BookingStatus status = BookingStatus.InReviewResponsible,
         Guid? contractId = null
         )
     {
@@ -82,8 +82,8 @@ public class Booking : BaseAuditableEntity
         customerId,
         responsibleId,
         confirmedAt,
-        customerAnser,
-        responsiplAnser,
+        Decision.None,
+        Decision.Pending,
         status,
         contractId
         );
@@ -95,9 +95,9 @@ public class Booking : BaseAuditableEntity
         Guid customerId,
         Guid responsibleId,
         DateTimeOffset confirmedAt,
-        Decision customerAnser = Decision.Pending,
-        Decision responsiplAnser = Decision.Pending,
-        BookingStatus status = BookingStatus.UnCreated,
+        Decision customerAnser ,
+        Decision responsiplAnser ,
+        BookingStatus status ,
         Guid? contractId = null
         )
     {
@@ -112,94 +112,99 @@ public class Booking : BaseAuditableEntity
 
 
     }
-    public void AssignResposibleAnswer(Decision decision, Guid bookingId, Guid responsibleId)
+    public void AssignResposibleAnswer(Decision decision)
     {
         ResponsibleAnswer = decision;
-        AddDomainEvent(new AssignResponsibleAnswerEvent(bookingId, responsibleId, decision));
+        //AddDomainEvent(new AssignResponsibleAnswerEvent(bookingId, responsibleId, decision));
     }
-    public void AssignCustomerAnswer(Decision decision, Guid bookingId, Guid customerId)
+    public void AssignCustomerAnswer(Decision decision)
     {
         CustomerAnswer = decision;
-        AddDomainEvent(new AssignCustomerAnswerEvent(bookingId, customerId, decision));
+        //AddDomainEvent(new AssignCustomerAnswerEvent(bookingId, customerId, decision));
     }
 
     // Booking Status
-    public void CancellBooking(Guid bookingId)
+    public void CancellBooking()
     {
         Status = BookingStatus.Cancelled;
-        AddDomainEvent(new CancellBookingEvent(bookingId));
+        //AddDomainEvent(new CancellBookingEvent(bookingId));
 
     }
-    public void ExpireBooking(Guid bookingId)
+    public void ExpireBooking()
     {
         Status = BookingStatus.Expired;
-        AddDomainEvent(new ExpiredBookingEvent(bookingId));
+        //AddDomainEvent(new ExpiredBookingEvent(bookingId));
 
     }
-    public void ConfirmeBookingStatus(Guid bookingId , Guid customerId , Guid responsibleId)
+    public void ConfirmeBookingStatus()
     {
         Status = BookingStatus.Confirmed;
-        AddDomainEvent(new ConfirmBookingEvent(bookingId , customerId , responsibleId));
+        //AddDomainEvent(new ConfirmBookingEvent(bookingId , customerId , responsibleId));
 
     }
-    public void DelayBookingStatus(Guid bookingId)
+    public void DelayBookingStatus()
     {
         Status = BookingStatus.Delaied;
-        AddDomainEvent(new DelayBookingEvent(bookingId));
+        //AddDomainEvent(new DelayBookingEvent(bookingId));
     }
-    public void InReviewResponsibleBookingStatus(Guid bookingId , Guid responsibleId)
+    public void InReviewResponsibleBookingStatus()
     {
         Status = BookingStatus.InReviewResponsible;
-        AddDomainEvent(new InReviewResponsibleBookingEvent(bookingId , responsibleId));
+        //AddDomainEvent(new InReviewResponsibleBookingEvent(bookingId , responsibleId));
     }
-    public void InReviewCustomerBookingStatus(Guid bookingId , Guid customerId)
+    public void InReviewCustomerBookingStatus()
     {
         Status = BookingStatus.InReviewCustomer;
-        AddDomainEvent(new InReviewCustomerBookingEvent(bookingId , customerId));
+        //AddDomainEvent(new InReviewCustomerBookingEvent(bookingId , customerId));
     }
     
     // Customer Answer
-    public void  CustomerApproveAnswer(Guid bookingId , Guid customerId)
+    public void  CustomerApproveAnswer()
     {
-        ResponsibleAnswer = Decision.Approved;
-        AddDomainEvent(new CustomerApproveEvent(bookingId , customerId));
+        CustomerAnswer = Decision.Approved;
+        //AddDomainEvent(new CustomerApproveEvent(bookingId , customerId));
     }
-    public void  CustomerRejectAnswer(Guid bookingId, Guid customerId)
+    public void  CustomerRejectAnswer()
     {
-        ResponsibleAnswer = Decision.Rejected;
-        AddDomainEvent(new CustomerRejectEvent(bookingId,customerId));
+        CustomerAnswer = Decision.Rejected;
+        //AddDomainEvent(new CustomerRejectEvent(bookingId,customerId));
     }
-    public void  CustomerDelayAnswer(Guid bookingId, Guid customerId)
+    public void  CustomerDelayAnswer()
     {
-        ResponsibleAnswer = Decision.Delay;
-        AddDomainEvent(new CustomerDelayEvent(bookingId,customerId));
+        CustomerAnswer = Decision.Delay;
+        //AddDomainEvent(new CustomerDelayEvent(bookingId,customerId));
     }
-    public void  CustomerPendingAnswer(Guid bookingId, Guid customerId)
+    public void  CustomerPendingAnswer()
     {
-        ResponsibleAnswer = Decision.Pending;
-        AddDomainEvent(new CustomerPendingEvent(bookingId, customerId));
+        CustomerAnswer = Decision.Pending;
+        //AddDomainEvent(new CustomerPendingEvent(bookingId, customerId));
+    }
+    public void  CustomerNoneAnswer()
+    {
+        CustomerAnswer = Decision.None;
+        //AddDomainEvent(new CustomerPendingEvent(bookingId, customerId));
     }
 
     //Responsible Answer
-    public void  ResponsibleApproveAnswer(Guid bookingId, Guid responsibleId)
+    public void  ResponsibleApproveAnswer()
     {
         ResponsibleAnswer = Decision.Approved;
-        AddDomainEvent(new ResponsibleApproveEvent(bookingId,responsibleId));
+        //AddDomainEvent(new ResponsibleApproveEvent(bookingId,responsibleId));
     }
-    public void ResponsibleRejectAnswer(Guid bookingId, Guid responsibleId)
+    public void ResponsibleRejectAnswer()
     {
         ResponsibleAnswer = Decision.Rejected;
-        AddDomainEvent(new ResponsibleRejectEvent(bookingId, responsibleId));
+        //AddDomainEvent(new ResponsibleRejectEvent(bookingId, responsibleId));
     }
-    public void ResponsibleDelayAnswer(Guid bookingId, Guid responsibleId)
+    public void ResponsibleDelayAnswer()
     {
         ResponsibleAnswer = Decision.Delay;
-        AddDomainEvent(new ResponsibleDelayEvent(bookingId , responsibleId));
+        //AddDomainEvent(new ResponsibleDelayEvent(bookingId , responsibleId));
     }
-    public void ResponsiblePendingAnswer(Guid bookingId, Guid responsibleId)
+    public void ResponsiblePendingAnswer()
     {
         ResponsibleAnswer = Decision.Pending;
-        AddDomainEvent(new ResponsiblePendingEvent(bookingId, responsibleId));
+        //AddDomainEvent(new ResponsiblePendingEvent(bookingId, responsibleId));
     }
     
     

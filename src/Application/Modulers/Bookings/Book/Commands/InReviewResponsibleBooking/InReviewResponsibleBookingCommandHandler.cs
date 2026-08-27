@@ -1,4 +1,5 @@
 using Alkonof_Backend.Application.Common.Interfaces;
+using Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.InReviewResponsibleBooking;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Events;
 using Alkonof_Backend.Domain.Entities.Bookings;
 using Alkonof_Backend.Domain.Entities.Identity.Enum;
@@ -7,12 +8,12 @@ using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.ConfirmBooking;
+namespace Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.InReviewResponsibleBooking;
 
-internal sealed class ConfirmBookingCommandHandler(IApplicationDbContext context , ICurrentUserProvider currentUser, IPublishEndpoint publishEndpoint)
-    : IRequestHandler<ConfirmBookingCommand>
+internal sealed class InReviewResponsibleBookingCommandHandler(IApplicationDbContext context , ICurrentUserProvider currentUser, IPublishEndpoint publishEndpoint)
+    : IRequestHandler<InReviewResponsibleBookingCommand>
 {
-    public async Task Handle(ConfirmBookingCommand request, CancellationToken cancellationToken)
+    public async Task Handle(InReviewResponsibleBookingCommand request, CancellationToken cancellationToken)
     {
         if (currentUser.Role != UserRole.Admin) { throw new InvalidOperationException("Current user is not authenticated."); }
         var booking = await context.Booking
@@ -23,7 +24,7 @@ internal sealed class ConfirmBookingCommandHandler(IApplicationDbContext context
             throw new NotFoundException(nameof(Booking), request.BookingId.ToString());
         }
 
-        booking.ConfirmeBookingStatus();
+        booking.InReviewResponsibleBookingStatus();
 
         await publishEndpoint.Publish(new BookingConfirmedEvent(booking.Id), cancellationToken);
 

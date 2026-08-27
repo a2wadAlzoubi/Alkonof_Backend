@@ -1,6 +1,7 @@
 using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Events;
 using Alkonof_Backend.Domain.Entities.Bookings;
+using Alkonof_Backend.Domain.Entities.Bookings.Enum;
 using Alkonof_Backend.Domain.Exceptions;
 using MassTransit;
 using MediatR;
@@ -21,10 +22,16 @@ internal sealed class AssignCustomerAnswerCommandHandler(IApplicationDbContext c
             throw new NotFoundException(nameof(Booking), request.BookingId.ToString());
         }
 
-        booking.AssignCustomerAnswer(request.Decision, request.BookingId, request.CustomerId);
 
+        if (booking.ResponsibleAnswer != Decision.Approved)
+        {
+            throw new NotFoundException(nameof(Booking), "anable to add Customer answer before responsible Approved");
+        }
+            
+        booking.AssignCustomerAnswer(request.Decision);
+
+        await publishEndpoint.Publish(new CustomerAnswerAssignedEvent(booking.Id, request.Decision), cancellationToken);
+        
         await context.SaveChangesAsync(cancellationToken);
-
-        await publishEndpoint.Publish(new CustomerAnswerAssignedEvent(booking.Id), cancellationToken);
     }
 }

@@ -6,7 +6,6 @@ namespace Alkonof_Backend.Domain.Entities.Bookings.Enum;
 
 public enum BookingStatus
 {
-    UnCreated = 0,
     InReviewCustomer = 1,
     InReviewResponsible = 2,
     Confirmed = 3,
@@ -19,7 +18,8 @@ public enum Decision
     Approved = 0,
     Rejected = 1,
     Pending = 2,
-    Delay = 3
+    Delay = 3,
+    None = 4
 }
 public enum ServiceType
 {

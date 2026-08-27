@@ -12,6 +12,7 @@ using Alkonof_Backend.Domain.Entities.ProjectMonitoring;
 using Alkonof_Backend.Domain.Entities.Schedualing;
 using Alkonof_Backend.Infrastructure.Identity;
 using Domain.RefreshTokens;
+using MassTransit;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -61,6 +62,11 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        
+        // Add MassTransit Outbox
+        builder.AddInboxStateEntity();
+        builder.AddOutboxMessageEntity();
+        builder.AddOutboxStateEntity();
     }
 
 }

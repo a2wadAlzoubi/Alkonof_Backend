@@ -7,12 +7,12 @@ using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.ConfirmBooking;
+namespace Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.InReviewCustomerBooking;
 
-internal sealed class ConfirmBookingCommandHandler(IApplicationDbContext context , ICurrentUserProvider currentUser, IPublishEndpoint publishEndpoint)
-    : IRequestHandler<ConfirmBookingCommand>
+internal sealed class InReviewCustomerBookingCommandHandler(IApplicationDbContext context , ICurrentUserProvider currentUser, IPublishEndpoint publishEndpoint)
+    : IRequestHandler<InReviewCustomerBookingCommand>
 {
-    public async Task Handle(ConfirmBookingCommand request, CancellationToken cancellationToken)
+    public async Task Handle(InReviewCustomerBookingCommand request, CancellationToken cancellationToken)
     {
         if (currentUser.Role != UserRole.Admin) { throw new InvalidOperationException("Current user is not authenticated."); }
         var booking = await context.Booking
@@ -23,7 +23,7 @@ internal sealed class ConfirmBookingCommandHandler(IApplicationDbContext context
             throw new NotFoundException(nameof(Booking), request.BookingId.ToString());
         }
 
-        booking.ConfirmeBookingStatus();
+        booking.InReviewCustomerBookingStatus();
 
         await publishEndpoint.Publish(new BookingConfirmedEvent(booking.Id), cancellationToken);
 

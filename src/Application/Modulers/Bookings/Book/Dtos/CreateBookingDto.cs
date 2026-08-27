@@ -8,8 +8,6 @@ public class CreateBookingDto
     public DateTimeOffset ConfirmedAt { get; set; }
     public Guid CustomerId { get; set; }
     public Guid ResponsibleId { get; set; }
-    public Decision CustomerAnswer { get; set; }
-    public Decision ResponsibleAnswer { get; set; }
     public BookingStatus Status { get; set; }
     public Guid? ContractId { get; set; }
     public string? CustomerName { get; set; }

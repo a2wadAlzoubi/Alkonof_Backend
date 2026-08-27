@@ -133,8 +133,6 @@ public class ApplicationDbContextInitialiser
                 customer1.Id,
                 responsible.Id,
                 DateTimeOffset.Now,
-                Decision.Pending,
-                Decision.Pending,
                 BookingStatus.InReviewCustomer
                 );
             _context.Booking.Add(booking1);
@@ -147,11 +145,11 @@ public class ApplicationDbContextInitialiser
                 customer2.Id,
                 responsible.Id,
                 DateTimeOffset.Now,
-                Decision.Approved,
-                Decision.Approved,
                 BookingStatus.Confirmed);
-            _context.Booking.Add(booking2);
+            booking2.AssignCustomerAnswer(Decision.Approved);
+            booking2.AssignResposibleAnswer(Decision.Approved);
 
+            _context.Booking.Add(booking2);
             // Scenario 5: Cancelled Booking
             var orderBooking3 = OrderBooking.CreateOrderBooking(customer3.Id, informaticseService.Id);
             _context.OrderBooking.Add(orderBooking3);
@@ -160,9 +158,11 @@ public class ApplicationDbContextInitialiser
                 customer3.Id,
                 responsible.Id,
                 DateTimeOffset.Now,
-                Decision.Rejected,
-                Decision.Approved,
                 BookingStatus.Cancelled);
+
+            booking2.AssignCustomerAnswer(Decision.Rejected);
+            booking2.AssignResposibleAnswer(Decision.Approved);
+            
             _context.Booking.Add(booking3);
 
             await _context.SaveChangesAsync();

@@ -20,8 +20,6 @@ internal sealed class CreateBookingCommandHandler(IApplicationDbContext context)
             request.Dto.CustomerId,
             request.Dto.ResponsibleId,
             request.Dto.ConfirmedAt,
-            request.Dto.CustomerAnswer,
-            request.Dto.ResponsibleAnswer,
             request.Dto.Status,
             request.Dto.ContractId
         );

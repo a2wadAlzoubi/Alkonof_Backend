@@ -1,0 +1,33 @@
+using Alkonof_Backend.Application.Common.Interfaces;
+using Alkonof_Backend.Application.Modulers.Bookings.Book.Events;
+using Alkonof_Backend.Domain.Entities.Bookings;
+using Alkonof_Backend.Domain.Entities.Bookings.Enum;
+using Alkonof_Backend.Domain.Exceptions;
+using MassTransit;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
+namespace Alkonof_Backend.Infrastructure.Consumers;
+
+public class InReviewResponsibleBookingConsumer(ILogger<InReviewResponsibleBookingConsumer> logger, IApplicationDbContext context) : IConsumer<ResponsibleAnswerAssignedEvent>
+{
+    public async Task Consume(ConsumeContext<ResponsibleAnswerAssignedEvent> consumeContext)
+    {
+        if (consumeContext.Message.Decision == Decision.Rejected || consumeContext.Message.Decision == Decision.Delay || consumeContext.Message.Decision == Decision.Pending)
+        {
+            var booking = await context.Booking
+                .FirstOrDefaultAsync(b => b.Id == consumeContext.Message.BookingId);
+
+            if (booking is null)
+            {
+                throw new NotFoundException(nameof(Booking), consumeContext.Message.BookingId.ToString());
+            }
+
+            booking.InReviewResponsibleBookingStatus();
+
+            await context.SaveChangesAsync(consumeContext.CancellationToken);
+
+            logger.LogInformation("[Responsible Rejected/Delayed/Pending] - Kept booking {BookingId} in InReviewResponsible status", consumeContext.Message.BookingId);
+        }
+    }
+}

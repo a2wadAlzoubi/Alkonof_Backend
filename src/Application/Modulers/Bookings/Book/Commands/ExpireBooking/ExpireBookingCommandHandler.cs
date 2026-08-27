@@ -21,7 +21,7 @@ internal sealed class ExpireBookingCommandHandler(IApplicationDbContext context 
             throw new NotFoundException(nameof(Booking), request.BookingId.ToString());
         }
 
-        booking.ExpireBooking(request.BookingId);
+        booking.ExpireBooking();
 
         await context.SaveChangesAsync(cancellationToken);
     }

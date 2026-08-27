@@ -18,7 +18,7 @@ internal sealed class CancellBookingCommandHandler(IApplicationDbContext context
             throw new NotFoundException(nameof(Booking), request.BookingId.ToString());
         }
 
-        booking.CancellBooking(request.BookingId);
+        booking.CancellBooking();
 
         await context.SaveChangesAsync(cancellationToken);
     }
