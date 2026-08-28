@@ -33,6 +33,7 @@ using Alkonof_Backend.Domain.Entities.Bookings.Enum;
 using Domain.DateHelper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.UpdateConfirmedAtBooking;
 
 namespace Alkonof_Backend.Web.Endpoints.Bookings;
 
@@ -68,10 +69,7 @@ public class Bookings : IEndpointGroup
         #region Booking State Management Endpoints
         bookingsGroup.MapPost("/{bookingId:guid}/assign-customer-answer", AssignCustomerAnswer).RequireAuthorization();
         bookingsGroup.MapPost("/{bookingId:guid}/assign-responsible-answer", AssignResponsibleAnswer).RequireAuthorization();
-        bookingsGroup.MapPost("/{bookingId:guid}/confirm", ConfirmBooking).RequireAuthorization();
-        bookingsGroup.MapPost("/{bookingId:guid}/delay", DelayBooking).RequireAuthorization();
-        bookingsGroup.MapPost("/{bookingId:guid}/cancel", CancellBooking).RequireAuthorization();
-        bookingsGroup.MapPost("/{bookingId:guid}/expire", ExpireBooking).RequireAuthorization();
+        bookingsGroup.MapPost("/{bookingId:guid}/expire", UpdateConfirmedAtBooking).RequireAuthorization();
         bookingsGroup.MapPatch("/{bookingId:guid}/responsible/{responsibleId:guid}", UpdateBookingResponsibleId).RequireAuthorization();
         #endregion
 
@@ -225,35 +223,12 @@ public class Bookings : IEndpointGroup
         return TypedResults.NoContent();
     }
 
-    public record ConfirmRequest(Guid CustomerId, Guid ResponsibleId);
-    [EndpointSummary("Confirm a booking")]
-    public static async Task<IResult> ConfirmBooking(ISender sender, Guid bookingId, [FromBody] ConfirmRequest request)
-    {
-        var command = new ConfirmBookingCommand(bookingId, request.CustomerId, request.ResponsibleId);
-        await sender.Send(command);
-        return TypedResults.NoContent();
-    }
+ 
 
-    [EndpointSummary("Delay a booking")]
-    public static async Task<IResult> DelayBooking(ISender sender, Guid bookingId)
+    [EndpointSummary("Update the confirmed at date of a booking")]
+    public static async Task<IResult> UpdateConfirmedAtBooking(ISender sender, Guid bookingId, [FromBody] DateTimeOffset confirmedAt)
     {
-        var command = new DelayBookingCommand(bookingId);
-        await sender.Send(command);
-        return TypedResults.NoContent();
-    }
-
-    [EndpointSummary("Cancel a booking")]
-    public static async Task<IResult> CancellBooking(ISender sender, Guid bookingId)
-    {
-        var command = new CancellBookingCommand(bookingId);
-        await sender.Send(command);
-        return TypedResults.NoContent();
-    }
-
-    [EndpointSummary("Expire a booking")]
-    public static async Task<IResult> ExpireBooking(ISender sender, Guid bookingId)
-    {
-        var command = new ExpireBookingCommand(bookingId);
+        var command = new UpdateConfirmedAtBookingCommand(bookingId, confirmedAt);
         await sender.Send(command);
         return TypedResults.NoContent();
     }

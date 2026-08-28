@@ -34,6 +34,7 @@ public static class DependencyInjection
         builder.Services.AddCors();
     }
 
+
     public static void AddKeyVaultIfConfigured(this IHostApplicationBuilder builder)
     {
         var keyVaultUri = builder.Configuration["AZURE_KEY_VAULT_ENDPOINT"];

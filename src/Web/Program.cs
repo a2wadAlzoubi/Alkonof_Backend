@@ -4,6 +4,8 @@ using Alkonof_Backend.Infrastructure.Hangfire;
 using Hangfire;
 using Scalar.AspNetCore;
 
+DotNetEnv.Env.Load();
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -39,7 +41,10 @@ app.UseCors(static builder =>
 app.UseFileServer();
 
 app.MapOpenApi();
-app.MapScalarApiReference();
+app.MapScalarApiReference(options =>
+{
+    options.WithOpenApiRoutePattern("/openapi/{documentName}.json");
+});
 
 app.UseExceptionHandler(options => { });
 

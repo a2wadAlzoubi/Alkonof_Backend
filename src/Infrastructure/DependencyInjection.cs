@@ -6,6 +6,7 @@ using Alkonof_Backend.Infrastructure.Consumers;
 using Alkonof_Backend.Infrastructure.Data;
 using Alkonof_Backend.Infrastructure.Data.Interceptors;
 using Alkonof_Backend.Infrastructure.Identity;
+using Alkonof_Backend.Infrastructure.Services;
 using Application.Abstractions.JWT;
 using Hangfire;
 using Infrastructure.Abstraction;
@@ -18,7 +19,9 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Resend;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -56,6 +59,32 @@ public static class DependencyInjection
             .AddApiEndpoints();
 
         builder.Services.AddSingleton(TimeProvider.System);
+
+        // Resend Settings
+        var resendSection = builder.Configuration.GetSection(ResendSettings.SectionName);
+        var resendConfigured = !string.IsNullOrWhiteSpace(resendSection["ApiKey"]) ||
+                              !string.IsNullOrWhiteSpace(resendSection["FromAddress"]);
+
+        var resendOptions = builder.Services.AddOptions<ResendSettings>()
+            .BindConfiguration(ResendSettings.SectionName);
+
+        if (resendConfigured)
+        {
+            resendOptions
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+        }
+
+        // Configure Resend client
+        //builder.Services.AddScoped(provider =>
+        //{
+        //    var options = provider.GetRequiredService<IOptions<ResendSettings>>();
+        //    var resendOptions = new ResendClientOptions { ApiToken = options.Value.ApiKey };
+        //    return new ResendClient(resendOptions , httpClient);
+        //});
+
+        builder.Services.AddScoped<IResend>(provider => provider.GetRequiredService<ResendClient>());
+        builder.Services.AddTransient<IEmailSender, ResendEmailSender>();
         builder.Services.AddTransient<IIdentityService, IdentityService>();
         builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
         builder.Services.AddScoped<IJwtExtractor, JwtExtractor>();

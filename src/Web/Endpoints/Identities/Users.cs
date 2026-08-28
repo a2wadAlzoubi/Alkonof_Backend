@@ -96,10 +96,10 @@ public class Users : IEndpointGroup
         return TypedResults.NoContent();
     }
 
-    [EndpointSummary("Soft delete a user")]
-    public static async Task<IResult> SoftDeleteUser(ISender sender, Guid id)
+    [EndpointSummary("Soft active delete a user")]
+    public static async Task<IResult> SoftDeleteUser(ISender sender, Guid id , bool isDeleted)
     {
-        var command = new SoftDeleteUserCommand(id);
+        var command = new SoftActiveDeleteUserCommand(id, isDeleted);
         await sender.Send(command);
         return TypedResults.NoContent();
     }

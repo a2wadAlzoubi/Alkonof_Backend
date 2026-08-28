@@ -4,9 +4,7 @@ using Alkonof_Backend.Domain.Entities.Identity.Enum;
 
 namespace Alkonof_Backend.Application.Modulers.Identities.Users.Commands.SoftDelete;
 
-
-
-internal class SoftDeleteUserCommandHandler : IRequestHandler<SoftDeleteUserCommand>
+internal class SoftDeleteUserCommandHandler : IRequestHandler<SoftActiveDeleteUserCommand>
 {
     private readonly IApplicationDbContext _context;
 
@@ -15,7 +13,7 @@ internal class SoftDeleteUserCommandHandler : IRequestHandler<SoftDeleteUserComm
         _context = context;
     }
 
-    public async Task Handle(SoftDeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task Handle(SoftActiveDeleteUserCommand request, CancellationToken cancellationToken)
     {
         var user = await _context.User
             .FindAsync([request.Id], cancellationToken);
@@ -27,7 +25,7 @@ internal class SoftDeleteUserCommandHandler : IRequestHandler<SoftDeleteUserComm
             throw new Exception("Admin user cannot be deleted.");
         }
 
-        user.SoftRemoneUser(request.Id);
+        user.SoftActiveRemoveUser(request.IsDeleted);
 
         await _context.SaveChangesAsync(cancellationToken);
     }

@@ -117,6 +117,10 @@ public class Booking : BaseAuditableEntity
     {
         LastModified = DateTimeOffset.UtcNow;
     }
+    public void UpdateConfirmedAt(DateTimeOffset confirmedAt)
+    {
+        this.ConfirmedAt = confirmedAt;
+    }
 
     public void AssignResposibleAnswer(Decision decision)
     {

@@ -130,10 +130,10 @@ public class User : BaseAuditableEntity
         Password = password;
         AddDomainEvent(new ProfileUpdatedEvent(userId));
     }
-    public void SoftRemoneUser(Guid userId)
+    public void SoftActiveRemoveUser(bool isDeleted)
     {
-        IsDeleted = false;
-        AddDomainEvent(new SoftRemoveUserEvent(userId));
+        IsDeleted = isDeleted;
+        //AddDomainEvent(new SoftRemoveUserEvent(userId));
     }
 
     public void AssignRole(UserRole role)
