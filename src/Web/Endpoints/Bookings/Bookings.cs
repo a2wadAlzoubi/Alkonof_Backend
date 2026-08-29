@@ -69,7 +69,7 @@ public class Bookings : IEndpointGroup
         #region Booking State Management Endpoints
         bookingsGroup.MapPost("/{bookingId:guid}/assign-customer-answer", AssignCustomerAnswer).RequireAuthorization();
         bookingsGroup.MapPost("/{bookingId:guid}/assign-responsible-answer", AssignResponsibleAnswer).RequireAuthorization();
-        bookingsGroup.MapPost("/{bookingId:guid}/expire", UpdateConfirmedAtBooking).RequireAuthorization();
+        bookingsGroup.MapPatch("/{bookingId:guid}/expire", UpdateConfirmedAtBooking).RequireAuthorization();
         bookingsGroup.MapPatch("/{bookingId:guid}/responsible/{responsibleId:guid}", UpdateBookingResponsibleId).RequireAuthorization();
         #endregion
 

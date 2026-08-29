@@ -28,6 +28,6 @@ public static class RecurringJobsScheduler
         recurringJobManager.AddOrUpdate<ISender>(
             "escalate-overdue-bookings-job",
             sender => sender.Send(new AutoApproveResponsibleBookingsCommand()),
-            "*/5 * * * *"); // Runs every 5 minutes
+            "*/1 * * * *"); // Runs every 5 minutes
     }
 }

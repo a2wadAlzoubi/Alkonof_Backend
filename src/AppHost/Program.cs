@@ -6,6 +6,8 @@ builder.AddAzureContainerAppEnvironment("aca-env");
 
 var jwtKey = builder.AddParameter("JwtKey");
 var ConnectionStrings = builder.AddParameter("ConnectionStrings");
+var resendApiKey = builder.AddParameter("ResendApiKey");
+var resendFromAddress = builder.AddParameter("ResendFromAddress");
 //var jwtIssuer = builder.AddParameter("JwtIssuer");
 //var jwtAudience = builder.AddParameter("JwtAudience");
 //var web = builder
@@ -21,6 +23,8 @@ var messaging = builder.AddRabbitMQ("messaging");
 var web = builder.AddProject<Projects.Web>(Services.WebApi)
     .WithReference(databaseServer)
     .WithReference(messaging)
+    .WithEnvironment("Resend__ApiKey", resendApiKey)
+    .WithEnvironment("Resend__FromAddress", resendFromAddress)
     .WaitFor(databaseServer)
     .WithExternalHttpEndpoints()
     .WithAspNetCoreEnvironment()

@@ -51,9 +51,9 @@ public class UserConfiguration() : IEntityTypeConfiguration<User>
                 new
                 {
                     Id = Guid.Parse("1a7e5c9d-3f21-4b86-7e5c-7d15e8a6b903"),
-                    Name = "Ahmad3",
+                    Name = "Kaiser",
                     Number = "0986123456",
-                    Email = "ahmad3@gmail.com",
+                    Email = "alzoubiawad123@gmail.com",
                     Password = passwordService.Hash("Aaaa1111"),
                     CreatedAt = new DateTimeOffset(2026, 1, 2, 0, 0, 0, TimeSpan.Zero),
                     Role = UserRole.Customer,

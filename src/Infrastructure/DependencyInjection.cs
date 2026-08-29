@@ -60,30 +60,26 @@ public static class DependencyInjection
 
         builder.Services.AddSingleton(TimeProvider.System);
 
+
+        builder.Services.AddHttpClient<ResendClient>();
+
         // Resend Settings
-        var resendSection = builder.Configuration.GetSection(ResendSettings.SectionName);
-        var resendConfigured = !string.IsNullOrWhiteSpace(resendSection["ApiKey"]) ||
-                              !string.IsNullOrWhiteSpace(resendSection["FromAddress"]);
+        builder.Services.AddOptions<ResendSettings>()
+            .BindConfiguration(ResendSettings.SectionName)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
 
-        var resendOptions = builder.Services.AddOptions<ResendSettings>()
-            .BindConfiguration(ResendSettings.SectionName);
-
-        if (resendConfigured)
+        // Resend
+        builder.Services.AddResend(options =>
         {
-            resendOptions
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
-        }
+            options.ApiToken = builder.Configuration
+                .GetRequiredSection(ResendSettings.SectionName)
+                .GetValue<string>(nameof(ResendSettings.ApiKey))
+                ?? throw new InvalidOperationException(
+                    "Resend:ApiKey is not configured.");
+        });
 
-        // Configure Resend client
-        //builder.Services.AddScoped(provider =>
-        //{
-        //    var options = provider.GetRequiredService<IOptions<ResendSettings>>();
-        //    var resendOptions = new ResendClientOptions { ApiToken = options.Value.ApiKey };
-        //    return new ResendClient(resendOptions , httpClient);
-        //});
-
-        builder.Services.AddScoped<IResend>(provider => provider.GetRequiredService<ResendClient>());
+        builder.Services.AddTransient<IResend, ResendClient>();
         builder.Services.AddTransient<IEmailSender, ResendEmailSender>();
         builder.Services.AddTransient<IIdentityService, IdentityService>();
         builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();

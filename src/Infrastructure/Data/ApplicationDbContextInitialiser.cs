@@ -133,7 +133,7 @@ public class ApplicationDbContextInitialiser
                 customer1.Id,
                 responsible.Id,
                 DateTimeOffset.Parse("2026-08-27T10:00:00+03:00"),
-                BookingStatus.InReviewCustomer
+                BookingStatus.InReviewResponsible
                 );
             _context.Booking.Add(booking1);
 

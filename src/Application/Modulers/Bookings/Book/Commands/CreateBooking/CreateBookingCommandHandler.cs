@@ -25,6 +25,7 @@ internal sealed class CreateBookingCommandHandler(IApplicationDbContext context)
         );
 
         await context.Booking.AddAsync(booking, cancellationToken);
+        
         await context.SaveChangesAsync(cancellationToken);
 
         return booking.Id;

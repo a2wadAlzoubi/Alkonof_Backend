@@ -12,32 +12,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Alkonof_Backend.Application.Modulers.Bookings.Book.Commands.AutoApproveResponsibleBookings;
 
-internal sealed class AutoApproveResponsibleBookingsHandler(IApplicationDbContext context, ISender sender , ICurrentUserProvider currentUser)
+internal sealed class AutoApproveResponsibleBookingsHandler(
+    IApplicationDbContext context,
+    ISender sender)
     : IRequestHandler<AutoApproveResponsibleBookingsCommand>
 {
     public async Task Handle(
         AutoApproveResponsibleBookingsCommand request,
         CancellationToken cancellationToken)
     {
-        var responsible = await context.User.FirstOrDefaultAsync(x => x.Id == currentUser.Id, cancellationToken);
-        if (responsible == null )
-        {
-            throw new NotFoundException(nameof(User) , nameof(responsible));
-        }
-        if (responsible.Role != UserRole.Responsible)
-        {
-            throw new Exception("User is not a responsible");
-        }
-            
-            
-        //var threshold = DateTimeOffset.UtcNow.AddHours(-2);
-        var threshold = DateTimeOffset.UtcNow.AddMinutes(3);
+        var threshold = DateTimeOffset.UtcNow.AddMinutes(-2);
 
         var bookings = await context.Booking
             .Where(x =>
                 x.Status == BookingStatus.InReviewResponsible &&
-                x.LastModified <= threshold &&
-                x.ResponsibleId == responsible.Id)
+                x.LastModified <= threshold)
             .Select(x => new
             {
                 x.Id,
@@ -54,6 +43,5 @@ internal sealed class AutoApproveResponsibleBookingsHandler(IApplicationDbContex
                     Decision.Approved),
                 cancellationToken);
         }
-    
     }
 }
