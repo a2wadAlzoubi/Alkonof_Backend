@@ -26,7 +26,11 @@ internal class SoftDeleteUserCommandHandler : IRequestHandler<SoftActiveDeleteUs
         }
 
         user.SoftActiveRemoveUser(request.IsDeleted);
-
+        if(user.RefreshTokens == null)
+        {
+            throw new Exception("User has no refresh tokens.");
+        }
+        _context.RefreshToken.RemoveRange(user.RefreshTokens);
         await _context.SaveChangesAsync(cancellationToken);
     }
 

@@ -21,15 +21,15 @@ namespace Alkonof_Backend.Application.Modulers.Identities.Authentication.Login
             var user = await context.User
                 .Include(u => u.RefreshTokens)
                 .SingleOrDefaultAsync(
-                    u => u.Email == request.Login.Email && u.IsDeleted != true,
+                    u => u.Email == request.Login.Email && u.IsDeleted == false,
                     cancellationToken);
 
 
             // 2- Validate User
-            if (user is null || user.RefreshTokens is null)
+            if (user is null || user.RefreshTokens is null || user.IsDeleted == true)
             {
                 throw new UnauthorizedAccessException(
-                    "Invalid email or password");
+                    "Invalid email or password Or User is deleted");
             }
 
 

@@ -11,12 +11,17 @@ internal sealed class ReserveDateForResponsibleTimeTableHandler(IApplicationDbCo
             .Include(u => u.TimeTables!.Where(t => t.DayOfWeek == request.day && t.Hour == request.hour))
             .FirstOrDefaultAsync(r => r.Id == request.ResponsibleId, cancellationToken);
 
-        if (Responsible == null && Responsible!.TimeTables == null)
+        if (Responsible == null && Responsible!.TimeTables == null )
         {
             throw new NotFoundException(nameof(Responsible), request.ResponsibleId.ToString());
         }
+
         foreach (var timeTable in Responsible.TimeTables!)
         {
+            if(timeTable.IsReserved)
+            {
+                throw new InvalidOperationException($"The time slot for {request.day} at {request.hour}:00 is already reserved.");
+            }
             timeTable.Reserve();
         }
 
