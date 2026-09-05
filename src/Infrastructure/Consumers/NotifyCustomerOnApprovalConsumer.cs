@@ -20,7 +20,6 @@ public class NotifyCustomerOnApprovalConsumer : IConsumer<ResponsibleAnswerAssig
         _context = context;
         _emailSender = emailSender;
     }
-
     public async Task Consume(ConsumeContext<ResponsibleAnswerAssignedEvent> consumContext)
     {
         // نحن نهتم فقط بحالة الموافقة
@@ -55,11 +54,15 @@ public class NotifyCustomerOnApprovalConsumer : IConsumer<ResponsibleAnswerAssig
                 <h1>Hello {booking.Customer.Name},</h1>
                 <p>Great news! Your booking with ID <strong>{booking.Id}</strong> has been approved by the responsible party.</p>
                 <p>Your appointment is confirmed for: <strong>{booking.ConfirmedAt:dddd, MMMM dd, yyyy 'at' HH:mm}</strong>.</p>
+                <p>Please checkout your account to give an answer to the booking.</p>
+                <p>https://alkonof.me</p>
                 <p>Thank you for using our service.</p>
+                <br>
+                <p>Alkonof Company</p>
             </body>
             </html>";
 
-        await _emailSender.SendEmailAsync(customerEmail, subject, body);
+        //await _emailSender.SendEmailAsync(customerEmail, subject, body);
 
         _logger.LogInformation("[Email Notification] Email prepared and sent (via dummy sender) to {CustomerEmail} for booking {BookingId}.", customerEmail, booking.Id);
     }

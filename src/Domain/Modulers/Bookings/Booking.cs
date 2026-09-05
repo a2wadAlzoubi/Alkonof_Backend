@@ -18,8 +18,8 @@ public class Booking : BaseAuditableEntity
         Guid customerId,
         Guid responsibleId,
         DateTimeOffset confirmedAt, 
-        Decision customerAnser = Decision.Pending,
-        Decision responsiplAnser = Decision.None,
+        Decision customerAnser = Decision.None,
+        Decision responsiplAnser = Decision.Pending,
         BookingStatus status = BookingStatus.InReviewResponsible,
         Guid? contractId = null
         )

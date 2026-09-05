@@ -2,7 +2,6 @@ using Alkonof_Backend.Application.Common.Interfaces;
 using Alkonof_Backend.Application.Modulers.Bookings.Book.Events;
 using Alkonof_Backend.Domain.Entities.Bookings;
 using Alkonof_Backend.Domain.Entities.Bookings.Enum;
-using Alkonof_Backend.Domain.Exceptions;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
